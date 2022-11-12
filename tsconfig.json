@@ -33,7 +33,8 @@
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "src/@types/*.d.ts"],
+    "types": ["node", "vite/client"],
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "paths": {
       "~/*": ["src/*"]
     }

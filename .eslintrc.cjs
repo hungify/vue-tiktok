@@ -9,7 +9,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
     project: './tsconfig.json',
-    extraFileExtensions: ['.vue'],
+    extraFileExtensions: ['.vue', '.json', '.scss', '.sass', '.less', '.css'],
   },
   globals: {
     defineProps: 'readonly',
@@ -35,20 +35,16 @@ module.exports = {
     'no-nested-ternary': 'error',
     'no-unneeded-ternary': 'error',
     'arrow-spacing': 'error',
+    'no-empty-function': 'off',
     'no-confusing-arrow': ['error', { allowParens: true, onlyOneSimpleParam: false }],
     // ###########
     // # PLUGINS #
     // ###########
 
     // # TYPESCRIPT
+    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
-      {
-        selector: 'variable',
-        types: ['boolean'],
-        format: ['PascalCase'],
-        prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
-      },
       {
         selector: 'interface',
         format: ['PascalCase'],
@@ -106,6 +102,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/ban-types': 'off',
@@ -113,5 +110,11 @@ module.exports = {
     // # VUE
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/no-unused-vars': [
+      'error',
+      {
+        ignorePattern: '^_',
+      },
+    ],
   },
 };
