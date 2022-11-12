@@ -1,0 +1,15 @@
+export type IconName =
+  | 'home'
+  | 'search'
+  | 'comment'
+  | 'heart'
+  | 'user-group'
+  | 'x'
+  | 'live'
+  | 'keyboard'
+  | 'earth-asia'
+  | 'ellipsis-vertical'
+  | 'question'
+  | 'check'
+  | 'plus'
+  | 'search';

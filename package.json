@@ -44,8 +44,7 @@
   "lint-staged": {
     "src/**/*.{js,ts,vue}": [
       "npm run lint",
-      "npm run format",
-      "git add ."
+      "npm run format"
     ]
   },
   "hooks": {
