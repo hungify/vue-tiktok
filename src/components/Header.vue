@@ -4,6 +4,7 @@ import { BASE_MENU, ROUTES_PATH, USER_MENU } from '~/configs';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import ImageBase from './ImageBase.vue';
+import PopperMenu from './Popper/PopperMenu/PopperMenu.vue';
 import SearchBox from './SearchBox.vue';
 
 const currentUser = {};

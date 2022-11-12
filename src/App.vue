@@ -9,7 +9,4 @@ import Home from './pages/Home.vue';
   </MainLayout>
 </template>
 
-<style lang="scss">
-#app {
-}
-</style>
+<style lang="scss" module></style>

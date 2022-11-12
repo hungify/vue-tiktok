@@ -7,9 +7,7 @@ interface IconProps extends SVGAttributes {
   color?: string;
 }
 
-const props = withDefaults(defineProps<IconProps>(), {
-  color: 'currentColor',
-});
+const props = defineProps<IconProps>();
 
 const currentIcon = computed(() =>
   defineAsyncComponent({

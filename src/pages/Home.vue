@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import ButtonBase from '~/components/ButtonBase.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <ButtonBase :type="'primary'" :size="'md'">Hello</ButtonBase>
+  <div class="$style.wrapper">Home Page</div>
 </template>
+
+<style lang="scss" module></style>

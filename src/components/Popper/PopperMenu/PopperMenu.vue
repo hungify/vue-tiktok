@@ -31,16 +31,16 @@ const handleBack = () => {
     arrow
     theme="light"
     interactive
-    :delay="[0, 500]"
+    :delay="[0, 400]"
     :offset="[-80, 16]"
     :hide-on-click="hideOnClick"
     @hide="handleReset"
   >
-    <template #default="{ state }">
-      <slot :state="state" />
+    <template #default>
+      <slot />
     </template>
 
-    <template #content="{ _hide }">
+    <template #content>
       <div :class="$style['menu-list']">
         <PopperWrapper :class="$style['menu-popper']">
           <!-- <Header title="current.title" @onBack="handleBack" v-if="history[0]" /> -->
