@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import { useSlots } from 'vue';
 import Header from '~/components/Header.vue';
 import Sidebar from '~/components/Sidebar/Sidebar.vue';
-
-const slots = useSlots();
 </script>
 
 <template>
@@ -16,7 +13,7 @@ const slots = useSlots();
       <slot name="sidebar">
         <Sidebar />
       </slot>
-      <div v-if="slots.content" :class="classes.content">
+      <div :class="classes.content">
         <slot />
       </div>
     </main>

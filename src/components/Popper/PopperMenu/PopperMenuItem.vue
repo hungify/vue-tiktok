@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { computed, useCssModule } from 'vue';
 import ButtonBase from '~/components/ButtonBase.vue';
+import IconBase from '~/components/IconBase.vue';
 import type { IconName } from '~/interfaces/icon';
+
 interface MenuItemProps {
   to?: string;
   leftIcon: IconName;

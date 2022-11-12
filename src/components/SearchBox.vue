@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
-// import { useTippy } from 'vue-tippy';
+import { useTippy } from 'vue-tippy';
+import PopperWrapper from './Popper/PopperWrapper.vue';
+import AccountItem from './SuggestedAccounts/AccountItem.vue';
+import type { User } from '~/models/user';
 
-const btn = ref(null);
+const searchBoxRef = ref<HTMLDivElement>();
+const resultRef = ref<HTMLDivElement>();
 
 const searchValue = ref('');
-const searchResults = ref([]);
+const searchResults = reactive<User[]>([]);
 const loading = ref(false);
 const showResults = ref(false);
 
@@ -19,42 +23,41 @@ const showClearAction = computed(() => {
   return !!searchValue.value && !loading.value;
 });
 
-// if (btn.value) {
-//   useTippy(btn.value, {
-//     content: 'Cool!',
-//     allowHTML: true,
-//     interactive: true,
-//     placement: 'bottom-end',
-//     trigger: 'click',
-//     theme: 'light',
-//     animation: 'shift-away',
-//     inertia: true,
-//     hideOnClick: false,
-//   });
-// }
+useTippy(searchBoxRef, {
+  content: resultRef,
+  allowHTML: true,
+  theme: 'light',
+  hideOnClick: true,
+});
 </script>
 <template>
-  <div class="wrapper">
-    <div class="search">
-      <input
-        ref="inputRef"
-        v-model="searchValue"
-        placeholder="Search accounts and videos"
-        :spellCheck="false"
-      />
-      <ButtonBase v-if="showClearAction" class-name="clear-btn" @click="handleClear">
+  <div :class="$style.wrapper">
+    <div ref="searchBoxRef" :class="$style.search">
+      <input v-model="searchValue" placeholder="Search accounts and videos" :spellCheck="false" />
+      <ButtonBase v-if="showClearAction" :class="$style['clear-btn']" @click="handleClear">
         <IconBase name="x" width="16" height="16" />
       </ButtonBase>
 
       <IconBase v-if="loading" name="check" width="24" height="24" />
-      <ButtonBase class="search-btn" @mousedown="(evt) => evt.preventDefault()">
+      <ButtonBase :class="$style['search-btn']" @mousedown="(evt) => evt.preventDefault()">
         <IconBase name="search" width="24" height="24" />
       </ButtonBase>
+    </div>
+    <div v-show="showResults && searchResults[0]" :class="$style['result-search']">
+      <PopperWrapper>
+        <h4 :class="$style['search-title']">Accounts</h4>
+        <AccountItem
+          v-for="item in searchResults"
+          :key="item.nickname"
+          data="{result}"
+          :item="item"
+        />
+      </PopperWrapper>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .wrapper {
   $search-width: pxToRem(500px);
   .search,
