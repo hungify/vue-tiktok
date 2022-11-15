@@ -116,5 +116,7 @@ module.exports = {
         ignorePattern: '^_',
       },
     ],
+    'vue/v-on-event-hyphenation': 'off',
+    'vue/attribute-hyphenation': 'off',
   },
 };
