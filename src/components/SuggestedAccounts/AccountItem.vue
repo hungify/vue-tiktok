@@ -53,7 +53,7 @@ const fullName = computed(() => {
 <style lang="scss" module>
 .account-item {
   display: flex;
-  padding: pxToRem(8px);
+  padding: pxToRem(8px) 0;
   cursor: pointer;
 }
 

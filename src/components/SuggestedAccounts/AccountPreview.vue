@@ -39,7 +39,7 @@ const fullName = computed(() => {
 
 <style lang="scss" module>
 .wrapper {
-  width: pxToRem(480px);
+  width: pxToRem(440px);
   padding: pxToRem(20px);
 }
 

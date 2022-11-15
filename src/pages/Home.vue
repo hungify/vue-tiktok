@@ -1,7 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NewsFeed from '~/components/NewsFeed.vue';
+</script>
 
 <template>
-  <div class="$style.wrapper">Home Page</div>
+  <NewsFeed />
 </template>
-
-<style lang="scss" module></style>
