@@ -12,4 +12,6 @@ export type IconName =
   | 'question'
   | 'check'
   | 'plus'
-  | 'search';
+  | 'search'
+  | 'share'
+  | 'music';
