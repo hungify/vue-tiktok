@@ -1,9 +1,12 @@
 <script lang="ts" setup></script>
 
 <template>
-  <nav class="wrapper">
+  <nav :class="$style.wrapper">
     <slot />
   </nav>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" module>
+.wrapper {
+}
+</style>

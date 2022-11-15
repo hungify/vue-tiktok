@@ -60,6 +60,7 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
   width: 100%;
   height: $default-layout-header-height;
   box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+  background-color: $white;
 }
 
 .inner {
