@@ -7,7 +7,13 @@ import IconBase from './IconBase.vue';
 interface VideoProps {
   video: Video;
 }
-defineProps<VideoProps>();
+// const props = defineProps<VideoProps>();
+const props = defineProps<VideoProps>();
+
+// interface VideoEvents {
+//   (eventName: 'onPlay', videoId: string): void;
+// }
+// const emits = defineEmits<VideoEvents>();
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 
@@ -25,10 +31,19 @@ const handleShareVideo = () => {
 
 const handlePlayVideo = () => {
   videoRef.value?.play();
+  // emits('onPlay', props.video.id);
 };
 
 const handlePauseVideo = () => {
-  videoRef.value?.pause();
+  if (
+    videoRef.value &&
+    videoRef.value?.currentTime > 0 &&
+    !videoRef.value?.paused &&
+    !videoRef.value?.ended &&
+    videoRef.value?.readyState > 2
+  ) {
+    videoRef.value?.pause();
+  }
 };
 
 const handleResetVideo = () => {
@@ -43,6 +58,7 @@ defineExpose({
   onPause: handlePauseVideo,
   onReset: handleResetVideo,
   played: videoRef.value?.played,
+  video: props.video,
 });
 </script>
 
@@ -59,6 +75,7 @@ defineExpose({
         @play="handlePlayVideo"
         @pause="handlePauseVideo"
         @reset="handleResetVideo"
+        @ended="handlePlayVideo"
       >
         <source type="video/mp4" :src="video.url" />
       </video>

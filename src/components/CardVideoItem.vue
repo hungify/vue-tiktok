@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import {
   useIntersectionObserver,
+  useWindowFocus,
   useWindowSize,
   type UseIntersectionObserverOptions,
 } from '@vueuse/core';
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
 import type { Video } from '~/models/video';
@@ -26,14 +27,14 @@ const props = defineProps<CardPlayerProps>();
 interface EventProps {
   (event: 'onIntersecting', videoId: string, shouldBePlay: boolean): void;
 }
-
-const emit = defineEmits<EventProps>();
+const emits = defineEmits<EventProps>();
 
 const currentVideoRef = ref<InstanceType<typeof BaseVideoPlayer>>();
-const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
-const isVideoVisible = ref(false);
-
+const isVideoInView = ref(false);
+const focused = useWindowFocus();
 const { width } = useWindowSize();
+const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
+
 const options = computed(() => {
   const baseOptions: UseIntersectionObserverOptions = {
     root: null,
@@ -57,30 +58,38 @@ const { stop } = useIntersectionObserver(
   (entries) => {
     if (entries[0]) {
       const { isIntersecting } = entries[0];
-      isVideoVisible.value = isIntersecting;
+      isVideoInView.value = isIntersecting;
     }
   },
   options.value,
 );
 
-watch(isVideoVisible, (value) => {
-  emit('onIntersecting', props.video.id, value);
+watch(isVideoInView, (value) => {
+  emits('onIntersecting', props.video.id, value);
 });
 
-onBeforeUnmount(() => {
-  stop();
+watch(focused, (value) => {
+  if (value && props.active && currentVideoRef.value?.video.id === props.video.id) {
+    currentVideoRef.value?.onPlay();
+  } else {
+    currentVideoRef.value?.onPause();
+  }
 });
 
 watch(
   () => props.active,
   (value) => {
-    if (value) {
+    if (value && currentVideoRef.value?.video.id === props.video.id) {
       currentVideoRef.value?.onPlay();
     } else {
       currentVideoRef.value?.onPause();
     }
   },
 );
+
+onBeforeUnmount(() => {
+  stop();
+});
 </script>
 
 <template>
