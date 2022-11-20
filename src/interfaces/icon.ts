@@ -14,4 +14,8 @@ export type IconName =
   | 'plus'
   | 'search'
   | 'share'
-  | 'music';
+  | 'music'
+  | 'play'
+  | 'pause'
+  | 'volume-mute'
+  | 'volume-full';

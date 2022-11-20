@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import type { Video } from '~/models/video';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
+import VolumeSlider from './VolumeSlider.vue';
 
 interface VideoProps {
   video: Video;
@@ -16,6 +17,9 @@ const props = defineProps<VideoProps>();
 // const emits = defineEmits<VideoEvents>();
 
 const videoRef = ref<HTMLVideoElement | null>(null);
+const isPlaying = ref(false);
+const isMute = ref(false);
+const volume = ref(100);
 
 const handleLikeVideo = () => {
   console.log('like video');
@@ -53,6 +57,21 @@ const handleResetVideo = () => {
   }
 };
 
+const handleValueVolumeChange = (value: number) => {
+  if (videoRef.value) {
+    videoRef.value.volume = value / 100;
+    volume.value = value;
+  }
+};
+
+const handleMuted = (muted: boolean) => {
+  if (videoRef.value) {
+    videoRef.value.muted = !videoRef.value.muted;
+    isMute.value = muted;
+  }
+  volume.value = 0;
+};
+
 defineExpose({
   onPlay: handlePlayVideo,
   onPause: handlePauseVideo,
@@ -65,21 +84,37 @@ defineExpose({
 <template>
   <div :class="$style.wrapper">
     <div :class="$style['player-inner']">
-      <video
-        :key="video.id"
-        ref="videoRef"
-        :class="$style['video-player']"
-        controls
-        playsInline
-        muted
-        @play="handlePlayVideo"
-        @pause="handlePauseVideo"
-        @reset="handleResetVideo"
-        @ended="handlePlayVideo"
-      >
-        <source type="video/mp4" :src="video.url" />
-      </video>
+      <div :class="$style['overlay']">
+        <video
+          :key="video.id"
+          ref="videoRef"
+          :class="$style['video-player']"
+          playsInline
+          loop
+          muted
+          @play="handlePlayVideo"
+          @pause="handlePauseVideo"
+          @reset="handleResetVideo"
+          @ended="handlePlayVideo"
+        >
+          <source type="video/mp4" :src="video.url" />
+        </video>
+        <div :class="$style.controls">
+          <button :class="[$style['play-or-pause'], $style['video-control']]">
+            <IconBase :name="isPlaying ? 'pause' : 'play'" width="24" height="24" />
+          </button>
+
+          <button :class="[$style['volume'], $style['video-control']]">
+            <VolumeSlider
+              :volume="volume"
+              @onVolumeChange="handleValueVolumeChange"
+              @onMuted="handleMuted"
+            />
+          </button>
+        </div>
+      </div>
     </div>
+
     <ul :class="$style.actions">
       <li :class="$style['actions-item']">
         <ButtonBase :class="$style.action" @click="handleLikeVideo">
@@ -118,16 +153,48 @@ defineExpose({
   border-radius: 8px;
   overflow: hidden;
   margin-right: pxToRem(20px);
-  height: pxToRem(700px);
-  height: calc(450px + (100vw - 768px) / 1152 * 100);
+}
 
-  .video-player {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
+.overlay {
+  height: calc(450px + (100vw - 768px) / 1152 * 100);
+  transition: opacity 0.3s linear;
+
+  &:hover .controls {
+    opacity: 1;
   }
+}
+
+.video-player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.controls {
+  // opacity: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  .video-control {
+    background-color: transparent;
+    border: none;
+    color: $white;
+    font-size: 2rem;
+    top: 0;
+    position: absolute;
+    cursor: pointer;
+  }
+}
+
+.play-or-pause {
+  left: 12px;
+}
+.volume {
+  right: 12px;
 }
 
 .actions {
