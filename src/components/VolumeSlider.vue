@@ -4,7 +4,7 @@ import IconBase from './IconBase.vue';
 
 interface VolumeSliderProps {
   volume: number;
-  muted?: boolean;
+  muted: boolean;
 }
 const props = defineProps<VolumeSliderProps>();
 
@@ -32,11 +32,27 @@ const onMutedHandler = () => {
 <template>
   <div :class="$style.wrapper">
     <div :class="$style.icon" @click="onMutedHandler">
-      <IconBase :name="muted ? 'volume-mute' : 'volume-full'" />
+      <template v-if="muted">
+        <IconBase name="volume-mute" width="24" height="24" />
+      </template>
+      <template v-else>
+        <IconBase name="volume-full" width="24" height="24" />
+      </template>
     </div>
     <div :class="$style.progress">
-      <div :class="$style['progress__bar']" />
-      <div :class="$style['progress__circle']" />
+      <div
+        :class="$style['progress__bar']"
+        :style="{
+          width: `${volume}%`,
+        }"
+      />
+      <div
+        :class="$style['progress__circle']"
+        :style="{
+          marginLeft: `${marginLeft}px`,
+          left: `${props.volume}%`,
+        }"
+      />
       <input
         defaultValue="100"
         type="range"
@@ -114,7 +130,6 @@ const onMutedHandler = () => {
   }
 
   .progress__bar {
-    width: 100%;
     height: 2px;
     background-color: $white;
     position: absolute;
@@ -122,7 +137,6 @@ const onMutedHandler = () => {
     top: 50%;
     transform: translateY(-50%);
     transition: 0.2s;
-    width: v-bind(volume);
   }
 
   .progress__circle {
@@ -132,11 +146,8 @@ const onMutedHandler = () => {
     background-color: $white;
     border-radius: 50%;
     top: 50%;
-    margin-left: 6px;
     transform: translate(-6px, -50%);
     transition: 0.2s;
-    left: v-bind(volume);
-    margin-left: v-bind(marginLeft);
   }
 }
 </style>

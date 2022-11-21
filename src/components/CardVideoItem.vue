@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   useIntersectionObserver,
-  useWindowFocus,
+  useDocumentVisibility,
   useWindowSize,
   type UseIntersectionObserverOptions,
 } from '@vueuse/core';
@@ -31,7 +31,7 @@ const emits = defineEmits<EventProps>();
 
 const currentVideoRef = ref<InstanceType<typeof BaseVideoPlayer>>();
 const isVideoInView = ref(false);
-const focused = useWindowFocus();
+const focused = useDocumentVisibility();
 const { width } = useWindowSize();
 const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
 

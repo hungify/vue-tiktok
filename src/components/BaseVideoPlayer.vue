@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { ref, watch } from 'vue';
 import type { Video } from '~/models/video';
+import { useVideo } from '~/store';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import VolumeSlider from './VolumeSlider.vue';
@@ -8,18 +10,24 @@ import VolumeSlider from './VolumeSlider.vue';
 interface VideoProps {
   video: Video;
 }
-// const props = defineProps<VideoProps>();
 const props = defineProps<VideoProps>();
 
-// interface VideoEvents {
-//   (eventName: 'onPlay', videoId: string): void;
-// }
-// const emits = defineEmits<VideoEvents>();
-
 const videoRef = ref<HTMLVideoElement | null>(null);
-const isPlaying = ref(false);
-const isMute = ref(false);
-const volume = ref(100);
+const videoStore = useVideo();
+const { muted, volume, playing } = storeToRefs(videoStore);
+const { togglePlayingOrPause, setVolume } = videoStore;
+
+watch(volume, (value) => {
+  if (videoRef.value) {
+    videoRef.value.volume = value / 100;
+  }
+});
+
+watch(muted, (value) => {
+  if (videoRef.value) {
+    videoRef.value.muted = value;
+  }
+});
 
 const handleLikeVideo = () => {
   console.log('like video');
@@ -33,50 +41,38 @@ const handleShareVideo = () => {
   console.log('share video');
 };
 
-const handlePlayVideo = () => {
-  videoRef.value?.play();
-  // emits('onPlay', props.video.id);
-};
-
-const handlePauseVideo = () => {
-  if (
-    videoRef.value &&
-    videoRef.value?.currentTime > 0 &&
-    !videoRef.value?.paused &&
-    !videoRef.value?.ended &&
-    videoRef.value?.readyState > 2
-  ) {
-    videoRef.value?.pause();
-  }
-};
-
-const handleResetVideo = () => {
-  if (videoRef.value) {
-    videoRef.value.currentTime = 0;
-    videoRef.value.pause();
-  }
-};
-
 const handleValueVolumeChange = (value: number) => {
   if (videoRef.value) {
-    videoRef.value.volume = value / 100;
-    volume.value = value;
+    setVolume(value);
   }
 };
 
 const handleMuted = (muted: boolean) => {
   if (videoRef.value) {
-    videoRef.value.muted = !videoRef.value.muted;
-    isMute.value = muted;
+    setVolume(muted ? 0 : 100);
   }
-  volume.value = 0;
+};
+
+const onVideoPlayingOrPauseHandler = (evt: Event) => {
+  if (evt.type === 'playing' || evt.type === 'pause') {
+    togglePlayingOrPause(evt.type);
+  }
+};
+
+const onPlayOrPauseHandler = (type?: 'playing' | 'pause') => {
+  if (videoRef.value) {
+    if (type && typeof type === 'string') {
+      togglePlayingOrPause(type);
+    } else {
+      togglePlayingOrPause(playing ? 'pause' : 'playing');
+    }
+  }
 };
 
 defineExpose({
-  onPlay: handlePlayVideo,
-  onPause: handlePauseVideo,
-  onReset: handleResetVideo,
-  played: videoRef.value?.played,
+  onPlay: onPlayOrPauseHandler,
+  onPause: onPlayOrPauseHandler,
+  onReset: onPlayOrPauseHandler,
   video: props.video,
 });
 </script>
@@ -85,28 +81,37 @@ defineExpose({
   <div :class="$style.wrapper">
     <div :class="$style['player-inner']">
       <div :class="$style['overlay']">
+        {{ muted }}
+        {{ volume }}
+        {{ playing }}
         <video
           :key="video.id"
           ref="videoRef"
           :class="$style['video-player']"
-          playsInline
           loop
-          muted
-          @play="handlePlayVideo"
-          @pause="handlePauseVideo"
-          @reset="handleResetVideo"
-          @ended="handlePlayVideo"
+          :muted="muted"
+          @playing="onVideoPlayingOrPauseHandler($event)"
+          @pause="onVideoPlayingOrPauseHandler($event)"
         >
           <source type="video/mp4" :src="video.url" />
         </video>
         <div :class="$style.controls">
-          <button :class="[$style['play-or-pause'], $style['video-control']]">
-            <IconBase :name="isPlaying ? 'pause' : 'play'" width="24" height="24" />
+          <button
+            :class="[$style['play-or-pause'], $style['video-control']]"
+            @click="onPlayOrPauseHandler()"
+          >
+            <template v-if="playing">
+              <IconBase name="pause" width="24" height="24" />
+            </template>
+            <template v-else>
+              <IconBase name="play" width="24" height="24" />
+            </template>
           </button>
 
           <button :class="[$style['volume'], $style['video-control']]">
             <VolumeSlider
               :volume="volume"
+              :muted="muted"
               @onVolumeChange="handleValueVolumeChange"
               @onMuted="handleMuted"
             />
