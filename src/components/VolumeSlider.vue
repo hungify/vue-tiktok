@@ -10,7 +10,7 @@ const props = defineProps<VolumeSliderProps>();
 
 interface VolumeSliderEvents {
   (eventName: 'onVolumeChange', volume: number): void;
-  (eventName: 'onMuted', muted: boolean): void;
+  (eventName: 'onMuted'): void;
 }
 const emit = defineEmits<VolumeSliderEvents>();
 
@@ -25,7 +25,7 @@ const onVolumeChangeHandler = (evt: Event) => {
 };
 
 const onMutedHandler = () => {
-  emit('onMuted', !props.muted);
+  emit('onMuted');
 };
 </script>
 

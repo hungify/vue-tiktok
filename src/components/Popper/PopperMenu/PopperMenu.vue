@@ -21,7 +21,7 @@ const current = computed(() => history[history.length - 1]);
 const handleReset = () => {
   history.splice(1);
 };
-const handleBack = () => {
+const _handleBack = () => {
   history.splice(history.length - 1);
 };
 </script>

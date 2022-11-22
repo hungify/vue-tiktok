@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import type { Video } from '~/models/video';
-import { useVideo } from '~/store';
+import { useVideoPlayerStore } from '~/store/video';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import VolumeSlider from './VolumeSlider.vue';
@@ -12,22 +11,28 @@ interface VideoProps {
 }
 const props = defineProps<VideoProps>();
 
-const videoRef = ref<HTMLVideoElement | null>(null);
-const videoStore = useVideo();
-const { muted, volume, playing } = storeToRefs(videoStore);
-const { togglePlayingOrPause, setVolume } = videoStore;
+const videoRef = ref<HTMLVideoElement>();
 
-watch(volume, (value) => {
-  if (videoRef.value) {
-    videoRef.value.volume = value / 100;
-  }
-});
+const store = useVideoPlayerStore();
 
-watch(muted, (value) => {
-  if (videoRef.value) {
-    videoRef.value.muted = value;
-  }
-});
+watch(
+  store,
+  (value) => {
+    if (videoRef.value) {
+      if (value.playing && props.video.id === store.currentVideoId) {
+        videoRef.value.play();
+      } else {
+        videoRef.value.pause();
+      }
+      if (value.volume > 0) {
+        videoRef.value.volume = value.volume / 100;
+      }
+    }
+  },
+  {
+    deep: true,
+  },
+);
 
 const handleLikeVideo = () => {
   console.log('like video');
@@ -42,38 +47,32 @@ const handleShareVideo = () => {
 };
 
 const handleValueVolumeChange = (value: number) => {
-  if (videoRef.value) {
-    setVolume(value);
-  }
+  store.setVolume(value);
 };
 
-const handleMuted = (muted: boolean) => {
-  if (videoRef.value) {
-    setVolume(muted ? 0 : 100);
-  }
+const handleMuted = () => {
+  store.toggleMuted();
 };
 
-const onVideoPlayingOrPauseHandler = (evt: Event) => {
-  if (evt.type === 'playing' || evt.type === 'pause') {
-    togglePlayingOrPause(evt.type);
-  }
+const onPlayOrPauseHandler = () => {
+  store.setCurrentVideoId(props.video.id);
+  store.togglePlayOrPause('play');
 };
 
-const onPlayOrPauseHandler = (type?: 'playing' | 'pause') => {
-  if (videoRef.value) {
-    if (type && typeof type === 'string') {
-      togglePlayingOrPause(type);
-    } else {
-      togglePlayingOrPause(playing ? 'pause' : 'playing');
-    }
-  }
+const handlePlay = () => {
+  store.setCurrentVideoId(props.video.id);
+  store.togglePlayOrPause('play');
+};
+
+const handlePause = () => {
+  store.togglePlayOrPause('pause');
 };
 
 defineExpose({
-  onPlay: onPlayOrPauseHandler,
-  onPause: onPlayOrPauseHandler,
-  onReset: onPlayOrPauseHandler,
+  onPlay: handlePlay,
+  onPause: handlePause,
   video: props.video,
+  setCurrentVideoId: store.setCurrentVideoId,
 });
 </script>
 
@@ -81,18 +80,7 @@ defineExpose({
   <div :class="$style.wrapper">
     <div :class="$style['player-inner']">
       <div :class="$style['overlay']">
-        {{ muted }}
-        {{ volume }}
-        {{ playing }}
-        <video
-          :key="video.id"
-          ref="videoRef"
-          :class="$style['video-player']"
-          loop
-          :muted="muted"
-          @playing="onVideoPlayingOrPauseHandler($event)"
-          @pause="onVideoPlayingOrPauseHandler($event)"
-        >
+        <video :key="video.id" ref="videoRef" :class="$style['video-player']" :muted="store.muted">
           <source type="video/mp4" :src="video.url" />
         </video>
         <div :class="$style.controls">
@@ -100,18 +88,17 @@ defineExpose({
             :class="[$style['play-or-pause'], $style['video-control']]"
             @click="onPlayOrPauseHandler()"
           >
-            <template v-if="playing">
+            <template v-if="store.playing && store.currentVideoId === video.id">
               <IconBase name="pause" width="24" height="24" />
             </template>
             <template v-else>
               <IconBase name="play" width="24" height="24" />
             </template>
           </button>
-
           <button :class="[$style['volume'], $style['video-control']]">
             <VolumeSlider
-              :volume="volume"
-              :muted="muted"
+              :volume="store.volume"
+              :muted="store.muted"
               @onVolumeChange="handleValueVolumeChange"
               @onMuted="handleMuted"
             />
@@ -178,7 +165,7 @@ defineExpose({
 }
 
 .controls {
-  // opacity: 0;
+  opacity: 0;
   bottom: 0;
   left: 0;
   position: absolute;

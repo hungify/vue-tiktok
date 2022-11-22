@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
-  useIntersectionObserver,
   useDocumentVisibility,
+  useIntersectionObserver,
   useWindowSize,
   type UseIntersectionObserverOptions,
 } from '@vueuse/core';
@@ -9,6 +9,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
 import type { Video } from '~/models/video';
+import { useVideoPlayerStore } from '~/store/video';
 import BaseVideoPlayer from './BaseVideoPlayer.vue';
 import ButtonBase from './ButtonBase.vue';
 import Hashtag from './Hashtag.vue';
@@ -53,6 +54,8 @@ const options = computed(() => {
   return baseOptions;
 });
 
+const store = useVideoPlayerStore();
+
 const { stop } = useIntersectionObserver(
   currentVideoRef,
   (entries) => {
@@ -68,6 +71,15 @@ watch(isVideoInView, (value) => {
   emits('onIntersecting', props.video.id, value);
 });
 
+watch(
+  () => props.active,
+  (value) => {
+    if (value) {
+      store.setCurrentVideoId(props.video.id);
+    }
+  },
+);
+
 watch(focused, (value) => {
   if (value && props.active && currentVideoRef.value?.video.id === props.video.id) {
     currentVideoRef.value?.onPlay();
@@ -81,8 +93,6 @@ watch(
   (value) => {
     if (value && currentVideoRef.value?.video.id === props.video.id) {
       currentVideoRef.value?.onPlay();
-    } else {
-      currentVideoRef.value?.onPause();
     }
   },
 );
