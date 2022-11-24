@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import IconBase from './IconBase.vue';
+import IconBase from '../IconBase.vue';
 
 interface VolumeSliderProps {
   volume: number;
@@ -82,7 +82,7 @@ const onMutedHandler = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.2s;
+    transition: all 0.2s linear;
   }
 
   .progress {
@@ -92,6 +92,7 @@ const onMutedHandler = () => {
     position: relative;
     transform-origin: top left;
     transform: rotate(-90deg) translate(40px, 20px);
+    transition: all 0.2s linear;
     // opacity: 0;
 
     &::after {
@@ -135,8 +136,8 @@ const onMutedHandler = () => {
     position: absolute;
     left: 0;
     top: 50%;
+    transition: all 0.2s linear;
     transform: translateY(-50%);
-    transition: 0.2s;
   }
 
   .progress__circle {
@@ -146,8 +147,8 @@ const onMutedHandler = () => {
     background-color: $white;
     border-radius: 50%;
     top: 50%;
+    transition: all 0.2s linear;
     transform: translate(-6px, -50%);
-    transition: 0.2s;
   }
 }
 </style>

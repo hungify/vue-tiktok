@@ -6,6 +6,7 @@ export const useVideoPlayerStore = defineStore('video', () => {
   const playing = ref(false);
   const currentTime = ref(0);
   const volume = ref(0);
+  const duration = ref(0);
 
   const togglePlayOrPause = (type?: 'play' | 'pause') => {
     if (type === 'play') {
@@ -18,7 +19,7 @@ export const useVideoPlayerStore = defineStore('video', () => {
   };
 
   const toggleMuted = () => {
-    volume.value = volume.value === 0 ? 50 : 0;
+    volume.value = volume.value === 0 ? 100 : 0;
   };
 
   const setVolume = (value: number) => {
@@ -33,6 +34,10 @@ export const useVideoPlayerStore = defineStore('video', () => {
     currentVideoId.value = id;
   };
 
+  const setDuration = (timeDuration: number) => {
+    duration.value = timeDuration;
+  };
+
   const muted = computed(() => volume.value === 0);
 
   return {
@@ -40,6 +45,7 @@ export const useVideoPlayerStore = defineStore('video', () => {
     muted,
     playing,
     currentTime,
+    duration,
     currentVideoId,
 
     toggleMuted,
@@ -47,6 +53,7 @@ export const useVideoPlayerStore = defineStore('video', () => {
     setVolume,
     setCurrentTime,
     setCurrentVideoId,
+    setDuration,
   };
 });
 

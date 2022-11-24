@@ -10,7 +10,7 @@ import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
 import type { Video } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
-import BaseVideoPlayer from './BaseVideoPlayer.vue';
+import BaseVideoPlayer from './VideoPlayer/BaseVideoPlayer.vue';
 import ButtonBase from './ButtonBase.vue';
 import Hashtag from './Hashtag.vue';
 import IconBase from './IconBase.vue';
@@ -25,10 +25,10 @@ interface CardVideoItemProps {
 }
 const props = defineProps<CardVideoItemProps>();
 
-interface EventProps {
+interface CardVideoItemEvents {
   (event: 'onIntersecting', videoId: string, shouldBePlay: boolean): void;
 }
-const emits = defineEmits<EventProps>();
+const emits = defineEmits<CardVideoItemEvents>();
 
 const currentVideoRef = ref<InstanceType<typeof BaseVideoPlayer>>();
 const cardVideoRef = ref<HTMLElement>();

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import { computed, nextTick } from 'vue';
 import { ref, watch } from 'vue';
 import type { Video } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
-import ButtonBase from './ButtonBase.vue';
-import IconBase from './IconBase.vue';
+import ButtonBase from '../ButtonBase.vue';
+import IconBase from '../IconBase.vue';
+import SeekBar from './SeekBar.vue';
 import VolumeSlider from './VolumeSlider.vue';
 
 interface VideoProps {
@@ -34,6 +36,30 @@ watch(
   },
 );
 
+const seekBarTime = computed(() => {
+  const currentTimeSeconds =
+    Math.floor(store.currentTime / 60) < 10
+      ? `0${Math.floor(store.currentTime / 60)}`
+      : Math.floor(store.currentTime / 60);
+  const currentTimeMinutes =
+    Math.floor(store.currentTime % 60) < 10
+      ? `0${Math.floor(store.currentTime % 60)}`
+      : Math.floor(store.currentTime % 60);
+
+  const durationSeconds =
+    Math.floor(store.duration / 60) < 10
+      ? `0${Math.floor(store.duration / 60)}`
+      : Math.floor(store.duration / 60);
+  const durationMinutes =
+    Math.floor(store.duration % 60) < 10
+      ? `0${Math.floor(store.duration % 60)}`
+      : Math.floor(store.duration % 60);
+  const currentTime = `${currentTimeSeconds}:${currentTimeMinutes}`;
+  const duration = `${durationSeconds}:${durationMinutes}`;
+
+  return `${currentTime} / ${duration}`;
+});
+
 const handleLikeVideo = () => {
   console.log('like video');
 };
@@ -60,12 +86,35 @@ const onPlayOrPauseHandler = () => {
 };
 
 const handlePlay = () => {
+  handleLoadedMetaData();
   store.setCurrentVideoId(props.video.id);
   store.togglePlayOrPause('play');
 };
 
 const handlePause = () => {
   store.togglePlayOrPause('pause');
+};
+
+const handleTimeUpdate = (evt: Event) => {
+  const target = evt.target as HTMLVideoElement;
+  const currentTime = target.currentTime;
+  store.setCurrentTime(currentTime);
+};
+
+const handleLoadedMetaData = async () => {
+  await nextTick();
+  if (videoRef.value && store.currentVideoId === props.video.id) {
+    const duration = videoRef.value?.duration;
+    store.setDuration(duration);
+  }
+};
+
+const handleSeekChange = (value: number) => {
+  const currentTime = (value / 100) * store.duration;
+  store.setCurrentTime(currentTime);
+  if (videoRef.value) {
+    videoRef.value.currentTime = currentTime;
+  }
 };
 
 defineExpose({
@@ -86,14 +135,13 @@ defineExpose({
           loop
           :class="$style['video-player']"
           :muted="store.muted"
+          @timeupdate="handleTimeUpdate"
+          @loadedmetadata="handleLoadedMetaData"
         >
           <source type="video/mp4" :src="video.url" />
         </video>
         <div :class="$style.controls">
-          <button
-            :class="[$style['play-or-pause'], $style['video-control']]"
-            @click="onPlayOrPauseHandler"
-          >
+          <button :class="[$style['play-or-pause']]" @click="onPlayOrPauseHandler">
             <template v-if="store.playing && store.currentVideoId === video.id">
               <IconBase name="pause" width="24" height="24" />
             </template>
@@ -101,14 +149,22 @@ defineExpose({
               <IconBase name="play" width="24" height="24" />
             </template>
           </button>
-          <button :class="[$style['volume'], $style['video-control']]">
+          <div :class="[$style['volume']]">
             <VolumeSlider
               :volume="store.volume"
               :muted="store.muted"
               @onVolumeChange="handleValueVolumeChange"
               @onMuted="handleMuted"
             />
-          </button>
+          </div>
+          <div :class="[$style['duration']]">
+            <SeekBar
+              :currentTime="store.currentTime"
+              :duration="store.duration"
+              @onSeek="handleSeekChange"
+            />
+            <div :class="$style.time">{{ seekBarTime }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -167,7 +223,7 @@ defineExpose({
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: pxToRem(16px);
 }
 
 .controls {
@@ -176,23 +232,43 @@ defineExpose({
   left: 0;
   position: absolute;
   width: 100%;
-  height: 60px;
-  .video-control {
-    background-color: transparent;
-    border: none;
-    color: $white;
-    font-size: 2rem;
-    top: 0;
-    position: absolute;
-    cursor: pointer;
-  }
+  padding: pxToRem(15px) pxToRem(20px);
 }
 
 .play-or-pause {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  bottom: 38px;
+  color: $white;
+  font-size: 2rem;
   left: 12px;
+  padding: 10px;
+  position: absolute;
+  transition: all 0.3s ease;
+  height: pxToRem(40px);
+  width: pxToRem(40px);
 }
 .volume {
+  bottom: 26px;
+  position: absolute;
+  cursor: pointer;
   right: 12px;
+}
+
+.duration {
+  bottom: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: unset;
+  align-items: center;
+  gap: pxToRem(15px);
+  transition: all 0.3s ease;
+
+  .time {
+    color: $white;
+    font-size: 1rem;
+  }
 }
 
 .actions {
