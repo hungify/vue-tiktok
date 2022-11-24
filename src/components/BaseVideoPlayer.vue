@@ -56,7 +56,7 @@ const handleMuted = () => {
 
 const onPlayOrPauseHandler = () => {
   store.setCurrentVideoId(props.video.id);
-  store.togglePlayOrPause('play');
+  store.togglePlayOrPause();
 };
 
 const handlePlay = () => {
@@ -80,13 +80,19 @@ defineExpose({
   <div :class="$style.wrapper">
     <div :class="$style['player-inner']">
       <div :class="$style['overlay']">
-        <video :key="video.id" ref="videoRef" :class="$style['video-player']" :muted="store.muted">
+        <video
+          :key="video.id"
+          ref="videoRef"
+          loop
+          :class="$style['video-player']"
+          :muted="store.muted"
+        >
           <source type="video/mp4" :src="video.url" />
         </video>
         <div :class="$style.controls">
           <button
             :class="[$style['play-or-pause'], $style['video-control']]"
-            @click="onPlayOrPauseHandler()"
+            @click="onPlayOrPauseHandler"
           >
             <template v-if="store.playing && store.currentVideoId === video.id">
               <IconBase name="pause" width="24" height="24" />

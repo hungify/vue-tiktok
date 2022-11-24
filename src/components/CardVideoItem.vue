@@ -18,12 +18,12 @@ import ImageBase from './ImageBase.vue';
 import PopperWrapper from './Popper/PopperWrapper.vue';
 import AccountPreview from './SuggestedAccounts/AccountPreview.vue';
 
-interface CardPlayerProps {
+interface CardVideoItemProps {
   video: Video;
   user: User;
   active: boolean;
 }
-const props = defineProps<CardPlayerProps>();
+const props = defineProps<CardVideoItemProps>();
 
 interface EventProps {
   (event: 'onIntersecting', videoId: string, shouldBePlay: boolean): void;
@@ -31,9 +31,12 @@ interface EventProps {
 const emits = defineEmits<EventProps>();
 
 const currentVideoRef = ref<InstanceType<typeof BaseVideoPlayer>>();
+const cardVideoRef = ref<HTMLElement>();
 const isVideoInView = ref(false);
 const focused = useDocumentVisibility();
 const { width } = useWindowSize();
+const store = useVideoPlayerStore();
+
 const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
 
 const options = computed(() => {
@@ -53,8 +56,6 @@ const options = computed(() => {
   }
   return baseOptions;
 });
-
-const store = useVideoPlayerStore();
 
 const { stop } = useIntersectionObserver(
   currentVideoRef,
@@ -97,13 +98,26 @@ watch(
   },
 );
 
+const scrollToVideo = () => {
+  if (cardVideoRef.value) {
+    cardVideoRef.value.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  }
+};
+
+defineExpose({
+  scrollToVideo,
+});
+
 onBeforeUnmount(() => {
   stop();
 });
 </script>
 
 <template>
-  <div :class="$style.wrapper">
+  <div ref="cardVideoRef" :class="$style.wrapper">
     <RouterLink :to="`/@/${user.nickname}`">
       <Tippy arrow theme="light" placement="bottom" interactive :delay="[0, 400]" :offset="[80, 0]">
         <template #default>
