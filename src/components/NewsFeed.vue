@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { onKeyStroke, useInfiniteScroll, type UseInfiniteScrollOptions } from '@vueuse/core';
+import {
+  onKeyStroke,
+  useEventListener,
+  useInfiniteScroll,
+  type UseInfiniteScrollOptions,
+} from '@vueuse/core';
 import { computed, reactive, ref, shallowReactive } from 'vue';
 import CardVideoItem from '~/components/CardVideoItem.vue';
 import { playList } from '~/mocks/video';
@@ -41,6 +46,15 @@ onKeyStroke(['ArrowDown', 'ArrowUp', 'm'], (e) => {
     }
   } else if (e.key === 'm') {
     store.toggleMuted();
+  }
+});
+
+useEventListener(document, 'visibilitychange', (evt: Event) => {
+  const target = evt.target as Document;
+  if (target.visibilityState === 'visible') {
+    store.togglePlayOrPause('play');
+  } else {
+    store.togglePlayOrPause('pause');
   }
 });
 

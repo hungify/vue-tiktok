@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, nextTick } from 'vue';
+import { computed, nextTick, onUpdated } from 'vue';
 import { ref, watch } from 'vue';
 import type { Video } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
@@ -91,10 +91,6 @@ const handlePlay = () => {
   store.togglePlayOrPause('play');
 };
 
-const handlePause = () => {
-  store.togglePlayOrPause('pause');
-};
-
 const handleTimeUpdate = (evt: Event) => {
   const target = evt.target as HTMLVideoElement;
   const currentTime = target.currentTime;
@@ -119,9 +115,7 @@ const handleSeekChange = (value: number) => {
 
 defineExpose({
   onPlay: handlePlay,
-  onPause: handlePause,
   video: props.video,
-  setCurrentVideoId: store.setCurrentVideoId,
 });
 </script>
 
