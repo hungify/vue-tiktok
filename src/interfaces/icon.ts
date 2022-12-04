@@ -18,4 +18,14 @@ export type IconName =
   | 'play'
   | 'pause'
   | 'volume-mute'
-  | 'volume-full';
+  | 'volume-full'
+  | 'qr'
+  | 'facebook'
+  | 'google'
+  | 'twitter'
+  | 'apple'
+  | 'instagram'
+  | 'user'
+  | 'user-plus'
+  | 'scan'
+  | 'chevron-left';
