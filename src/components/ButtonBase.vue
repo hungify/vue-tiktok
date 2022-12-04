@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { computed, toRefs, useCssModule, useSlots } from 'vue';
+import { computed, toRefs, useSlots } from 'vue';
 import { ObjectKeys } from '~/utils/object';
 
 interface ButtonProps {
-  type?: 'primary' | 'secondary' | 'tertiary' | 'unstyled';
+  color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'unstyled';
-  variant?: 'outline' | 'solid' | 'ghost' | 'link' | 'unstyled';
+  variant?: 'outline' | 'solid' | 'ghost' | 'link';
   rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -16,9 +16,9 @@ interface ButtonProps {
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  type: 'unstyled',
-  size: 'unstyled',
-  variant: 'unstyled',
+  color: 'danger',
+  size: 'md',
+  variant: 'solid',
   rounded: false,
   disabled: false,
   loading: false,
@@ -36,8 +36,10 @@ if (href?.value && to?.value) {
 if (disabled?.value) {
   ObjectKeys(props).forEach((key) => {
     if (key.startsWith('on') && typeof props[key] === 'function') {
-      // eslint-disable-next-line vue/no-mutating-props
-      delete props[key];
+      Object.defineProperty(props, key, {
+        value: () => {},
+        writable: false,
+      });
     }
   });
 }
@@ -50,18 +52,17 @@ if (href?.value) {
   Component = 'router-link';
 }
 
-const $style = useCssModule();
-
 const classes = computed(() => {
-  const { type, size, rounded, disabled, loading } = props;
-  return [
-    $style['btn'],
-    $style[`btn-${type}`],
-    $style[`btn-${size}`],
-    rounded ? $style['btn-rounded'] : '',
-    disabled ? $style['btn-disabled'] : '',
-    loading ? $style['btn-loading'] : '',
-  ];
+  const { color, size, rounded, disabled, loading, variant } = props;
+  return {
+    btn: true,
+    [`btn-${color}`]: color,
+    [`btn-${size}`]: size,
+    'btn-rounded': rounded,
+    'btn-disabled': disabled,
+    'btn-loading': loading,
+    [`btn-${variant}`]: variant,
+  };
 });
 
 const slots = useSlots();
@@ -76,35 +77,45 @@ const slots = useSlots();
     :disabled="disabled"
     @click="onClick"
   >
-    <span v-if="slots.leftIcon" :class="$style.icon">
+    <span v-if="slots.leftIcon" class="icon">
       <slot name="leftIcon" />
     </span>
-    <span :class="$style.title">
+    <span class="title">
       <slot />
     </span>
 
-    <span v-if="slots.rightIcon" :class="$style.icon">
+    <span v-if="slots.rightIcon" class="icon">
       <slot name="rightIcon" />
     </span>
   </component>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 $btnColors: (
-  primary: (
-    default: $primary,
-    hover: $primary-dark,
-    active: $primary-light,
+  default: (
+    default: $default,
+    hover: $default-dark,
+    active: $default-light,
   ),
-  secondary: (
-    default: $secondary,
-    hover: $secondary-dark,
-    active: $secondary-light,
+  info: (
+    default: $info,
+    hover: $info-dark,
+    active: $info-light,
   ),
-  tertiary: (
-    default: $tertiary,
-    hover: $tertiary-dark,
-    active: $tertiary-light,
+  warning: (
+    default: $warning,
+    hover: $warning-dark,
+    active: $warning-light,
+  ),
+  success: (
+    default: $success,
+    hover: $success-dark,
+    active: $success-light,
+  ),
+  danger: (
+    default: $danger,
+    hover: $danger-dark,
+    active: $danger-light,
   ),
 );
 
@@ -112,31 +123,28 @@ $btnSizes: (
   xs: (
     padding: $xs-btn-padding,
     font-size: $xs-btn-font-size,
+    border-radius: $xs-btn-border-radius,
   ),
   sm: (
     padding: $sm-btn-padding,
     font-size: $sm-btn-font-size,
+    border-radius: $sm-btn-border-radius,
   ),
   md: (
     padding: $md-btn-padding,
     font-size: $md-btn-font-size,
+    border-radius: $md-btn-border-radius,
   ),
   lg: (
     padding: $lg-btn-padding,
     font-size: $lg-btn-font-size,
+    border-radius: $lg-btn-border-radius,
   ),
   xl: (
     padding: $xl-btn-padding,
     font-size: $xl-btn-font-size,
+    border-radius: $xl-btn-border-radius,
   ),
-);
-
-$btnBorderRadius: (
-  xs: $xs-btn-border-radius,
-  sm: $sm-btn-border-radius,
-  md: $md-btn-border-radius,
-  lg: $lg-btn-border-radius,
-  xl: $xl-btn-border-radius,
 );
 
 .btn {
@@ -152,8 +160,8 @@ $btnBorderRadius: (
     margin-left: 1.2rem;
   }
 
-  title {
-    margin: 0 0.5rem;
+  .title {
+    flex: 1 1 auto;
   }
   .icon + .title,
   .title + .icon {
@@ -167,38 +175,18 @@ $btnBorderRadius: (
   }
 }
 
-@each $type, $colors in $btnColors {
-  .btn-#{$type} {
-    color: map-get($colors, 'default');
-    background-color: transparent;
-    border: 1px solid map-get($colors, 'default');
-
-    &:hover {
-      color: map-get($colors, 'hover');
-      background-color: transparent;
-      border: 1px solid map-get($colors, 'hover');
-    }
-
-    &:active {
-      color: map-get($colors, 'active');
-      background-color: transparent;
-      border: 1px solid map-get($colors, 'active');
-    }
-  }
-}
-
 @each $size, $styles in $btnSizes {
   .btn-#{$size} {
     padding: map-get($styles, 'padding');
     font-size: map-get($styles, 'font-size');
+    border-radius: map-get($styles, 'border-radius');
   }
 }
 
-@each $size, $radius in $btnBorderRadius {
-  .btn-#{$size} {
-    border-radius: $radius;
-  }
+.btn-rounded {
+  border-radius: 9999px;
 }
+
 .btn-expanded {
   width: 100%;
 }
@@ -206,6 +194,7 @@ $btnBorderRadius: (
 .btn-disabled {
   opacity: 0.5;
   pointer-events: none;
+  cursor: not-allowed;
 }
 
 .btn-loading {
@@ -213,47 +202,72 @@ $btnBorderRadius: (
   pointer-events: none;
 }
 
-.btn-unstyled {
-  color: $black;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  border-radius: 0;
+@each $type, $colors in $btnColors {
+  .btn-#{$type} {
+    &.btn-ghost {
+      color: map-get($colors, 'default');
+      background-color: transparent;
 
-  &:hover {
-    color: inherit;
-    background-color: transparent;
-    border: none;
-  }
+      &:hover {
+        color: map-get($colors, 'hover');
+        background-color: rgba(map-get($colors, 'hover'), 0.1);
+      }
 
-  &:active {
-    color: inherit;
-    background-color: transparent;
-    border: none;
-  }
-}
+      &:active {
+        color: map-get($colors, 'active');
+        background-color: transparent;
+      }
+    }
 
-.btn-solid {
-  @each $type, $colors in $btnColors {
-    .btn-#{$type} {
-      @each $variant, $color in $colors {
-        .btn-#{$variant} {
-          color: $white;
-          background-color: $color;
-          border: 1px solid $color;
+    &.btn-solid {
+      color: $white;
+      background-color: map-get($colors, 'default');
+      border: 1px solid map-get($colors, 'default');
 
-          &:hover {
-            color: $white;
-            background-color: map-get($colors, 'hover');
-            border: 1px solid map-get($colors, 'hover');
-          }
+      &:hover {
+        color: $white;
+        background-color: map-get($colors, 'hover');
+        border: 1px solid map-get($colors, 'hover');
+      }
 
-          &:active {
-            color: $white;
-            background-color: map-get($colors, 'active');
-            border: 1px solid map-get($colors, 'active');
-          }
-        }
+      &:active {
+        color: $white;
+        background-color: map-get($colors, 'active');
+        border: 1px solid map-get($colors, 'active');
+      }
+    }
+
+    &.btn-link {
+      color: map-get($colors, 'default');
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        color: map-get($colors, 'hover');
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+      }
+
+      &:active {
+        color: map-get($colors, 'active');
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+      }
+    }
+
+    &.btn-outline {
+      color: map-get($colors, 'default');
+      background-color: transparent;
+      border: 1px solid map-get($colors, 'default');
+
+      &:hover {
+        background-color: rgba(map-get($colors, 'hover'), 0.1);
+      }
+
+      &:active {
+        background-color: map-get($colors, 'active');
       }
     }
   }

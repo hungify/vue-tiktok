@@ -165,19 +165,29 @@ defineExpose({
 
     <ul :class="$style.actions">
       <li :class="$style['actions-item']">
-        <ButtonBase :class="$style.action" @click="handleLikeVideo">
+        <ButtonBase :class="$style.action" variant="ghost" color="default" @click="handleLikeVideo">
           <IconBase name="heart" />
         </ButtonBase>
         <strong :class="$style.count">{{ video.likesCount }}</strong>
       </li>
       <li :class="$style['actions-item']">
-        <ButtonBase :class="$style.action" @click="handleCommentVideo">
+        <ButtonBase
+          :class="$style.action"
+          variant="ghost"
+          color="default"
+          @click="handleCommentVideo"
+        >
           <IconBase name="comment" />
         </ButtonBase>
         <strong :class="$style.count">{{ video.commentsCount }}</strong>
       </li>
       <li :class="$style['actions-item']">
-        <ButtonBase :class="$style.action" @click="handleShareVideo">
+        <ButtonBase
+          :class="$style.action"
+          variant="ghost"
+          color="default"
+          @click="handleShareVideo"
+        >
           <IconBase name="share" />
         </ButtonBase>
         <strong :class="$style.count">{{ video.sharesCount }}</strong>

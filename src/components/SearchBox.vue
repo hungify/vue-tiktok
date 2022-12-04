@@ -34,12 +34,23 @@ useTippy(searchBoxRef, {
   <div :class="$style.wrapper">
     <div ref="searchBoxRef" :class="$style.search">
       <input v-model="searchValue" placeholder="Search accounts and videos" :spellCheck="false" />
-      <ButtonBase v-if="showClearAction" :class="$style['clear-btn']" @click="handleClear">
+      <ButtonBase
+        v-if="showClearAction"
+        variant="ghost"
+        color="default"
+        :class="$style['clear-btn']"
+        @click="handleClear"
+      >
         <IconBase name="x" width="16" height="16" />
       </ButtonBase>
 
       <IconBase v-if="loading" name="check" width="24" height="24" />
-      <ButtonBase :class="$style['search-btn']" @mousedown="(evt) => evt.preventDefault()">
+      <ButtonBase
+        variant="ghost"
+        color="default"
+        :class="$style['search-btn']"
+        @mousedown="(evt) => evt.preventDefault()"
+      >
         <IconBase name="search" width="24" height="24" />
       </ButtonBase>
     </div>
@@ -80,7 +91,7 @@ useTippy(searchBoxRef, {
       padding-right: 40px;
       color: $black;
       font-size: 1.6rem;
-      caret-color: $primary;
+      caret-color: $danger;
       background-color: transparent;
       font-family: $font-family;
     }

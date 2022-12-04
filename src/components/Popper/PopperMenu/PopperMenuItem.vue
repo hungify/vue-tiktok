@@ -25,7 +25,13 @@ const buttonClasses = computed(() => {
 
 <template>
   <div :class="$style.wrapper">
-    <ButtonBase :to="to" :class="buttonClasses" @click="$emit('onClick')">
+    <ButtonBase
+      :to="to"
+      :class="buttonClasses"
+      variant="ghost"
+      color="default"
+      @click="$emit('onClick')"
+    >
       <template #leftIcon>
         <IconBase :name="leftIcon" />
       </template>

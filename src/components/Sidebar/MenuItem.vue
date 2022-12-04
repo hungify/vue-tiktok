@@ -60,7 +60,7 @@ const classes = computed(() => {
     }
 
     &.router-link-active {
-      color: $primary;
+      color: $danger;
     }
   }
 

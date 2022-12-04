@@ -20,13 +20,13 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
       <SearchBox />
 
       <div :class="$style.actions">
-        <ButtonBase type="secondary" size="md">
+        <ButtonBase color="default" variant="outline" size="md">
           <template #leftIcon>
             <IconBase name="plus" width="16" height="16" />
           </template>
           Upload
         </ButtonBase>
-        <ButtonBase type="primary" size="md">Log in</ButtonBase>
+        <ButtonBase>Log in</ButtonBase>
         <PopperMenu :items="currentItems">
           <template #default="_state">
             <ImageBase
@@ -35,7 +35,7 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
               src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
               alt="Nguyen Van A"
             />
-            <ButtonBase v-else :class="$style['more-btn']">
+            <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="default">
               <IconBase name="ellipsis-vertical" width="24" height="24" />
             </ButtonBase>
           </template>
@@ -112,7 +112,7 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
   font-weight: 600;
   color: $white;
   font-family: $font-family;
-  background-color: $primary;
+  background-color: $danger;
 }
 
 .user-avatar {
