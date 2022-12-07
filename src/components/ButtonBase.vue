@@ -3,13 +3,12 @@ import { computed, toRefs, useSlots } from 'vue';
 import { ObjectKeys } from '~/utils/object';
 
 interface ButtonProps {
-  color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
+  color?: 'default' | 'success' | 'info' | 'warning' | 'danger' | 'unstyled';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'unstyled';
   variant?: 'outline' | 'solid' | 'ghost' | 'link';
   rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  onClick?: () => void;
   href?: string;
   to?: string;
   expanded?: boolean;
@@ -22,26 +21,20 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   rounded: false,
   disabled: false,
   loading: false,
-  onClick: () => {},
   href: '',
   to: '',
   expanded: false,
 });
 
-const { to, href, disabled, onClick } = toRefs(props);
-if (href?.value && to?.value) {
-  throw new Error('You can only use one of href or to');
+interface ButtonEvents {
+  (eventName: 'click', event: MouseEvent): void;
 }
 
-if (disabled?.value) {
-  ObjectKeys(props).forEach((key) => {
-    if (key.startsWith('on') && typeof props[key] === 'function') {
-      Object.defineProperty(props, key, {
-        value: () => {},
-        writable: false,
-      });
-    }
-  });
+const emits = defineEmits<ButtonEvents>();
+
+const { to, href, disabled } = toRefs(props);
+if (href?.value && to?.value) {
+  throw new Error('You can only use one of href or to');
 }
 
 let Component = 'button';
@@ -62,6 +55,7 @@ const classes = computed(() => {
     'btn-disabled': disabled,
     'btn-loading': loading,
     [`btn-${variant}`]: variant,
+    'btn-expanded': props.expanded,
   };
 });
 
@@ -75,7 +69,7 @@ const slots = useSlots();
     :to="to"
     :class="classes"
     :disabled="disabled"
-    @click="onClick"
+    @click="emits('click', $event)"
   >
     <span v-if="slots.leftIcon" class="icon">
       <slot name="leftIcon" />
@@ -156,6 +150,8 @@ $btnSizes: (
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   font-family: $font-family;
+  color: rgba(22, 24, 35, 0.9);
+
   & + & {
     margin-left: 1.2rem;
   }
@@ -192,9 +188,10 @@ $btnSizes: (
 }
 
 .btn-disabled {
-  opacity: 0.5;
   pointer-events: none;
   cursor: not-allowed;
+  color: rgba(22, 24, 35, 0.34);
+  background-color: rgba(22, 24, 35, 0.06);
 }
 
 .btn-loading {
