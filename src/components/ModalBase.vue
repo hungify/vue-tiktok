@@ -130,18 +130,22 @@ const bodyClasses = computed(() => {
 });
 </script>
 <template>
-  <Teleport v-if="isModalOpen" to="body">
-    <Transition name="modal">
-      <div class="modal-container">
+  <Teleport to="body">
+    <Transition name="scale">
+      <div v-if="isModalOpen" class="modal-container">
         <section ref="modalRef" class="modal-content" :class="contentClasses">
-          <div class="modal-header" :class="headerClass">
+          <div
+            class="modal-header"
+            :class="headerClass"
+            :style="{ justifyContent: !!$slots.header ? 'space-between' : 'flex-end' }"
+          >
             <slot name="header">
               {{ title }}
             </slot>
             <ButtonBase
               class="modal-close-btn"
               variant="ghost"
-              color="default"
+              color="unstyled"
               size="xs"
               rounded
               @click="handleCloseModal"
@@ -257,7 +261,6 @@ $modalSizes: (
   font-size: 1.25rem;
   font-weight: 500;
   display: flex;
-  justify-content: space-between;
   padding: 2rem 0;
 }
 
@@ -324,13 +327,13 @@ $modalSizes: (
   color: #000;
 }
 
-.modal-enter-active,
-.modal-leave-active {
+.scale-enter-active,
+.scale-leave-active {
   transition: all 0.3s ease;
 }
 
-.modal-enter-from,
-.modal-leave-to {
+.scale-enter-from,
+.scale-leave-to {
   opacity: 0;
   transform: scale(1.1);
 }
