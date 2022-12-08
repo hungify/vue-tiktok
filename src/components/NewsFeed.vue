@@ -11,6 +11,8 @@ import { playList } from '~/mocks/video';
 import type { NewsFeed } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
 
+const isModalOpen = sessionStorage.getItem('isModalOpen') === 'true';
+
 const newsFeed = reactive<NewsFeed[]>(playList);
 const newsFeedRef = ref<HTMLDivElement>();
 const cardVideoItemRef = ref<InstanceType<typeof CardVideoItem>[]>();
@@ -33,6 +35,7 @@ const firstVideoInView = computed(() => {
 });
 
 onKeyStroke(['ArrowDown', 'ArrowUp', 'm'], (e) => {
+  if (isModalOpen) return;
   e.preventDefault();
   if (e.key === 'ArrowDown') {
     const index = newsFeed.findIndex((item) => item.video.id === firstVideoInView.value?.video.id);

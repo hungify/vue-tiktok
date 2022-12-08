@@ -1,6 +1,9 @@
 <script lang="ts" setup>
+import { useSessionStorage } from '@vueuse/core';
+import { ref } from 'vue';
 import images from '~/assets/images';
 import { BASE_MENU, ROUTES_PATH, USER_MENU } from '~/configs';
+import AuthModal from './AuthModal/AuthModal.vue';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import ImageBase from './ImageBase.vue';
@@ -9,9 +12,12 @@ import SearchBox from './SearchBox.vue';
 
 const currentUser = {};
 const currentItems = !currentUser ? USER_MENU : BASE_MENU;
+const isOpen = ref(false);
+useSessionStorage('isModalOpen', isOpen);
 </script>
 
 <template>
+  <AuthModal v-model="isOpen" />
   <header :class="$style.wrapper">
     <div :class="$style.inner">
       <RouterLink :to="ROUTES_PATH.home" :class="$style['logo-link']">
@@ -20,13 +26,13 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
       <SearchBox />
 
       <div :class="$style.actions">
-        <ButtonBase color="default" variant="outline" size="md">
+        <ButtonBase color="unstyled" variant="outline" size="md">
           <template #leftIcon>
             <IconBase name="plus" width="16" height="16" />
           </template>
           Upload
         </ButtonBase>
-        <ButtonBase>Log in</ButtonBase>
+        <ButtonBase @click="isOpen = true">Log in</ButtonBase>
         <PopperMenu :items="currentItems">
           <template #default="_state">
             <ImageBase
@@ -35,7 +41,7 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
               src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
               alt="Nguyen Van A"
             />
-            <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="default">
+            <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="unstyled">
               <IconBase name="ellipsis-vertical" width="24" height="24" />
             </ButtonBase>
           </template>

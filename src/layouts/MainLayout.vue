@@ -13,6 +13,7 @@ import Sidebar from '~/components/Sidebar/Sidebar.vue';
       <slot name="sidebar">
         <Sidebar />
       </slot>
+
       <div :class="$style.content">
         <slot />
       </div>

@@ -158,6 +158,7 @@ $btnSizes: (
 
   .title {
     flex: 1 1 auto;
+    text-align: left;
   }
   .icon + .title,
   .title + .icon {

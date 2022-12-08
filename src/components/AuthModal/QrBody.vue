@@ -28,7 +28,7 @@ import IconBase from '../IconBase.vue';
 .login-qr-code {
   &-container {
     display: flex;
-    height: pxToRem(680px);
+    height: pxToRem(600px);
     justify-content: space-between;
   }
   &-inner {

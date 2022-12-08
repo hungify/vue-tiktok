@@ -28,4 +28,6 @@ export type IconName =
   | 'user'
   | 'user-plus'
   | 'scan'
-  | 'chevron-left';
+  | 'chevron-left'
+  | 'eye'
+  | 'eye-slash';

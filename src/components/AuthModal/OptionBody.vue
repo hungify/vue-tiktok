@@ -1,41 +1,51 @@
 <script lang="ts" setup>
 import ButtonBase from '~/components/ButtonBase.vue';
 import IconBase from '~/components/IconBase.vue';
+
+interface OptionBodyEvents {
+  (eventName: 'onSelect', option: 'qr' | 'form'): void;
+}
+
+const emits = defineEmits<OptionBodyEvents>();
+
+const handleSelectOption = (option: 'qr' | 'form') => {
+  emits('onSelect', option);
+};
 </script>
 
 <template>
   <div class="option-list">
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option" @click="handleSelectOption('qr')">
       <template #leftIcon>
         <IconBase name="qr" />
       </template>
       Sử dụng mã QR
     </ButtonBase>
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option" @click="handleSelectOption('form')">
       <template #leftIcon>
         <IconBase name="user" />
       </template>
       Số điện thoại / Email / TikTok ID
     </ButtonBase>
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option">
       <template #leftIcon>
         <IconBase name="facebook" />
       </template>
       Tiếp tục với Facebook
     </ButtonBase>
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option">
       <template #leftIcon>
         <IconBase name="twitter" />
       </template>
       Tiếp tục với Twitter
     </ButtonBase>
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option">
       <template #leftIcon>
         <IconBase name="apple" />
       </template>
       Tiếp tục với Apple
     </ButtonBase>
-    <ButtonBase size="xl" class="btn-option">
+    <ButtonBase color="unstyled" class="btn-option">
       <template #leftIcon>
         <IconBase name="instagram" />
       </template>
