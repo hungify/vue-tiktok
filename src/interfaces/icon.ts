@@ -30,4 +30,8 @@ export type IconName =
   | 'scan'
   | 'chevron-left'
   | 'eye'
-  | 'eye-slash';
+  | 'eye-slash'
+  | 'l-key'
+  | 'arrow-up'
+  | 'arrow-down'
+  | 'm-key';
