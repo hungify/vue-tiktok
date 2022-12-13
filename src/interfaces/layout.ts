@@ -8,6 +8,7 @@ interface MenuItem {
 export interface MenuItemLink extends MenuItem {
   to: string;
 }
+
 export interface MenuItemLangue extends Omit<MenuItem, 'icon'> {
   languages?: {
     title: string;

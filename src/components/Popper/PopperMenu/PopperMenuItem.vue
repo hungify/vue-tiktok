@@ -6,12 +6,12 @@ import type { IconName } from '~/interfaces/icon';
 
 interface MenuItemProps {
   title: string;
-  to?: string | null;
-  icon?: IconName | null;
+  to?: string | '';
+  icon?: IconName | '';
 }
 withDefaults(defineProps<MenuItemProps>(), {
-  to: null,
-  icon: null,
+  to: '',
+  icon: '',
 });
 
 interface MenuItemEvents {

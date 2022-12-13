@@ -11,7 +11,7 @@ import type { BaseMenu, MenuItemLangue } from '~/interfaces/layout';
 import PopperWrapper from '../PopperWrapper.vue';
 import MenuItem from './PopperMenuItem.vue';
 
-type Menu = BaseMenu | MenuItemLangue;
+type Menu = BaseMenu[] | MenuItemLangue;
 
 interface Shortcut {
   title: string;
@@ -19,7 +19,7 @@ interface Shortcut {
 }
 
 interface PopperMenuProps {
-  items: Menu;
+  items: BaseMenu[];
   hideOnClick?: boolean;
 }
 
@@ -27,19 +27,19 @@ const props = withDefaults(defineProps<PopperMenuProps>(), {
   hideOnClick: false,
 });
 
-const menuList = reactive<{ data: Menu }>({ data: props.items });
+const menuItems = reactive<{ data: Menu }>({ data: props.items });
 const isShowModal = ref(false);
 const shortcuts = reactive<Shortcut[]>(SHORT_CUTS as Shortcut[]);
 
 const currentMenuList = computed(() => {
-  if (Array.isArray(menuList.data)) {
-    return menuList.data;
+  if (Array.isArray(menuItems.data)) {
+    return menuItems.data;
   } else {
-    return menuList.data.languages;
+    return menuItems.data.languages;
   }
 });
 
-const titleSubMenu = computed(() => !Array.isArray(menuList.data) && menuList.data.title);
+const titleSubMenu = computed(() => !Array.isArray(menuItems.data) && menuItems.data.title);
 
 const isDarkMode = ref(false);
 
@@ -47,7 +47,7 @@ const handleReset = () => {};
 
 const handleChange = (item: BaseMenu, _evt: Event) => {
   if (item.icon === 'earth-asia') {
-    menuList.data = item;
+    menuItems.data = item;
   } else if (item.icon === 'question' && item?.to) {
     window.open(item.to, '_blank');
   } else if (item.icon === 'keyboard') {
@@ -56,7 +56,7 @@ const handleChange = (item: BaseMenu, _evt: Event) => {
 };
 
 const handleBack = () => {
-  menuList.data = props.items;
+  menuItems.data = props.items;
 };
 </script>
 
@@ -106,9 +106,7 @@ const handleBack = () => {
             <MenuItem
               v-for="(item, index) in currentMenuList"
               :key="index"
-              :title="item.title"
-              :to="item.to"
-              :icon="item.icon"
+              v-bind="item"
               @onClick="(event) => handleChange(item, event)"
             />
           </div>
