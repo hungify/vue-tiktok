@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
           </RouterLink>
         </div>
         <div :class="$style.action">
-          <ButtonBase size="sm" type="primary" variant="solid"> Follow </ButtonBase>
+          <ButtonBase size="sm" variant="solid"> Follow </ButtonBase>
         </div>
         <div :class="$style['video-info']">
           <span :class="$style.desc">

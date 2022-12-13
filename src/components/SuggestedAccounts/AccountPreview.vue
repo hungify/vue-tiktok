@@ -19,7 +19,7 @@ const fullName = computed(() => {
   <div :class="$style.wrapper">
     <div :class="$style.header">
       <ImageBase :class="$style.avatar" :src="item.avatar" alt="avatar" />
-      <ButtonBase :class="$style['follow-btn']" type="primary" size="lg"> Follow </ButtonBase>
+      <ButtonBase :class="$style['follow-btn']" size="sm"> Follow </ButtonBase>
     </div>
     <div :class="$style.body">
       <p :class="$style.nickname">

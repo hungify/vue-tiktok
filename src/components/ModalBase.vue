@@ -145,7 +145,7 @@ const bodyClasses = computed(() => {
             <ButtonBase
               class="modal-close-btn"
               variant="ghost"
-              color="unstyled"
+              color="default"
               size="xs"
               rounded
               @click="handleCloseModal"

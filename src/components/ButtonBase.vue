@@ -2,7 +2,7 @@
 import { computed, toRefs, useSlots } from 'vue';
 
 interface ButtonProps {
-  color?: 'default' | 'success' | 'info' | 'warning' | 'danger' | 'unstyled';
+  color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'outline' | 'solid' | 'ghost' | 'link';
   rounded?: boolean;
@@ -52,7 +52,7 @@ const classes = computed(() => {
     'btn-rounded': rounded,
     'btn-disabled': disabled,
     'btn-loading': loading,
-    [`btn-${variant}-${color}`]: color !== 'unstyled',
+    [`btn-${variant}-${color}`]: color,
     'btn-expanded': props.expanded,
   };
 });
