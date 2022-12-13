@@ -1,25 +1,18 @@
 import type { IconName } from './icon';
-import type { Modify } from './utils';
 
-export interface MenuItemLink {
+interface MenuItem {
   title: string;
   icon: IconName;
+}
+
+export interface MenuItemLink extends MenuItem {
   to: string;
 }
-
-type MenuItemLinkOptional = Modify<MenuItemLink, { to?: string }>;
-
-export interface BaseMenu extends MenuItemLinkOptional {
-  children?: {
+export interface MenuItemLangue extends Omit<MenuItem, 'icon'> {
+  languages?: {
     title: string;
-    data: {
-      code: string;
-      type: string;
-      title: string;
-    }[];
-  };
+    lang: string;
+  }[];
 }
 
-export interface UserMenu extends BaseMenu {
-  separated?: boolean;
-}
+export type BaseMenu = MenuItemLangue & Partial<Pick<MenuItemLink, 'to' | 'icon'>>;

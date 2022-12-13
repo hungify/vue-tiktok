@@ -34,4 +34,6 @@ export type IconName =
   | 'l-key'
   | 'arrow-up'
   | 'arrow-down'
-  | 'm-key';
+  | 'm-key'
+  | 'sun'
+  | 'moon';

@@ -1,0 +1,138 @@
+[
+  {
+    "title": "Tiếng Việt (Việt Nam)",
+    "lang": "vi"
+  },
+  {
+    "title": "English",
+    "lang": "en"
+  },
+  {
+    "title": "العربية",
+    "lang": "ar"
+  },
+  {
+    "title": "বাঙ্গালি (ভারত)",
+    "lang": "bn"
+  },
+  {
+    "title": "Cebuano (Pilipinas)",
+    "lang": "ceb"
+  },
+  {
+    "title": "Čeština (Česká republika)",
+    "lang": "cs"
+  },
+  {
+    "title": "Deutsch",
+    "lang": "de"
+  },
+  {
+    "title": "Ελληνικά (Ελλάδα)",
+    "lang": "el"
+  },
+  {
+    "title": "Español",
+    "lang": "es"
+  },
+  {
+    "title": "Suomi (Suomi)",
+    "lang": "fi"
+  },
+  {
+    "title": "Filipino (Pilipinas)",
+    "lang": "fil"
+  },
+  {
+    "title": "Français",
+    "lang": "fr"
+  },
+  {
+    "title": "हिंदी",
+    "lang": "hi"
+  },
+  {
+    "title": "Magyar (Magyarország)",
+    "lang": "hu"
+  },
+  {
+    "title": "Bahasa Indonesia (Indonesia)",
+    "lang": "id"
+  },
+  {
+    "title": "Italiano (Italia)",
+    "lang": "it"
+  },
+  {
+    "title": "日本語（日本）",
+    "lang": "ja"
+  },
+  {
+    "title": "Basa Jawa (Indonesia)",
+    "lang": "jv"
+  },
+  {
+    "title": "ខ្មែរ (កម្ពុជា)",
+    "lang": "km"
+  },
+  {
+    "title": "한국어 (대한민국)",
+    "lang": "ko"
+  },
+  {
+    "title": "Bahasa Melayu (Malaysia)",
+    "lang": "ms"
+  },
+  {
+    "title": "မြန်မာ (မြန်မာ)",
+    "lang": "my"
+  },
+  {
+    "title": "Nederlands (Nederland)",
+    "lang": "nl"
+  },
+  {
+    "title": "Polski (Polska)",
+    "lang": "pl"
+  },
+  {
+    "title": "Português (Brasil)",
+    "lang": "pt"
+  },
+  {
+    "title": "Română (Romania)",
+    "lang": "ro"
+  },
+  {
+    "title": "Русский (Россия)",
+    "lang": "ru"
+  },
+  {
+    "title": "Svenska (Sverige)",
+    "lang": "sv"
+  },
+  {
+    "title": "ไทย (ไทย)",
+    "lang": "th"
+  },
+  {
+    "title": "Türkçe (Türkiye)",
+    "lang": "tr"
+  },
+  {
+    "title": "Українська (Україна)",
+    "lang": "uk"
+  },
+  {
+    "title": "اردو",
+    "lang": "ur"
+  },
+  {
+    "title": "简体中文",
+    "lang": "zh"
+  },
+  {
+    "title": "繁體中文",
+    "lang": "zh-TW"
+  }
+]

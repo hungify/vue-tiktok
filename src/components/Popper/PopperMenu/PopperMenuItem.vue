@@ -5,35 +5,38 @@ import IconBase from '~/components/IconBase.vue';
 import type { IconName } from '~/interfaces/icon';
 
 interface MenuItemProps {
-  to?: string;
-  leftIcon: IconName;
   title: string;
-  separated?: boolean;
+  to?: string | null;
+  icon?: IconName | null;
 }
-const props = defineProps<MenuItemProps>();
+withDefaults(defineProps<MenuItemProps>(), {
+  to: null,
+  icon: null,
+});
+
 interface MenuItemEvents {
-  (eventName: 'onClick'): void;
+  (eventName: 'onClick', event: Event): void;
 }
 defineEmits<MenuItemEvents>();
 
 const $style = useCssModule();
 
 const buttonClasses = computed(() => {
-  return [$style['menu-item'], props.separated ? $style['menu-item--separated'] : ''];
+  return [$style['menu-item']];
 });
 </script>
 
 <template>
   <div :class="$style.wrapper">
     <ButtonBase
-      :to="to"
       :class="buttonClasses"
       variant="ghost"
       color="default"
-      @click="$emit('onClick')"
+      v-bind="to ? { to } : {}"
+      @click="$emit('onClick', $event)"
     >
       <template #leftIcon>
-        <IconBase :name="leftIcon" />
+        <IconBase v-if="icon" :name="icon" />
       </template>
       {{ title }}
     </ButtonBase>
@@ -45,16 +48,13 @@ const buttonClasses = computed(() => {
   width: 100%;
   justify-content: flex-start;
   border-radius: 0;
-  padding: 11px 16px;
+  padding: 1rem 1.6rem;
   line-height: 1.8rem;
-  font-weight: 600;
-
-  &.separate {
-    border-top: 1px solid rgba(22, 24, 35, 0.12);
-  }
+  font-weight: 500;
+  transition: all 0.2s ease-in-out 0.1ms;
 
   &:hover {
-    background-color: rgba(22, 24, 35, 0.03);
+    background-color: rgba(22, 24, 35, 0.08);
   }
 }
 </style>

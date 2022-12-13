@@ -1,4 +1,5 @@
-import type { BaseMenu, MenuItemLink, UserMenu } from '~/interfaces/layout';
+import type { BaseMenu, MenuItemLink } from '~/interfaces/layout';
+import languages from '~/assets/languages.json';
 
 export const ROUTES_PATH = {
   home: '/',
@@ -30,27 +31,16 @@ export const MENU_LINKS: MenuItemLink[] = [
 export const BASE_MENU: BaseMenu[] = [
   {
     icon: 'earth-asia',
-    title: 'English',
-    children: {
-      title: 'Language',
-      data: [
-        {
-          type: 'language',
-          code: 'en',
-          title: 'English',
-        },
-        {
-          type: 'language',
-          code: 'vi',
-          title: 'Tiếng Việt',
-        },
-      ],
-    },
+    title: 'Language',
+    languages: languages.map((lang) => ({
+      title: lang.title,
+      lang: lang.lang,
+    })),
   },
   {
     icon: 'question',
     title: 'Feedback and help',
-    to: '/feedback',
+    to: 'https://www.tiktok.com/feedback',
   },
   {
     icon: 'keyboard',
@@ -58,11 +48,11 @@ export const BASE_MENU: BaseMenu[] = [
   },
 ];
 
-export const USER_MENU: UserMenu[] = [
+export const USER_MENU: BaseMenu[] = [
   {
     icon: 'user-group',
     title: 'View profile',
-    to: '/@hoaa',
+    to: '/@:nickname',
   },
   {
     icon: 'comment',
@@ -75,10 +65,4 @@ export const USER_MENU: UserMenu[] = [
     to: '/settings',
   },
   ...BASE_MENU,
-  {
-    icon: 'question',
-    title: 'Log out',
-    to: '/logout',
-    separated: true,
-  },
 ];
