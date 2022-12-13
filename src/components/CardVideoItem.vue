@@ -4,7 +4,7 @@ import {
   useWindowSize,
   type UseIntersectionObserverOptions,
 } from '@vueuse/core';
-import { computed, onBeforeUnmount, onUpdated, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
 import type { Video } from '~/models/video';

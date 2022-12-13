@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, toRefs, useSlots } from 'vue';
+import { computed, toRefs, useSlots, type ButtonHTMLAttributes } from 'vue';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes {
   color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'outline' | 'solid' | 'ghost' | 'link';

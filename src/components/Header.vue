@@ -26,7 +26,7 @@ useSessionStorage('isModalOpen', isOpen);
       <SearchBox />
 
       <div :class="$style.actions">
-        <ButtonBase color="unstyled" variant="outline" size="md">
+        <ButtonBase color="default" variant="outline" size="md">
           <template #leftIcon>
             <IconBase name="plus" width="16" height="16" />
           </template>
@@ -41,7 +41,7 @@ useSessionStorage('isModalOpen', isOpen);
               src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
               alt="Nguyen Van A"
             />
-            <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="unstyled">
+            <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="default">
               <IconBase name="ellipsis-vertical" width="24" height="24" />
             </ButtonBase>
           </template>

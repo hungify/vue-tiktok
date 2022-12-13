@@ -15,37 +15,37 @@ const handleSelectOption = (option: 'qr' | 'form') => {
 
 <template>
   <div class="option-list">
-    <ButtonBase color="unstyled" class="btn-option" @click="handleSelectOption('qr')">
+    <ButtonBase color="default" class="btn-option" @click="handleSelectOption('qr')">
       <template #leftIcon>
         <IconBase name="qr" />
       </template>
       Sử dụng mã QR
     </ButtonBase>
-    <ButtonBase color="unstyled" class="btn-option" @click="handleSelectOption('form')">
+    <ButtonBase color="default" class="btn-option" @click="handleSelectOption('form')">
       <template #leftIcon>
         <IconBase name="user" />
       </template>
       Số điện thoại / Email / TikTok ID
     </ButtonBase>
-    <ButtonBase color="unstyled" class="btn-option">
+    <ButtonBase color="default" class="btn-option">
       <template #leftIcon>
         <IconBase name="facebook" />
       </template>
       Tiếp tục với Facebook
     </ButtonBase>
-    <ButtonBase color="unstyled" class="btn-option">
+    <ButtonBase color="default" class="btn-option">
       <template #leftIcon>
         <IconBase name="twitter" />
       </template>
       Tiếp tục với Twitter
     </ButtonBase>
-    <ButtonBase color="unstyled" class="btn-option">
+    <ButtonBase color="default" class="btn-option">
       <template #leftIcon>
         <IconBase name="apple" />
       </template>
       Tiếp tục với Apple
     </ButtonBase>
-    <ButtonBase color="unstyled" class="btn-option">
+    <ButtonBase color="default" class="btn-option">
       <template #leftIcon>
         <IconBase name="instagram" />
       </template>

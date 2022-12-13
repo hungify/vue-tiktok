@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { computed, nextTick, onUpdated } from 'vue';
-import { ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import type { Video } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
 import ButtonBase from '../ButtonBase.vue';

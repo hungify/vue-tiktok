@@ -64,7 +64,7 @@ const onSubmit = handleSubmit((values) => {
     </div>
     <ButtonBase
       variant="solid"
-      :color="meta.valid ? 'danger' : 'unstyled'"
+      :color="meta.valid ? 'danger' : 'default'"
       type="submit"
       class="login-form-btn"
       expanded

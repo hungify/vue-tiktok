@@ -66,7 +66,7 @@ const handleBack = () => {
     <template v-if="methodAuth !== 'option'" #header>
       <ButtonBase
         variant="ghost"
-        color="unstyled"
+        color="default"
         size="xs"
         rounded
         class="btn-back"
