@@ -3,23 +3,14 @@ import { computed, reactive, ref } from 'vue';
 import { Tippy } from 'vue-tippy';
 import ButtonBase from '~/components/ButtonBase.vue';
 import IconBase from '~/components/IconBase.vue';
-import ModalBase from '~/components/ModalBase.vue';
+import ModalShortcut from '~/components/ModalShortcut.vue';
 import SwitchBase from '~/components/SwitchBase.vue';
-import { SHORT_CUTS } from '~/constants/shortcuts';
-import type { IconName } from '~/interfaces/icon';
-import type { BaseMenu, MenuItemLangue } from '~/interfaces/layout';
+import type { BaseMenuItem } from '~/interfaces/layout';
 import PopperWrapper from '../PopperWrapper.vue';
-import MenuItem from './PopperMenuItem.vue';
-
-type Menu = BaseMenu[] | MenuItemLangue;
-
-interface Shortcut {
-  title: string;
-  icon: IconName;
-}
+import PopperMenuItem from './PopperMenuItem.vue';
 
 interface PopperMenuProps {
-  items: BaseMenu[];
+  items: BaseMenuItem[];
   hideOnClick?: boolean;
 }
 
@@ -27,30 +18,21 @@ const props = withDefaults(defineProps<PopperMenuProps>(), {
   hideOnClick: false,
 });
 
-const menuItems = reactive<{ data: Menu }>({ data: props.items });
+const menuItems = reactive<{ data: BaseMenuItem[] }>({ data: props.items });
 const isShowModal = ref(false);
-const shortcuts = reactive<Shortcut[]>(SHORT_CUTS as Shortcut[]);
 
-const currentMenuList = computed(() => {
-  if (Array.isArray(menuItems.data)) {
-    return menuItems.data;
-  } else {
-    return menuItems.data.languages;
-  }
-});
-
-const titleSubMenu = computed(() => !Array.isArray(menuItems.data) && menuItems.data.title);
+const isSubMenu = computed(() => !menuItems.data?.[0]?.children);
 
 const isDarkMode = ref(false);
 
 const handleReset = () => {};
 
-const handleChange = (item: BaseMenu, _evt: Event) => {
-  if (item.icon === 'earth-asia') {
-    menuItems.data = item;
-  } else if (item.icon === 'question' && item?.to) {
+const handleMenuItemClick = (item: BaseMenuItem, _evt: Event) => {
+  if (item?.children) {
+    menuItems.data = item.children;
+  } else if (item?.to) {
     window.open(item.to, '_blank');
-  } else if (item.icon === 'keyboard') {
+  } else {
     isShowModal.value = true;
   }
 };
@@ -61,24 +43,7 @@ const handleBack = () => {
 </script>
 
 <template>
-  <ModalBase
-    v-model="isShowModal"
-    size="md"
-    :headerClass="$style['shortcut-header']"
-    :bodyClass="$style['shortcut-body']"
-    :footerClass="$style['shortcut-footer']"
-  >
-    <template #default>
-      <h1 :class="$style.title">Keyboard shortcuts</h1>
-      <ul :class="$style['shortcut-list']">
-        <li v-for="shortcut in shortcuts" :key="shortcut.icon" :class="$style['shortcut-item']">
-          {{ shortcut.title }}
-          <IconBase :name="shortcut.icon" />
-        </li>
-      </ul>
-    </template>
-  </ModalBase>
-
+  <ModalShortcut v-model="isShowModal" />
   <Tippy
     arrow
     theme="light"
@@ -95,23 +60,25 @@ const handleBack = () => {
       <div :class="$style['menu-list']">
         <PopperWrapper :class="$style['menu-popper']">
           <div :class="$style['menu-body']">
-            <div v-show="titleSubMenu" :class="$style['menu-header']">
+            <div v-show="isSubMenu" :class="$style['menu-header']">
               <ButtonBase size="sm" variant="solid" color="default" @click="handleBack">
                 <template #leftIcon>
                   <IconBase name="chevron-left" />
                 </template>
               </ButtonBase>
-              <span :class="$style['menu-title']">{{ titleSubMenu }}</span>
+              <span :class="$style['menu-title']">Language</span>
             </div>
-            <MenuItem
-              v-for="(item, index) in currentMenuList"
+            <PopperMenuItem
+              v-for="(item, index) in menuItems.data"
               :key="index"
-              v-bind="item"
-              @onClick="(event) => handleChange(item, event)"
+              :title="item.title"
+              :to="item.to"
+              :icon="item.icon"
+              @onClick="(event) => handleMenuItemClick(item, event)"
             />
           </div>
-          <div v-show="!titleSubMenu" :class="$style['menu-item']">
-            <ButtonBase size="md" variant="ghost" color="default">
+          <div v-show="!isSubMenu" :class="$style['menu-item']">
+            <ButtonBase size="md" variant="ghost" color="default" :class="$style['btn-menu-item']">
               Dark mode
               <template #leftIcon>
                 <IconBase name="moon" />
@@ -133,12 +100,13 @@ const handleBack = () => {
   .menu-header {
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    background: $white;
   }
-
   .menu-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    flex: 1 1 auto;
   }
 }
 
@@ -162,49 +130,13 @@ const handleBack = () => {
   }
 }
 
+.btn-menu-item {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 0;
+}
+
 .menu-item-switch {
   margin-right: 1.6rem;
-}
-.shortcut {
-  &-header {
-    padding: 0 !important;
-    padding-top: 1rem !important;
-    padding-right: 1rem !important;
-  }
-
-  &-body {
-    height: 28rem !important;
-    padding: 3.2rem !important;
-    padding-top: 0 !important;
-    .title {
-      text-align: center;
-    }
-  }
-
-  &-footer {
-    display: none !important;
-  }
-
-  &-list {
-    margin-top: 1.6rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top: 1px solid rgba(22, 24, 35, 0.12);
-  }
-
-  &-item {
-    font-weight: 400;
-    font-size: 1.5rem;
-    width: 100%;
-    padding: 1.5rem 0;
-    text-align: left;
-    color: rgb(22, 24, 35);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(22, 24, 35, 0.12);
-  }
 }
 </style>

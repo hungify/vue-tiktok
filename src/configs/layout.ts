@@ -1,5 +1,5 @@
-import type { BaseMenu, MenuItemLink } from '~/interfaces/layout';
 import languages from '~/assets/languages.json';
+import type { BaseMenuItem, BaseMenuItemLink } from '~/interfaces/layout';
 
 export const ROUTES_PATH = {
   home: '/',
@@ -10,7 +10,7 @@ export const ROUTES_PATH = {
   live: '/live',
 };
 
-export const MENU_LINKS: MenuItemLink[] = [
+export const MENU_LINKS: BaseMenuItemLink[] = [
   {
     title: 'For You',
     icon: 'home',
@@ -28,11 +28,11 @@ export const MENU_LINKS: MenuItemLink[] = [
   },
 ];
 
-export const BASE_MENU: BaseMenu[] = [
+export const BASE_MENU: BaseMenuItem[] = [
   {
-    icon: 'earth-asia',
-    title: 'Language',
-    languages: languages.map((lang) => ({
+    icon: 'alphabet',
+    title: 'English',
+    children: languages.map((lang) => ({
       title: lang.title,
       lang: lang.lang,
     })),
@@ -48,7 +48,7 @@ export const BASE_MENU: BaseMenu[] = [
   },
 ];
 
-export const USER_MENU: BaseMenu[] = [
+export const USER_MENU: BaseMenuItem[] = [
   {
     icon: 'user-group',
     title: 'View profile',

@@ -39,8 +39,8 @@ const fullName = computed(() => {
 
 <style lang="scss" module>
 .wrapper {
-  width: pxToRem(440px);
-  padding: pxToRem(20px);
+  width: 44rem;
+  padding: 2rem;
 }
 
 .header {
@@ -50,19 +50,19 @@ const fullName = computed(() => {
 }
 
 .avatar {
-  width: pxToRem(44px);
-  height: pxToRem(44px);
+  width: 4.4rem;
+  height: 4.4rem;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .follow-btn {
-  padding: 6px 16px;
+  padding: 0.6rem 1.6rem;
 }
 
 .body {
-  margin-top: 12px;
-  color: #161823;
+  margin-top: 1.2rem;
+  color: $text;
 }
 
 .nickname {
@@ -71,7 +71,7 @@ const fullName = computed(() => {
 
 .check {
   font-size: 1.4rem;
-  color: #20d5ec;
+  color: $info;
   margin-left: 4px;
 }
 
@@ -80,19 +80,19 @@ const fullName = computed(() => {
 }
 
 .analytics {
-  margin-top: pxToRem(10px);
+  margin-top: 1rem;
   font-size: 1.8rem;
 }
 
 .value ~ .value {
-  margin-left: pxToRem(20px);
+  margin-left: 2rem;
 }
 
 .label {
-  color: #161823bf;
+  color: $text;
 }
 
 .value ~ .label {
-  margin-left: pxToRem(6px);
+  margin-left: 0.6rem;
 }
 </style>

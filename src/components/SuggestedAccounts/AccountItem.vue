@@ -72,18 +72,18 @@ const fullName = computed(() => {
 .nickname {
   margin-top: 0;
   font-size: 1.6rem;
-  color: #161823;
+  color: $text;
   line-height: 1;
 }
 
 .check {
   margin-left: 4px;
   font-size: 1.4rem;
-  color: #20d5ec;
+  color: $info;
 }
 
 .name {
   font-size: 1.2rem;
-  opacity: #161823bf;
+  opacity: $text;
 }
 </style>

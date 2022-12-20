@@ -89,18 +89,15 @@ useSessionStorage('isModalOpen', isOpen);
 }
 
 .more-btn {
-  font-size: 2rem;
   margin-left: 28px;
-  padding: 4px 8px;
-  background-color: transparent;
-  cursor: pointer;
+  padding: 4px 0px 3px 8px !important;
 }
 
 .action-btn {
   position: relative;
   display: flex;
   font-size: 2.2rem;
-  color: #161823;
+  color: $text;
   background-color: transparent;
   padding: 4px 10px;
   cursor: pointer;

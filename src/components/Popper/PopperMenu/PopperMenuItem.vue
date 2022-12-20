@@ -1,40 +1,38 @@
 <script lang="ts" setup>
-import { computed, useCssModule } from 'vue';
+import { useRouter } from 'vue-router';
 import ButtonBase from '~/components/ButtonBase.vue';
 import IconBase from '~/components/IconBase.vue';
 import type { IconName } from '~/interfaces/icon';
 
-interface MenuItemProps {
+interface BaseMenuItem {
   title: string;
-  to?: string | '';
-  icon?: IconName | '';
+  to?: string;
+  icon?: IconName;
+  children?: BaseMenuItem[];
 }
-withDefaults(defineProps<MenuItemProps>(), {
-  to: '',
-  icon: '',
-});
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface MenuItemProps extends BaseMenuItem {}
+
+const props = defineProps<MenuItemProps>();
 
 interface MenuItemEvents {
   (eventName: 'onClick', event: Event): void;
 }
-defineEmits<MenuItemEvents>();
+const emit = defineEmits<MenuItemEvents>();
 
-const $style = useCssModule();
+const router = useRouter();
 
-const buttonClasses = computed(() => {
-  return [$style['menu-item']];
-});
+const handleClick = (event: Event) => {
+  if (props.to) {
+    router.push(props.to);
+  }
+  emit('onClick', event);
+};
 </script>
 
 <template>
-  <div :class="$style.wrapper">
-    <ButtonBase
-      :class="buttonClasses"
-      variant="ghost"
-      color="default"
-      v-bind="to ? { to } : {}"
-      @click="$emit('onClick', $event)"
-    >
+  <div class="wrapper">
+    <ButtonBase class="menu-item" variant="ghost" color="default" @click="handleClick">
       <template #leftIcon>
         <IconBase v-if="icon" :name="icon" />
       </template>
@@ -43,15 +41,12 @@ const buttonClasses = computed(() => {
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .menu-item {
   width: 100%;
-  justify-content: flex-start;
   border-radius: 0;
-  padding: 1rem 1.6rem;
-  line-height: 1.8rem;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out 0.1ms;
+  text-align: left;
+  font-weight: 700;
 
   &:hover {
     background-color: rgba(22, 24, 35, 0.08);

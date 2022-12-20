@@ -36,4 +36,5 @@ export type IconName =
   | 'arrow-down'
   | 'm-key'
   | 'sun'
-  | 'moon';
+  | 'moon'
+  | 'alphabet';
