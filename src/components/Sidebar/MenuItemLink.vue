@@ -1,30 +1,21 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import type { IconName } from '~/interfaces/icon';
 import IconBase from '../IconBase.vue';
-import { RouterLink } from 'vue-router';
 
 interface MenuItemProps {
   title: string;
   to: string;
   icon: IconName;
-  active?: boolean;
 }
-const props = defineProps<MenuItemProps>();
-
-const classes = computed(() => {
-  return {
-    'menu-item': true,
-    'menu-item--active': props.active,
-  };
-});
+defineProps<MenuItemProps>();
 </script>
 
 <template>
   <div class="menu-item-wrapper">
-    <RouterLink :to="to" :class="classes">
+    <RouterLink :to="to" class="menu-item">
       <IconBase :name="icon" width="32" height="32" />
-      <span>
+      <span class="title">
         {{ title }}
       </span>
     </RouterLink>
@@ -40,41 +31,20 @@ const classes = computed(() => {
     font-size: 1.8rem;
     font-weight: 700;
     border-radius: 4px;
-    color: var(--text-color);
+    color: $text;
     transition: background-color ease-in-out 200ms;
 
-    &--active {
-      color: var(--primary);
-
-      .icon {
-        display: none;
-      }
-
-      .active-icon {
-        display: flex;
-      }
+    &.router-link-active {
+      color: $danger;
     }
 
     &:hover {
       background-color: rgba(22, 24, 35, 0.03);
     }
-
-    &.router-link-active {
-      color: $danger;
-    }
   }
 
   .title {
     margin-left: 10px;
-  }
-
-  .icon,
-  .active-icon {
-    display: flex;
-  }
-
-  .active-icon {
-    display: none;
   }
 }
 </style>

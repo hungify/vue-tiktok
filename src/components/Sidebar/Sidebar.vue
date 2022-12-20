@@ -1,19 +1,14 @@
 <script lang="ts" setup>
-import Menu from './Menu.vue';
 import { MENU_LINKS } from '~/configs';
-import MenuItem from './MenuItem.vue';
 import SuggestedAccounts from '../SuggestedAccounts/SuggestedAccounts.vue';
+import Menu from './Menu.vue';
 </script>
 
 <template>
   <aside :class="$style.wrapper">
     <div :class="$style.scroll">
       <div :class="$style.inner">
-        <Menu>
-          <template v-for="item in MENU_LINKS" :key="item.title">
-            <MenuItem :title="item.title" :icon="item.icon" :to="item.to" />
-          </template>
-        </Menu>
+        <Menu :items="MENU_LINKS" />
         <SuggestedAccounts label="Suggested accounts" />
         <SuggestedAccounts label="Following accounts" />
       </div>
