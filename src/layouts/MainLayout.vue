@@ -39,8 +39,7 @@ import Sidebar from '~/components/Sidebar/Sidebar.vue';
 
 .content {
   flex: 1;
-  width: 692px;
-  max-width: 692px;
+  max-width: 72rem;
   padding: 24px 0;
   position: relative;
 }

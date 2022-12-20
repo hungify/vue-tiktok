@@ -6,6 +6,19 @@ export const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'root',
     component: () => import('~/pages/Home.vue'),
+    meta: {
+      title: 'Home',
+      layout: 'MainLayout',
+    },
+  },
+  {
+    path: '/following',
+    name: 'following',
+    component: () => import('~/pages/Following.vue'),
+    meta: {
+      title: 'Following',
+      layout: 'MainLayout',
+    },
   },
 ];
 
