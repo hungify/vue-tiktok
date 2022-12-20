@@ -4,6 +4,7 @@ import video3 from './3.mp4';
 import video4 from './4.mp4';
 import video5 from './5.mp4';
 import video6 from './6.mp4';
+import following from './following.mp4';
 
 export const VIDEOS = {
   video1,
@@ -12,4 +13,5 @@ export const VIDEOS = {
   video4,
   video5,
   video6,
+  following,
 };
