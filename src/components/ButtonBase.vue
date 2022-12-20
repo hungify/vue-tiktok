@@ -213,7 +213,7 @@ $btnVariants: (
   justify-content: center;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.2s ease-in-out;
+  transition: all ease-in-out 200ms;
   cursor: pointer;
   font-family: $font-family;
   background-color: transparent;
@@ -224,7 +224,7 @@ $btnVariants: (
 
   .title {
     flex: 1 1 auto;
-    text-align: left;
+    text-align: inherit;
   }
   .icon + .title,
   .title + .icon {
