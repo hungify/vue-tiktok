@@ -24,7 +24,11 @@ const router = useRouter();
 
 const handleClick = (event: Event) => {
   if (props.to) {
-    router.push(props.to);
+    if (props.to.startsWith('http')) {
+      window.open(props.to, '_blank');
+    } else {
+      router.push(props.to);
+    }
   }
   emit('onClick', event);
 };
