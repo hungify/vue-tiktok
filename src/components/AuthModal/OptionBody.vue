@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 import ButtonBase from '~/components/ButtonBase.vue';
 import IconBase from '~/components/IconBase.vue';
+import type { AuthModalType } from './AuthModal.vue';
 
 interface OptionBodyEvents {
-  (eventName: 'onSelect', option: 'qr' | 'form'): void;
+  (eventName: 'onSelect', option: AuthModalType): void;
 }
 
-const emits = defineEmits<OptionBodyEvents>();
+const emit = defineEmits<OptionBodyEvents>();
 
-const handleSelectOption = (option: 'qr' | 'form') => {
-  emits('onSelect', option);
+const handleSelectOption = (option: AuthModalType) => {
+  emit('onSelect', option);
 };
 </script>
 
@@ -21,7 +22,7 @@ const handleSelectOption = (option: 'qr' | 'form') => {
       </template>
       Sử dụng mã QR
     </ButtonBase>
-    <ButtonBase color="default" class="btn-option" @click="handleSelectOption('form')">
+    <ButtonBase color="default" class="btn-option" @click="handleSelectOption('login-email')">
       <template #leftIcon>
         <IconBase name="user" />
       </template>

@@ -1,11 +1,20 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
+import { ObjectKeys } from '~/utils/object';
 import ButtonBase from '../ButtonBase.vue';
 import IconBase from '../IconBase.vue';
 import ModalBase from '../ModalBase.vue';
 import FormBody from './FormBody.vue';
 import OptionBody from './OptionBody.vue';
 import QrBody from './QrBody.vue';
+
+export type AuthModalType =
+  | 'qr'
+  | 'login-email'
+  | 'login-phone'
+  | 'signup'
+  | 'forgot-password'
+  | 'option';
 
 interface AuthModalProps {
   modelValue: boolean;
@@ -24,29 +33,38 @@ const isShowModal = computed({
   },
 });
 
-const methodAuth = ref<'qr' | 'form' | 'option'>('option');
+const methodAuth = ref<AuthModalType>('option');
+
+const modalTile = reactive({
+  'login-phone': 'Log in for TikTok',
+  'login-email': 'Log in for TikTok',
+  signup: 'Sign up for TikTok',
+  'forgot-password': 'Forgot password',
+  qr: 'Log in with QR code',
+  option: 'Log in to TikTok',
+});
+
+const isMethodAuthForm = computed(() => {
+  return ObjectKeys(modalTile)
+    .filter((key) => key !== 'option')
+    .includes(methodAuth.value);
+});
 
 const currentModalBody = computed(() => {
   if (methodAuth.value === 'qr') {
     return QrBody;
   }
-  if (methodAuth.value === 'form') {
+  if (isMethodAuthForm.value) {
     return FormBody;
   }
   return OptionBody;
 });
 
 const currentModalTitle = computed(() => {
-  if (methodAuth.value === 'qr') {
-    return 'Đăng nhập bằng mã QR';
-  }
-  if (methodAuth.value === 'form') {
-    return 'Đăng nhập';
-  }
-  return 'Đăng nhập vào TikTok';
+  return modalTile[methodAuth.value];
 });
 
-const handleSelectOption = (option: 'qr' | 'form') => {
+const handleSelectOption = (option: AuthModalType) => {
   methodAuth.value = option;
 };
 const handleBack = () => {
@@ -77,12 +95,22 @@ const handleBack = () => {
     </template>
     <template #default>
       <h1 class="title">{{ currentModalTitle }}</h1>
-      <component :is="currentModalBody" @onSelect="handleSelectOption" />
+      <component
+        :is="currentModalBody"
+        v-bind="currentModalBody === FormBody ? { methodAuth } : {}"
+        @onSelect="handleSelectOption"
+      />
     </template>
     <template #footer>
       <div class="auth-footer-inner">
-        Bạn không có tài khoản?
-        <ButtonBase variant="link" color="danger">Đăng ký</ButtonBase>
+        Don’t have an account?
+        <ButtonBase
+          variant="link"
+          color="danger"
+          class="btn-link"
+          @click="handleSelectOption('signup')"
+          >Sign up</ButtonBase
+        >
       </div>
     </template>
   </ModalBase>
@@ -122,6 +150,10 @@ const handleBack = () => {
     color: $danger;
     font-weight: 600;
     margin-left: 4px;
+  }
+  .btn-link {
+    padding: 0;
+    margin-left: 0.6rem;
   }
 }
 </style>
