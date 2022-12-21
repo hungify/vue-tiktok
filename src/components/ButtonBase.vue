@@ -188,6 +188,11 @@ $btnVariants: (
     ),
   ),
   link: (
+    default: (
+      default: $default-light,
+      hover: $default,
+      active: $default-dark,
+    ),
     danger: (
       default: $danger,
       active: rgba($danger-dark, 1),
