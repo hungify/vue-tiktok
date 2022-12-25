@@ -13,7 +13,7 @@ import Hashtag from './Hashtag.vue';
 import IconBase from './IconBase.vue';
 import ImageBase from './ImageBase.vue';
 import PopperWrapper from './Popper/PopperWrapper.vue';
-import AccountPreview from './SuggestedAccounts/AccountPreview.vue';
+import AccountPreview from './Sidebar/AccountPreview.vue';
 import BaseVideoPlayer from './VideoPlayer/BaseVideoPlayer.vue';
 
 interface CardVideoItemProps {
@@ -98,7 +98,14 @@ onBeforeUnmount(() => {
 <template>
   <div ref="cardVideoRef" :class="$style.wrapper">
     <RouterLink :to="`/@/${user.nickname}`">
-      <Tippy arrow theme="light" placement="bottom" interactive :delay="[0, 400]" :offset="[80, 0]">
+      <Tippy
+        arrow
+        theme="light"
+        placement="bottom"
+        interactive
+        :delay="[0, 400]"
+        :offset="[140, 0]"
+      >
         <template #default>
           <div :class="$style['user-avatar']">
             <ImageBase
@@ -131,7 +138,9 @@ onBeforeUnmount(() => {
           <span :class="$style.desc">
             {{ video.description }}
           </span>
-          <Hashtag v-for="tag in video.hashtags" :key="tag" :text="tag" />
+          <div :class="$style['hashtag-list']">
+            <Hashtag v-for="tag in video.hashtags" :key="tag" :title="tag" />
+          </div>
         </div>
         <div :class="$style['song-info']">
           <IconBase name="music" width="12" heigh="12" />
@@ -191,6 +200,11 @@ onBeforeUnmount(() => {
     .nickname {
       margin-left: 8px;
     }
+  }
+  .hashtag-list {
+    display: flex;
+    max-width: 35rem;
+    gap: 0.8rem;
   }
   .action {
     position: absolute;

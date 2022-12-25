@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import type { User } from '~/models/user';
 import ButtonBase from '../ButtonBase.vue';
 import IconBase from '../IconBase.vue';
@@ -18,15 +19,21 @@ const fullName = computed(() => {
 <template>
   <div :class="$style.wrapper">
     <div :class="$style.header">
-      <ImageBase :class="$style.avatar" :src="item.avatar" alt="avatar" />
+      <RouterLink :to="`@${item.nickname}`">
+        <ImageBase :class="$style.avatar" :src="item.avatar" alt="avatar" />
+      </RouterLink>
       <ButtonBase :class="$style['follow-btn']" size="sm"> Follow </ButtonBase>
     </div>
     <div :class="$style.body">
-      <p :class="$style.nickname">
-        <strong>{{ item.nickname }}</strong>
-        <IconBase v-if="item.verified" name="check" :class="$style.check" />
-      </p>
-      <p :class="$style.name">{{ fullName }}</p>
+      <RouterLink :to="`@${item.nickname}`">
+        <p :class="$style.nickname">
+          <strong>{{ item.nickname }}</strong>
+          <IconBase v-if="item.verified" name="check" :class="$style.check" />
+        </p>
+      </RouterLink>
+      <RouterLink :to="`@${item.nickname}`">
+        <p :class="$style.name">{{ fullName }}</p>
+      </RouterLink>
       <p :class="$style.analytics">
         <strong :class="$style.value">{{ item.followers }}</strong>
         <span :class="$style.label">Follower</span>
@@ -39,7 +46,8 @@ const fullName = computed(() => {
 
 <style lang="scss" module>
 .wrapper {
-  width: 44rem;
+  min-width: 30rem;
+  width: 100%;
   padding: 2rem;
 }
 

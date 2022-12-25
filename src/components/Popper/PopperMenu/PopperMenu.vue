@@ -44,14 +44,7 @@ const handleBack = () => {
 
 <template>
   <ModalShortcut v-model="isShowModal" />
-  <Tippy
-    arrow
-    theme="light"
-    interactive
-    :delay="[0, 4000000]"
-    :offset="[-80, 16]"
-    @hide="handleReset"
-  >
+  <Tippy arrow theme="light" interactive :delay="[0, 400]" :offset="[-80, 16]" @hide="handleReset">
     <template #default>
       <slot />
     </template>

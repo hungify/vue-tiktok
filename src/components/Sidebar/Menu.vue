@@ -2,7 +2,6 @@
 import type { BaseMenuItemLink } from '~/interfaces/layout';
 import MenuItemLink from './MenuItemLink.vue';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface MenuProps {
   items: BaseMenuItemLink[];
 }

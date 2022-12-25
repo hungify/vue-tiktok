@@ -37,4 +37,5 @@ export type IconName =
   | 'm-key'
   | 'sun'
   | 'moon'
-  | 'alphabet';
+  | 'alphabet'
+  | 'tag';

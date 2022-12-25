@@ -31,16 +31,16 @@ import Sidebar from '~/components/Sidebar/Sidebar.vue';
 .container {
   width: 100vw;
   max-width: $default-layout-width;
-  gap: pxToRem(30px);
+  gap: 2rem;
   padding: 0 $default-layout-horizontal-spacer;
   margin-top: $default-layout-header-height;
   display: flex;
 }
 
 .content {
-  flex: 1;
+  flex: 1 1 auto;
   max-width: 72rem;
-  padding: 24px 0;
+  padding: 2.4rem 0;
   position: relative;
 }
 </style>

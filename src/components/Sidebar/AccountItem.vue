@@ -29,16 +29,20 @@ const fullName = computed(() => {
     arrow
   >
     <template #default>
-      <div :class="$style['account-item']">
+      <RouterLink :class="$style['account-item']" :to="`@${item.nickname}`">
         <ImageBase :class="$style.avatar" :src="item.avatar" alt="avatar" />
         <div :class="$style['item-info']">
-          <p :class="$style.nickname">
-            <strong>{{ item.nickname }}</strong>
-            <IconBase v-if="item.verified" name="check" :class="$style.check" />
-          </p>
-          <p :class="$style.name">{{ fullName }}</p>
+          <RouterLink :to="`@${item.nickname}`">
+            <p :class="$style.nickname">
+              <strong>{{ item.nickname }}</strong>
+              <IconBase v-if="item.verified" name="check" :class="$style.check" />
+            </p>
+          </RouterLink>
+          <RouterLink :to="`@${item.nickname}`">
+            <p :class="$style.name">{{ fullName }}</p>
+          </RouterLink>
         </div>
-      </div>
+      </RouterLink>
     </template>
     <template #content>
       <div tabIndex="-1">

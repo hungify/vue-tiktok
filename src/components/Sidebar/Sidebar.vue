@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { MENU_LINKS } from '~/configs';
-import SuggestedAccounts from '../SuggestedAccounts/SuggestedAccounts.vue';
+import SuggestedList from './SuggestedList.vue';
 import Menu from './Menu.vue';
+import { UserList } from '~/mocks/users';
+import DiscoverList from './DiscoverList.vue';
 </script>
 
 <template>
@@ -9,8 +11,13 @@ import Menu from './Menu.vue';
     <div :class="$style.scroll">
       <div :class="$style.inner">
         <Menu :items="MENU_LINKS" />
-        <SuggestedAccounts label="Suggested accounts" />
-        <SuggestedAccounts label="Following accounts" />
+        <SuggestedList label="Suggested accounts" :items="UserList" />
+        <SuggestedList
+          label="Following accounts"
+          :items="[]"
+          labelEmpty="Accounts you follow will appear here"
+        />
+        <DiscoverList />
       </div>
     </div>
   </aside>

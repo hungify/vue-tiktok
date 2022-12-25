@@ -4,7 +4,7 @@ import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import { useTippy } from 'vue-tippy';
 import PopperWrapper from './Popper/PopperWrapper.vue';
-import AccountItem from './SuggestedAccounts/AccountItem.vue';
+import AccountItem from './Sidebar/AccountItem.vue';
 import type { User } from '~/models/user';
 
 const searchBoxRef = ref<HTMLDivElement>();
