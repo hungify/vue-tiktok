@@ -20,6 +20,15 @@ export const routes: RouteRecordRaw[] = [
       layout: 'MainLayout',
     },
   },
+  {
+    path: '/live',
+    name: 'live',
+    component: () => import('~/pages/Live.vue'),
+    meta: {
+      title: 'Live',
+      layout: 'FullLayout',
+    },
+  },
 ];
 
 const router = createRouter({
