@@ -38,4 +38,5 @@ export type IconName =
   | 'sun'
   | 'moon'
   | 'alphabet'
-  | 'tag';
+  | 'tag'
+  | 'x-circle';

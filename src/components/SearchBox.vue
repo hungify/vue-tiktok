@@ -6,6 +6,7 @@ import { useTippy } from 'vue-tippy';
 import PopperWrapper from './Popper/PopperWrapper.vue';
 import AccountItem from './Sidebar/AccountItem.vue';
 import type { User } from '~/models/user';
+import { useDebounceFn } from '@vueuse/shared';
 
 const searchBoxRef = ref<HTMLDivElement>();
 const resultRef = ref<HTMLDivElement>();
@@ -18,6 +19,10 @@ const showResults = ref(false);
 const handleClear = () => {
   searchValue.value = '';
 };
+
+const handleSearchValueChange = useDebounceFn((evt: Event) => {
+  searchValue.value = (evt.target as HTMLInputElement).value;
+}, 1000);
 
 const showClearAction = computed(() => {
   return !!searchValue.value && !loading.value;
@@ -33,7 +38,12 @@ useTippy(searchBoxRef, {
 <template>
   <div :class="$style.wrapper">
     <div ref="searchBoxRef" :class="$style.search">
-      <input v-model="searchValue" placeholder="Search accounts and videos" :spellCheck="false" />
+      <input
+        :value="searchValue"
+        placeholder="Search accounts and videos"
+        :spellCheck="false"
+        @input="handleSearchValueChange"
+      />
       <ButtonBase
         v-if="showClearAction"
         variant="ghost"
@@ -41,18 +51,20 @@ useTippy(searchBoxRef, {
         :class="$style['clear-btn']"
         @click="handleClear"
       >
-        <IconBase name="x" width="16" height="16" />
+        <IconBase name="x-circle" width="16" height="16" />
       </ButtonBase>
 
       <IconBase v-if="loading" name="check" width="24" height="24" />
-      <ButtonBase
-        variant="ghost"
-        color="default"
-        :class="$style['search-btn']"
-        @mousedown="(evt) => evt.preventDefault()"
-      >
-        <IconBase name="search" width="24" height="24" />
-      </ButtonBase>
+      <div>
+        <ButtonBase
+          variant="ghost"
+          color="default"
+          :class="$style['search-btn']"
+          @mousedown="(evt) => evt.preventDefault()"
+        >
+          <IconBase name="search" width="24" height="24" />
+        </ButtonBase>
+      </div>
     </div>
     <div v-show="showResults && searchResults[0]" :class="$style['result-search']">
       <PopperWrapper>
@@ -70,7 +82,7 @@ useTippy(searchBoxRef, {
 
 <style lang="scss" module>
 .wrapper {
-  $search-width: pxToRem(500px);
+  $search-width: 40rem;
   .search,
   .search-result {
     width: $search-width;
@@ -79,16 +91,15 @@ useTippy(searchBoxRef, {
   .search {
     position: relative;
     height: $search-height;
-    padding-left: 16px;
+    padding-left: 1.6rem;
     display: flex;
     background-color: rgba(22, 24, 35, 0.06);
     border-radius: $search-border-radius;
     border: 1.5px solid transparent;
 
     input {
-      flex: 1;
+      flex: 1 1 auto;
       height: 100%;
-      padding-right: 40px;
       color: $black;
       font-size: 1.6rem;
       caret-color: $danger;
@@ -119,16 +130,18 @@ useTippy(searchBoxRef, {
     padding: 5px 12px;
     font-size: 1.4rem;
     font-weight: 600;
-    color: rgba(22, 24, 35, 0.5);
+    color: rgba($text, 0.5);
   }
 
   .clear-btn,
   .loading {
     position: absolute;
-    right: calc(#{$search-button-width} + 16px);
+    right: $search-button-width;
     top: 50%;
+    padding-left: 1rem;
+    padding-right: 1rem;
     transform: translateY(-50%);
-    color: rgba(22, 24, 35, 0.34);
+    color: rgba($text, 0.34);
   }
 
   .loading {
@@ -153,8 +166,8 @@ useTippy(searchBoxRef, {
     border-top-right-radius: $search-border-radius;
     border-bottom-right-radius: $search-border-radius;
     font-size: 1.8rem;
-    padding: pxToRem(10px);
-    color: rgba(22, 24, 35, 0.34);
+    padding: 1rem;
+    color: rgba($text, 0.34);
 
     &:hover {
       cursor: pointer;
