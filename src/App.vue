@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
 import MainLayout from './layouts/MainLayout.vue';
+const route = useRoute();
 </script>
 
 <template>
-  <MainLayout>
+  <MainLayout :full="route.meta.full">
     <RouterView />
   </MainLayout>
 </template>

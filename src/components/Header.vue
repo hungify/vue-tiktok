@@ -57,7 +57,7 @@ useSessionStorage('isModalOpen', isOpen);
   $search-height: 46px;
   $search-top-spacer: 9px;
   $search-button-width: 52px;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 10;
@@ -71,7 +71,7 @@ useSessionStorage('isModalOpen', isOpen);
 
 .inner {
   height: 100%;
-  width: $default-layout-width;
+  width: 100%;
   padding: 0 $default-layout-horizontal-spacer;
   display: flex;
   align-items: center;

@@ -26,7 +26,8 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('~/pages/Live.vue'),
     meta: {
       title: 'Live',
-      layout: 'FullLayout',
+      layout: 'MainLayout',
+      full: true,
     },
   },
 ];
