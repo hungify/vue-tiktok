@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-import { useSessionStorage } from '@vueuse/core';
-import { ref } from 'vue';
 import images from '~/assets/images';
 import { BASE_MENU, ROUTES_PATH, USER_MENU } from '~/configs';
-import AuthModal from './AuthModal/AuthModal.vue';
 import ButtonBase from './ButtonBase.vue';
 import IconBase from './IconBase.vue';
 import ImageBase from './ImageBase.vue';
 import PopperMenu from './Popper/PopperMenu/PopperMenu.vue';
 import SearchBox from './SearchBox.vue';
 
+interface HeaderEvents {
+  (event: 'onShowModal'): void;
+}
+defineEmits<HeaderEvents>();
+
 const currentUser = {};
 const currentItems = !currentUser ? USER_MENU : BASE_MENU;
-const isOpen = ref(false);
-useSessionStorage('isModalOpen', isOpen);
 </script>
 
 <template>
-  <AuthModal v-model="isOpen" />
   <header :class="$style.wrapper">
     <div :class="$style.inner">
       <RouterLink :to="ROUTES_PATH.home" :class="$style['logo-link']">
@@ -32,7 +31,7 @@ useSessionStorage('isModalOpen', isOpen);
           </template>
           Upload
         </ButtonBase>
-        <ButtonBase @click="isOpen = true">Log in</ButtonBase>
+        <ButtonBase @click="$emit('onShowModal')">Log in</ButtonBase>
         <PopperMenu :items="currentItems">
           <template #default="_state">
             <ImageBase

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { computed, useCssModule } from 'vue';
+import { computed, useCssModule, ref } from 'vue';
 import Header from '~/components/Header.vue';
 import Sidebar from '~/components/Sidebar/Sidebar.vue';
+import { useSessionStorage } from '@vueuse/core';
+import AuthModal from '~/components/AuthModal/AuthModal.vue';
 interface MainLayoutProps {
   full?: boolean;
 }
@@ -13,17 +15,24 @@ const $style = useCssModule();
 const layoutClasses = computed(() => {
   return [$style.wrapper, props.full && $style.full];
 });
+
+const isOpen = ref(false);
+useSessionStorage('isModalOpen', isOpen);
+const handleShowModal = () => {
+  isOpen.value = true;
+};
 </script>
 
 <template>
+  <AuthModal v-model="isOpen" />
   <div :class="layoutClasses">
     <slot name="header">
-      <Header />
+      <Header @onShowModal="handleShowModal" />
     </slot>
 
     <main :class="$style.container">
       <slot name="sidebar">
-        <Sidebar />
+        <Sidebar @onShowModal="handleShowModal" />
       </slot>
 
       <div :class="$style.content">
