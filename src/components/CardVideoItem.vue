@@ -132,7 +132,9 @@ onBeforeUnmount(() => {
           </RouterLink>
         </div>
         <div :class="$style.action">
-          <ButtonBase size="sm" variant="solid"> Follow </ButtonBase>
+          <ButtonBase :class="$style['btn-follow']" size="sm" variant="outline">
+            Follow
+          </ButtonBase>
         </div>
         <div :class="$style['video-info']">
           <span :class="$style.desc">
@@ -209,6 +211,12 @@ onBeforeUnmount(() => {
   .action {
     position: absolute;
     right: 12px;
+    .btn-follow {
+      min-height: 28px;
+      min-width: 88px;
+      padding: 0 1.2rem;
+      font-size: 1.6rem;
+    }
   }
 
   .video-info {
