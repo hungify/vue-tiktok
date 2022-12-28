@@ -58,7 +58,6 @@ const handleShowModal = () => {
   width: 100%;
   gap: 2rem;
   padding: 0 $default-layout-horizontal-spacer;
-  margin-top: $default-layout-header-height;
   display: flex;
 }
 
