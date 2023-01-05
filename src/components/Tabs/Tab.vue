@@ -44,7 +44,7 @@ const tabVariant = computed(() => {
 });
 
 const tabColor = computed(() => {
-  return tabsContext?.props.color;
+  return isActive.value ? tabsContext?.props.color : 'default';
 });
 
 const getSlotName = (iconPosition: string) => {
