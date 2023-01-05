@@ -1,13 +1,21 @@
 <script lang="ts" setup>
 import { computed, getCurrentInstance, inject } from 'vue';
+import type { IconName } from '~/interfaces/icon';
 import type { TabsContext } from '.';
 import ButtonBase from '../ButtonBase.vue';
+import IconBase from '../IconBase.vue';
 
 interface TabProps {
   disabled?: boolean;
+  icon?: IconName;
+  iconPosition?: 'left' | 'right';
 }
 
-const props = defineProps<TabProps>();
+const props = withDefaults(defineProps<TabProps>(), {
+  disabled: false,
+  icon: undefined,
+  iconPosition: 'left',
+});
 
 const tabsContext = inject<TabsContext>('tabs');
 
@@ -38,10 +46,17 @@ const tabVariant = computed(() => {
 const tabColor = computed(() => {
   return tabsContext?.props.color;
 });
+
+const getSlotName = (iconPosition: string) => {
+  return iconPosition + 'Icon';
+};
 </script>
 
 <template>
   <ButtonBase :variant="tabVariant" :color="tabColor" :class="tabClasses" @click="handleChangeTab">
+    <template v-if="icon" #[getSlotName(iconPosition)]>
+      <IconBase v-if="icon" :name="icon" width="18" height="18" />
+    </template>
     <slot />
   </ButtonBase>
 </template>
