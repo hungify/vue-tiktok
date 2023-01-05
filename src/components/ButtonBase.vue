@@ -11,6 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes {
   href?: string;
   to?: string;
   expanded?: boolean;
+  titleClass?: string;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   href: '',
   to: '',
   expanded: false,
+  titleClass: '',
 });
 
 interface ButtonEvents {
@@ -72,7 +74,7 @@ const slots = useSlots();
     <span v-if="slots.leftIcon" class="icon">
       <slot name="leftIcon" />
     </span>
-    <span class="title">
+    <span class="title" :class="titleClass">
       <slot />
     </span>
 
