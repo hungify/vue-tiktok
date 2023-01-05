@@ -15,12 +15,14 @@ export interface TabsProps {
   orientation?: TabsOrientation;
   variant?: TabsVariant;
   color?: TabsColor;
+  fitted?: boolean;
 }
 const props = withDefaults(defineProps<TabsProps>(), {
   align: 'start',
   orientation: 'horizontal',
   variant: 'enclosed',
   color: 'danger',
+  fitted: false,
 });
 
 interface TabsEvents {

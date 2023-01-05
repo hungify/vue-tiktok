@@ -53,7 +53,14 @@ const getSlotName = (iconPosition: string) => {
 </script>
 
 <template>
-  <ButtonBase :variant="tabVariant" :color="tabColor" :class="tabClasses" @click="handleChangeTab">
+  <ButtonBase
+    :variant="tabVariant"
+    :color="tabColor"
+    :class="tabClasses"
+    :expanded="tabsContext?.props.fitted"
+    titleClass="tab-title"
+    @click="handleChangeTab"
+  >
     <template v-if="icon" #[getSlotName(iconPosition)]>
       <IconBase v-if="icon" :name="icon" width="18" height="18" />
     </template>
@@ -64,6 +71,9 @@ const getSlotName = (iconPosition: string) => {
 <style scoped lang="scss">
 .tab {
   margin: 0px !important;
+  ::v-deep .tab-title {
+    flex: 0;
+  }
   &--disabled {
     opacity: 0.5;
     cursor: not-allowed;
