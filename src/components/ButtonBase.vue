@@ -220,7 +220,7 @@ $btnVariants: (
   font-weight: 600;
   transition: all ease-in-out 200ms;
   cursor: pointer;
-  font-family: $font-family;
+  font-family: $font-primary;
   background-color: transparent;
 
   & + & {

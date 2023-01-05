@@ -104,7 +104,7 @@ useTippy(searchBoxRef, {
       font-size: 1.6rem;
       caret-color: $danger;
       background-color: transparent;
-      font-family: $font-family;
+      font-family: $font-primary;
     }
 
     input:not(:placeholder-shown) ~ .search-btn {

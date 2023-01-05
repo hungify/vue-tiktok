@@ -113,7 +113,7 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
   font-size: 1.4rem;
   font-weight: 600;
   color: $white;
-  font-family: $font-family;
+  font-family: $font-primary;
   background-color: $danger;
 }
 
