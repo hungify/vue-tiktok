@@ -39,4 +39,6 @@ export type IconName =
   | 'moon'
   | 'alphabet'
   | 'tag'
-  | 'x-circle';
+  | 'x-circle'
+  | 'ellipsis-horizontal'
+  | 'link';

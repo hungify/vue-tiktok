@@ -17,7 +17,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe.smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
@@ -41,7 +41,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe-smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
@@ -65,7 +65,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe-smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
@@ -90,7 +90,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe-smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
@@ -114,7 +114,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe-smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
@@ -138,7 +138,7 @@ export const playList: NewsFeed[] = [
     },
     user: {
       avatar: 'https://files.fullstack.edu.vn/f8-tiktok/users/4153/6366c4a9204d9.jpg',
-      nickname: 'Joe Smith',
+      nickname: 'joe-smith',
       firstName: 'Joe',
       lastName: 'Smith',
       verified: false,
