@@ -30,6 +30,14 @@ export const routes: RouteRecordRaw[] = [
       full: true,
     },
   },
+  {
+    path: '/@:nickname',
+    name: 'userProfile',
+    component: () => import('~/pages/UserProfile.vue'),
+    meta: {
+      layout: 'MainLayout',
+    },
+  },
 ];
 
 const router = createRouter({

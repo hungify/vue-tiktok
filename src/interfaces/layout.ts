@@ -10,7 +10,7 @@ export interface BaseMenuItem {
 export type BaseMenuItemLink = Required<Omit<BaseMenuItem, 'children'>>;
 
 export interface BaseRouteMeta {
-  title: string;
+  title?: string;
   layout?: 'MainLayout';
   full?: boolean;
   requiresAuth?: boolean;

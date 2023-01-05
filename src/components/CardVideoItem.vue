@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="cardVideoRef" :class="$style.wrapper">
-    <RouterLink :to="`/@/${user.nickname}`">
+    <RouterLink :to="`/@${user.nickname}`">
       <Tippy
         arrow
         theme="light"
@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
     <div :class="$style.content">
       <div :class="$style.info">
         <div :class="$style['user-info']">
-          <RouterLink :to="user.nickname">
+          <RouterLink :to="`/@${user.nickname}`">
             <strong :class="$style['full-name']">{{ fullName }}</strong>
             <span :class="$style.nickname">{{ user.nickname }}</span>
           </RouterLink>

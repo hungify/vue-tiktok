@@ -41,4 +41,5 @@ export type IconName =
   | 'tag'
   | 'x-circle'
   | 'ellipsis-horizontal'
-  | 'link';
+  | 'link'
+  | 'lock';

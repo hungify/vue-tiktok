@@ -52,7 +52,6 @@ export const USER_MENU: BaseMenuItem[] = [
   {
     icon: 'user-group',
     title: 'View profile',
-    to: '/@:nickname',
   },
   {
     icon: 'comment',
