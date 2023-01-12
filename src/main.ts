@@ -4,6 +4,7 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import router from '~/routes';
 import { createPinia } from 'pinia';
+import './index.scss';
 
 const app = createApp(App);
 
