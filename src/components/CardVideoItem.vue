@@ -86,6 +86,18 @@ const scrollToVideo = () => {
   }
 };
 
+const handleLikeVideo = () => {
+  console.log('like video');
+};
+
+const handleCommentVideo = () => {
+  console.log('comment video');
+};
+
+const handleShareVideo = () => {
+  console.log('share video');
+};
+
 defineExpose({
   scrollToVideo,
 });
@@ -153,7 +165,45 @@ onBeforeUnmount(() => {
           </RouterLink>
         </div>
       </div>
-      <BaseVideoPlayer ref="currentVideoRef" :video="video" />
+
+      <div :class="$style['video-and-actions']">
+        <BaseVideoPlayer ref="currentVideoRef" :video="video" />
+        <ul :class="$style.actions">
+          <li :class="$style['actions-item']">
+            <ButtonBase
+              :class="$style.action"
+              variant="ghost"
+              color="default"
+              @click="handleLikeVideo"
+            >
+              <IconBase name="heart" />
+            </ButtonBase>
+            <strong :class="$style.count">{{ video.likesCount }}</strong>
+          </li>
+          <li :class="$style['actions-item']">
+            <ButtonBase
+              :class="$style.action"
+              variant="ghost"
+              color="default"
+              @click="handleCommentVideo"
+            >
+              <IconBase name="comment" />
+            </ButtonBase>
+            <strong :class="$style.count">{{ video.commentsCount }}</strong>
+          </li>
+          <li :class="$style['actions-item']">
+            <ButtonBase
+              :class="$style.action"
+              variant="ghost"
+              color="default"
+              @click="handleShareVideo"
+            >
+              <IconBase name="share" />
+            </ButtonBase>
+            <strong :class="$style.count">{{ video.sharesCount }}</strong>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -232,6 +282,34 @@ onBeforeUnmount(() => {
     .song-name {
       margin-left: 8px;
     }
+  }
+}
+
+.video-and-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  &-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .action {
+    padding: pxToRem(16px);
+    background-color: rgba(22, 24, 35, 0.06);
+    border-radius: 50%;
+    margin: pxToRem(8px) 0;
+  }
+  .count {
+    color: rgba(22, 24, 35, 0.6);
   }
 }
 </style>

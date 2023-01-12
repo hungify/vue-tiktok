@@ -71,7 +71,7 @@ const getSlotName = (iconPosition: string) => {
 <style scoped lang="scss">
 .tab {
   margin: 0px !important;
-  ::v-deep .tab-title {
+  :deep(.tab-title) {
     flex: 0;
   }
   &--disabled {

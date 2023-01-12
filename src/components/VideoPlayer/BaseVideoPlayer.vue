@@ -9,8 +9,11 @@ import VolumeSlider from './VolumeSlider.vue';
 
 interface VideoProps {
   video: Video;
+  isShowControls?: boolean;
 }
-const props = defineProps<VideoProps>();
+const props = withDefaults(defineProps<VideoProps>(), {
+  isShowControls: true,
+});
 
 const videoRef = ref<HTMLVideoElement>();
 
@@ -58,18 +61,6 @@ const seekBarTime = computed(() => {
 
   return `${currentTime} / ${duration}`;
 });
-
-const handleLikeVideo = () => {
-  console.log('like video');
-};
-
-const handleCommentVideo = () => {
-  console.log('comment video');
-};
-
-const handleShareVideo = () => {
-  console.log('share video');
-};
 
 const handleValueVolumeChange = (value: number) => {
   store.setVolume(value);
@@ -119,88 +110,50 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="$style.wrapper">
-    <div :class="$style['player-inner']">
-      <div :class="$style['overlay']">
-        <video
-          :key="video.id"
-          ref="videoRef"
-          loop
-          :class="$style['video-player']"
-          :muted="store.muted"
-          @timeupdate="handleTimeUpdate"
-          @loadedmetadata="handleLoadedMetaData"
-        >
-          <source type="video/mp4" :src="video.url" />
-        </video>
-        <div :class="$style.controls">
-          <button :class="[$style['play-or-pause']]" @click="onPlayOrPauseHandler">
-            <template v-if="store.playing && store.currentVideoId === video.id">
-              <IconBase name="pause" width="24" height="24" />
-            </template>
-            <template v-else>
-              <IconBase name="play" width="24" height="24" />
-            </template>
-          </button>
-          <div :class="[$style['volume']]">
-            <VolumeSlider
-              :volume="store.volume"
-              :muted="store.muted"
-              @onVolumeChange="handleValueVolumeChange"
-              @onMuted="handleMuted"
-            />
-          </div>
-          <div :class="[$style['duration']]">
-            <SeekBar
-              :currentTime="store.currentTime"
-              :duration="store.duration"
-              @onSeek="handleSeekChange"
-            />
-            <div :class="$style.time">{{ seekBarTime }}</div>
-          </div>
+  <div :class="$style['player-inner']">
+    <div :class="$style['overlay']">
+      <video
+        :key="video.id"
+        ref="videoRef"
+        loop
+        :class="$style['video-player']"
+        :muted="store.muted"
+        @timeupdate="handleTimeUpdate"
+        @loadedmetadata="handleLoadedMetaData"
+      >
+        <source type="video/mp4" :src="video.url" />
+      </video>
+      <div v-if="isShowControls" :class="$style.controls">
+        <button :class="[$style['play-or-pause']]" @click="onPlayOrPauseHandler">
+          <template v-if="store.playing && store.currentVideoId === video.id">
+            <IconBase name="pause" width="24" height="24" />
+          </template>
+          <template v-else>
+            <IconBase name="play" width="24" height="24" />
+          </template>
+        </button>
+        <div :class="[$style['volume']]">
+          <VolumeSlider
+            :volume="store.volume"
+            :muted="store.muted"
+            @onVolumeChange="handleValueVolumeChange"
+            @onMuted="handleMuted"
+          />
+        </div>
+        <div :class="[$style['duration']]">
+          <SeekBar
+            :currentTime="store.currentTime"
+            :duration="store.duration"
+            @onSeek="handleSeekChange"
+          />
+          <div :class="$style.time">{{ seekBarTime }}</div>
         </div>
       </div>
     </div>
-
-    <ul :class="$style.actions">
-      <li :class="$style['actions-item']">
-        <ButtonBase :class="$style.action" variant="ghost" color="default" @click="handleLikeVideo">
-          <IconBase name="heart" />
-        </ButtonBase>
-        <strong :class="$style.count">{{ video.likesCount }}</strong>
-      </li>
-      <li :class="$style['actions-item']">
-        <ButtonBase
-          :class="$style.action"
-          variant="ghost"
-          color="default"
-          @click="handleCommentVideo"
-        >
-          <IconBase name="comment" />
-        </ButtonBase>
-        <strong :class="$style.count">{{ video.commentsCount }}</strong>
-      </li>
-      <li :class="$style['actions-item']">
-        <ButtonBase
-          :class="$style.action"
-          variant="ghost"
-          color="default"
-          @click="handleShareVideo"
-        >
-          <IconBase name="share" />
-        </ButtonBase>
-        <strong :class="$style.count">{{ video.sharesCount }}</strong>
-      </li>
-    </ul>
   </div>
 </template>
 
 <style lang="scss" module>
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-}
 .player-inner {
   position: relative;
   box-sizing: border-box;
@@ -271,29 +224,6 @@ defineExpose({
   .time {
     color: $white;
     font-size: 1rem;
-  }
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  &-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .action {
-    padding: pxToRem(16px);
-    background-color: rgba(22, 24, 35, 0.06);
-    border-radius: 50%;
-    margin: pxToRem(8px) 0;
-  }
-  .count {
-    color: rgba(22, 24, 35, 0.6);
   }
 }
 </style>
