@@ -5,8 +5,8 @@ export interface Video {
   title: string;
   description: string;
   url: string;
-  song: string;
   thumbnailUrl: string;
+  song: string;
   likesCount: number;
   sharesCount: number;
   commentsCount: number;

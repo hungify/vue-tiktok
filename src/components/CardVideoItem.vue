@@ -71,7 +71,7 @@ watch(isVideoInView, (value) => {
 watch(
   () => props.active,
   (value) => {
-    if (value && currentVideoRef.value?.video.id === props.video.id) {
+    if (value && currentVideoRef.value?.id === props.video.id) {
       currentVideoRef.value?.onPlay();
     }
   },
@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div :class="$style['video-and-actions']">
-        <BaseVideoPlayer ref="currentVideoRef" :video="video" />
+        <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
         <ul :class="$style.actions">
           <li :class="$style['actions-item']">
             <ButtonBase
