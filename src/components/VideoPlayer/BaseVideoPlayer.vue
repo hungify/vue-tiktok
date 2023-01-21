@@ -1,17 +1,22 @@
 <script lang="ts" setup>
 import { computed, nextTick, ref, watch } from 'vue';
-import type { Video } from '~/models/video';
 import { useVideoPlayerStore } from '~/store/video';
 import IconBase from '../IconBase.vue';
 import SeekBar from './SeekBar.vue';
 import VolumeSlider from './VolumeSlider.vue';
 
 interface VideoProps {
-  video: Video;
+  id: string;
+  url: string;
   isShowControls?: boolean;
+  loop?: boolean;
+  muted?: boolean;
 }
+
 const props = withDefaults(defineProps<VideoProps>(), {
   isShowControls: true,
+  loop: true,
+  muted: false,
 });
 
 const videoRef = ref<HTMLVideoElement>();
@@ -22,7 +27,7 @@ watch(
   store,
   (value) => {
     if (videoRef.value) {
-      if (value.playing && props.video.id === store.currentVideoId) {
+      if (value.playing && props.id === store.currentVideoId) {
         videoRef.value.play();
       } else {
         videoRef.value.pause();
@@ -70,13 +75,13 @@ const handleMuted = () => {
 };
 
 const onPlayOrPauseHandler = () => {
-  store.setCurrentVideoId(props.video.id);
+  store.setCurrentVideoId(props.id);
   store.togglePlayOrPause();
 };
 
 const handlePlay = () => {
   handleLoadedMetaData();
-  store.setCurrentVideoId(props.video.id);
+  store.setCurrentVideoId(props.id);
   store.togglePlayOrPause('play');
 };
 
@@ -88,7 +93,7 @@ const handleTimeUpdate = (evt: Event) => {
 
 const handleLoadedMetaData = async () => {
   await nextTick();
-  if (videoRef.value && store.currentVideoId === props.video.id) {
+  if (videoRef.value && store.currentVideoId === props.id) {
     const duration = videoRef.value?.duration;
     store.setDuration(duration);
   }
@@ -104,7 +109,7 @@ const handleSeekChange = (value: number) => {
 
 defineExpose({
   onPlay: handlePlay,
-  video: props.video,
+  id: props.id,
 });
 </script>
 
@@ -112,19 +117,19 @@ defineExpose({
   <div :class="$style['player-inner']">
     <div :class="$style['overlay']">
       <video
-        :key="video.id"
+        :key="id"
         ref="videoRef"
-        loop
         :class="$style['video-player']"
-        :muted="store.muted"
+        :muted="muted || store.muted"
+        v-bind="$attrs"
         @timeupdate="handleTimeUpdate"
         @loadedmetadata="handleLoadedMetaData"
       >
-        <source type="video/mp4" :src="video.url" />
+        <source type="video/mp4" :src="url" />
       </video>
       <div v-if="isShowControls" :class="$style.controls">
         <button :class="[$style['play-or-pause']]" @click="onPlayOrPauseHandler">
-          <template v-if="store.playing && store.currentVideoId === video.id">
+          <template v-if="store.playing && store.currentVideoId === id">
             <IconBase name="pause" width="24" height="24" />
           </template>
           <template v-else>

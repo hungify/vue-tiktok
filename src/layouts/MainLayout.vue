@@ -16,6 +16,10 @@ const layoutClasses = computed(() => {
   return [$style.wrapper, props.full && $style.full];
 });
 
+const containerClasses = computed(() => {
+  return [$style.container, props.full && $style.full];
+});
+
 const isOpen = ref(false);
 useSessionStorage('isModalOpen', isOpen);
 const handleShowModal = () => {
@@ -30,7 +34,7 @@ const handleShowModal = () => {
       <Header @onShowModal="handleShowModal" />
     </slot>
 
-    <main :class="$style.container">
+    <main :class="containerClasses">
       <slot name="sidebar">
         <Sidebar @onShowModal="handleShowModal" />
       </slot>
@@ -59,6 +63,9 @@ const handleShowModal = () => {
   gap: 2rem;
   padding: 0 $default-layout-horizontal-spacer;
   display: flex;
+  &.full {
+    padding: 0 $full-layout-horizontal-spacer;
+  }
 }
 
 .content {

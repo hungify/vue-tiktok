@@ -36,6 +36,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('~/pages/UserProfile.vue'),
     meta: {
       layout: 'MainLayout',
+      full: true,
     },
   },
 ];
