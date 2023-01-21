@@ -9,8 +9,8 @@ export const followingList = [
     isFollowed: false,
     popularVideo: {
       id: '8',
-      thumbUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
-      fileUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
+      thumbnailUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
+      url: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
     },
   },
   {
@@ -23,8 +23,8 @@ export const followingList = [
     isFollowed: false,
     popularVideo: {
       id: '1',
-      thumbUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
-      fileUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
+      thumbnailUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
+      url: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
     },
   },
   {
@@ -37,8 +37,8 @@ export const followingList = [
     isFollowed: false,
     popularVideo: {
       id: '9',
-      thumbUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
-      fileUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
+      thumbnailUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
+      url: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
     },
   },
   {
@@ -51,8 +51,8 @@ export const followingList = [
     isFollowed: false,
     popularVideo: {
       id: '10',
-      thumbUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
-      fileUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
+      thumbnailUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
+      url: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
     },
   },
   {
@@ -65,8 +65,8 @@ export const followingList = [
     isFollowed: false,
     popularVideo: {
       id: '11',
-      thumbUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
-      fileUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
+      thumbnailUrl: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a15142b.jpg',
+      url: 'https://files.fullstack.edu.vn/f8-tiktok/videos/8-630268a08faa9.mp4',
     },
   },
 ];

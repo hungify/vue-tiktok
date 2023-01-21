@@ -32,8 +32,8 @@ const handlePlay = (id: string) => {
 
 <style lang="scss" scoped>
 .following-list {
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
+  display: grid !important;
+  gap: 2.4rem 1.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 </style>
