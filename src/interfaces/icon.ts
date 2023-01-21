@@ -42,4 +42,5 @@ export type IconName =
   | 'x-circle'
   | 'ellipsis-horizontal'
   | 'link'
-  | 'lock';
+  | 'lock-solid'
+  | 'lock-outline';

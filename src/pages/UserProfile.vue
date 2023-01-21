@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-
 import ButtonBase from '~/components/ButtonBase.vue';
 import IconBase from '~/components/IconBase.vue';
 import Tab from '~/components/Tabs/Tab.vue';
@@ -8,34 +7,44 @@ import TabList from '~/components/Tabs/TabList.vue';
 import TabPanel from '~/components/Tabs/TabPanel.vue';
 import TabPanels from '~/components/Tabs/TabPanels.vue';
 import Tabs from '~/components/Tabs/Tabs.vue';
+import VideoOverlay from '~/components/VideoOverlay.vue';
 import type { IconName } from '~/interfaces/icon';
+import { videoProfiles } from '~/mocks/profile';
+import type { Video } from '~/models/video';
+
 interface VideoTab {
   id: number;
   title: string;
   icon?: IconName;
-  content: string;
+  videos: Video[];
 }
 
 const tabs = reactive<VideoTab[]>([
   {
     id: 1,
     title: 'Video',
-    content: 'Video content',
+    videos: videoProfiles,
   },
   {
     id: 2,
     title: 'Liked',
-    icon: 'lock',
-    content: 'Video Liked',
+    icon: 'lock-solid',
+    videos: [],
   },
 ]);
 
 const selectedTab = ref(1);
+
+const currentVideoId = ref('1');
+
+const handlePlay = (id: string) => {
+  currentVideoId.value = id;
+};
 </script>
 
 <template>
   <div :class="$style.wrapper">
-    <div>
+    <div :class="$style['info-inner']">
       <div :class="$style['user-profile']">
         <div :class="$style['user-share-info']">
           <div :class="$style['user-info']">
@@ -85,7 +94,24 @@ const selectedTab = ref(1);
         </TabList>
         <TabPanels>
           <TabPanel v-for="tab in tabs" :key="tab.id">
-            <span>{{ tab.content }}</span>
+            <div v-if="tab.videos[0]" :class="$style['video-list']">
+              <template v-for="video in tab.videos" :key="video.id">
+                <VideoOverlay
+                  :id="video.id"
+                  :active="video.id === currentVideoId"
+                  :thumbnailUrl="video.thumbnailUrl"
+                  :url="video.url"
+                  :currentVideoId="currentVideoId"
+                  @onPlay="handlePlay"
+                  >#hashtag</VideoOverlay
+                >
+              </template>
+            </div>
+            <div v-else :class="$style['tab-panel-empty']">
+              <IconBase name="lock-outline" width="90" height="90" />
+              <strong :class="$style['title']">This user's liked videos are private</strong>
+              <p :class="$style['desc']">Videos liked by kienkienthuc369 are currently hidden</p>
+            </div>
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -95,18 +121,18 @@ const selectedTab = ref(1);
 
 <style lang="scss" module>
 .wrapper {
-  max-width: 692px;
   padding-left: 16px;
   padding-right: 16px;
+}
+
+.info-inner {
+  max-width: 70rem;
 }
 
 .user-profile {
   display: flex;
   flex-direction: row;
   width: 100%;
-  // padding: 20px 0;
-  // position: relative;
-  // scroll-margin-top: $default-layout-header-height;
 }
 
 .user-share-info {
@@ -223,6 +249,43 @@ const selectedTab = ref(1);
 
 .profile-tabs {
   margin-top: 2rem;
-  width: 460px;
+  min-height: 49rem;
+}
+
+.tab-panel-empty {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10% auto;
+
+  svg {
+    fill-opacity: 0.34;
+    margin-bottom: 2.4rem;
+  }
+  .title {
+    font-size: 2.4rem;
+    line-height: 2.8rem;
+    font-family: $font-secondary;
+    font-weight: 700;
+    color: $text;
+    margin-top: 2.4rem;
+  }
+  .desc {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    font-family: $font-primary;
+    font-weight: 400;
+    color: rgba($text, 0.75);
+    margin-top: 0.8rem;
+  }
+}
+
+.video-list {
+  display: grid !important;
+  gap: 2.4rem 1.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 </style>
