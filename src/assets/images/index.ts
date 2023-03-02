@@ -3,6 +3,7 @@ import noImage from './no-image.png?url';
 import loginQrCodeGuide from './login-qr-guide.gif';
 import qrCode from './qr-code.jpg';
 import following from './following.jpeg';
+import thumbnail from './thumbnail.jpeg';
 
 const IMAGES = {
   logo,
@@ -10,6 +11,7 @@ const IMAGES = {
   loginQrCodeGuide,
   qrCode,
   following,
+  thumbnail,
 };
 
 export default IMAGES;

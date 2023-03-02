@@ -1,4 +1,4 @@
-import { VIDEOS } from '~/assets/videos/video';
+import VIDEOS from '~/assets/videos';
 import type { NewsFeed } from '~/models/video';
 
 export const playList: NewsFeed[] = [

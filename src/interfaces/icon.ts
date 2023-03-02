@@ -43,4 +43,6 @@ export type IconName =
   | 'ellipsis-horizontal'
   | 'link'
   | 'lock-solid'
-  | 'lock-outline';
+  | 'lock-outline'
+  | 'tiktok'
+  | 'code';

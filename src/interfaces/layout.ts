@@ -9,9 +9,11 @@ export interface BaseMenuItem {
 
 export type BaseMenuItemLink = Required<Omit<BaseMenuItem, 'children'>>;
 
+export type LayoutName = 'MainLayout' | 'BlankLayout';
+
 export interface BaseRouteMeta {
   title?: string;
-  layout?: 'MainLayout';
+  layout?: LayoutName;
   full?: boolean;
   requiresAuth?: boolean;
 }

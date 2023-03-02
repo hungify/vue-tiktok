@@ -4,6 +4,7 @@ import Header from '~/components/Header.vue';
 import Sidebar from '~/components/Sidebar/Sidebar.vue';
 import { useSessionStorage } from '@vueuse/core';
 import AuthModal from '~/components/AuthModal/AuthModal.vue';
+
 interface MainLayoutProps {
   full?: boolean;
 }
@@ -13,11 +14,11 @@ const props = withDefaults(defineProps<MainLayoutProps>(), {
 const $style = useCssModule();
 
 const layoutClasses = computed(() => {
-  return [$style.wrapper, props.full && $style.full];
+  return [$style['main-layout-wrapper'], props.full && $style.full];
 });
 
 const containerClasses = computed(() => {
-  return [$style.container, props.full && $style.full];
+  return [$style['main-layout-container'], props.full && $style.full];
 });
 
 const isOpen = ref(false);
@@ -47,7 +48,7 @@ const handleShowModal = () => {
 </template>
 
 <style lang="scss" module>
-.wrapper {
+.main-layout-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,7 +59,7 @@ const handleShowModal = () => {
   }
 }
 
-.container {
+.main-layout-container {
   width: 100%;
   gap: 2rem;
   padding: 0 $default-layout-horizontal-spacer;

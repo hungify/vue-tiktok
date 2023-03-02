@@ -1,4 +1,4 @@
-import { VIDEOS } from '~/assets/videos/video';
+import { VIDEOS } from '~/assets/videos';
 import type { Video } from '~/models/video';
 
 export const videoProfiles: Video[] = [

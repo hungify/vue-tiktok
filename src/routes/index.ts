@@ -31,11 +31,20 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/@:nickname',
+    path: '/:nickname',
     name: 'userProfile',
     component: () => import('~/pages/UserProfile.vue'),
     meta: {
       layout: 'MainLayout',
+      full: true,
+    },
+  },
+  {
+    path: '/:nickname/video/:videoId',
+    name: 'videoDetail',
+    component: () => import('~/pages/VideoDetail.vue'),
+    meta: {
+      layout: 'BlankLayout',
       full: true,
     },
   },

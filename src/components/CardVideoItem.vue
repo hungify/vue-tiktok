@@ -138,7 +138,7 @@ onBeforeUnmount(() => {
     <div :class="$style.content">
       <div :class="$style.info">
         <div :class="$style['user-info']">
-          <RouterLink :to="`/@${user.nickname}`">
+          <RouterLink :to="`@${user.nickname}`">
             <strong :class="$style['full-name']">{{ fullName }}</strong>
             <span :class="$style.nickname">{{ user.nickname }}</span>
           </RouterLink>
@@ -167,7 +167,9 @@ onBeforeUnmount(() => {
       </div>
 
       <div :class="$style['video-and-actions']">
-        <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
+        <RouterLink :to="`@${user.nickname}/video/${video.id}`">
+          <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
+        </RouterLink>
         <ul :class="$style.actions">
           <li :class="$style['actions-item']">
             <ButtonBase
