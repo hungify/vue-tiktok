@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed, provide, reactive } from 'vue';
 import type {
   NumberOrString,
   TabsAlign,

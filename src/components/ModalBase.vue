@@ -1,8 +1,5 @@
 <script lang="ts" setup>
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
-import { computed, ref, watch } from 'vue';
-import ButtonBase from './ButtonBase.vue';
-import IconBase from './IconBase.vue';
 
 interface ModalProps {
   title?: string;
@@ -50,6 +47,27 @@ const isModalOpen = ref<boolean>(props.value ?? props.modelValue);
 
 const modalRef = ref<HTMLElement | null>(null);
 
+const handleCloseModal = () => {
+  isModalOpen.value = false;
+  emit('onClose');
+  emit('update:modelValue', false);
+};
+
+const handleESC = () => {
+  emit('onEsc');
+  handleCloseModal();
+};
+
+const handleOkModal = () => {
+  emit('onOk');
+  handleCloseModal();
+};
+
+const handleClickOutside = () => {
+  emit('onOverlayClick');
+  handleCloseModal();
+};
+
 onClickOutside(modalRef, () => {
   if (props.overlayToClose) {
     handleClickOutside();
@@ -92,27 +110,6 @@ watch(isModalOpen, (value) => {
   }
 });
 
-const handleCloseModal = () => {
-  isModalOpen.value = false;
-  emit('onClose');
-  emit('update:modelValue', false);
-};
-
-const handleESC = () => {
-  emit('onEsc');
-  handleCloseModal();
-};
-
-const handleOkModal = () => {
-  emit('onOk');
-  handleCloseModal();
-};
-
-const handleClickOutside = () => {
-  emit('onOverlayClick');
-  handleCloseModal();
-};
-
 const contentClasses = computed(() => {
   const { size } = props;
   return {
@@ -129,6 +126,7 @@ const bodyClasses = computed(() => {
   };
 });
 </script>
+
 <template>
   <Teleport to="body">
     <Transition name="scale">
@@ -150,7 +148,7 @@ const bodyClasses = computed(() => {
               rounded
               @click="handleCloseModal"
             >
-              <IconBase :name="'x'" />
+              <IconBase name="x" />
             </ButtonBase>
           </div>
           <div class="modal-body" :class="bodyClasses">

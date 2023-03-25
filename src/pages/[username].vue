@@ -1,13 +1,4 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
-import ButtonBase from '~/components/ButtonBase.vue';
-import IconBase from '~/components/IconBase.vue';
-import Tab from '~/components/Tabs/Tab.vue';
-import TabList from '~/components/Tabs/TabList.vue';
-import TabPanel from '~/components/Tabs/TabPanel.vue';
-import TabPanels from '~/components/Tabs/TabPanels.vue';
-import Tabs from '~/components/Tabs/Tabs.vue';
-import VideoOverlay from '~/components/VideoOverlay.vue';
 import type { IconName } from '~/interfaces/icon';
 import { videoProfiles } from '~/mocks/profile';
 import type { Video } from '~/models/video';
@@ -86,7 +77,7 @@ const handlePlay = (id: string) => {
       </div>
     </div>
     <div :class="$style['profile-tabs']">
-      <Tabs v-model="selectedTab" :fitted="true" variant="line">
+      <Tabs v-model="selectedTab" fitted variant="line">
         <TabList>
           <Tab v-for="tab in tabs" :key="tab.id" :icon="tab.icon">
             {{ tab.title }}

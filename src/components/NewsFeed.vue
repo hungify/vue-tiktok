@@ -5,11 +5,9 @@ import {
   useInfiniteScroll,
   type UseInfiniteScrollOptions,
 } from '@vueuse/core';
-import { computed, reactive, ref, shallowReactive } from 'vue';
 import CardVideoItem from '~/components/CardVideoItem.vue';
 import { playList } from '~/mocks/video';
 import type { NewsFeed } from '~/models/video';
-import { useVideoPlayerStore } from '~/store/video';
 
 const isModalOpen = sessionStorage.getItem('isModalOpen') === 'true';
 

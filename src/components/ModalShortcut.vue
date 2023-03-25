@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
 import { SHORT_CUTS } from '~/constants/shortcuts';
 import type { IconName } from '~/interfaces/icon';
-import ModalBase from './ModalBase.vue';
 
 interface Shortcut {
   title: string;

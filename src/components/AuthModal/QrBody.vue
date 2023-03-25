@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import images from '~/assets/images';
-import IconBase from '../IconBase.vue';
 </script>
 
 <template>

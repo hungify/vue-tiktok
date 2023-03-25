@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { inject, computed, getCurrentInstance } from 'vue';
 import type { TabsContext } from '.';
 
 const tabsContext = inject<TabsContext>('tabs');
-const isActive = computed(() => tabsContext?.state.selectedIndex === currentKey.value);
+
 const currentKey = computed(() => getCurrentInstance()?.vnode.key);
+const isActive = computed(() => tabsContext?.state.selectedIndex === currentKey.value);
 </script>
 
 <template>

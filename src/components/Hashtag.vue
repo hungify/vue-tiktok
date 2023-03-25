@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import type { IconName } from '~/interfaces/icon';
-import IconBase from './IconBase.vue';
+import { IconName } from '~/interfaces/icon';
 
 interface HashTagProps {
   title: string;

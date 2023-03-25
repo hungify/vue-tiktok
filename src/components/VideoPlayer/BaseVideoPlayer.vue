@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { computed, nextTick, ref, watch } from 'vue';
-import { useVideoPlayerStore } from '~/store/video';
-import IconBase from '../IconBase.vue';
+import { useVideoPlayerStore } from '~/stores/video';
 import SeekBar from './SeekBar.vue';
 import VolumeSlider from './VolumeSlider.vue';
 

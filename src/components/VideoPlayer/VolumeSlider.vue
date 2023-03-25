@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import IconBase from '../IconBase.vue';
-
 interface VolumeSliderProps {
   volume: number;
   muted: boolean;

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { RouterLink } from 'vue-router';
 import type { IconName } from '~/interfaces/icon';
-import IconBase from '../IconBase.vue';
+import { RouterLink } from 'vue-router';
 
 interface MenuItemProps {
   title: string;
@@ -13,8 +12,8 @@ defineProps<MenuItemProps>();
 
 <template>
   <div class="menu-item-wrapper">
-    <RouterLink :to="to" class="menu-item">
-      <IconBase :name="icon" width="32" height="32" />
+    <RouterLink :to="to" class="menu-item" active-class="active-active">
+      <IconBase :name="icon" :width="32" :height="32" />
       <span class="title">
         {{ title }}
       </span>
@@ -34,7 +33,7 @@ defineProps<MenuItemProps>();
     color: $text;
     transition: background-color ease-in-out 200ms;
 
-    &.router-link-active {
+    &.router-link-exact-active {
       color: $danger;
     }
 

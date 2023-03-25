@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, type ImgHTMLAttributes, ref } from 'vue';
+import type { ImgHTMLAttributes } from 'vue';
 import images from '~/assets/images';
 
 interface ImageProps extends ImgHTMLAttributes {

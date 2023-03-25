@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import ButtonBase from '~/components/ButtonBase.vue';
-import IconBase from '~/components/IconBase.vue';
 import type { IconName } from '~/interfaces/icon';
 
 interface BaseMenuItem {

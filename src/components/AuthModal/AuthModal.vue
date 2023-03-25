@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, reactive } from 'vue';
-import { ObjectKeys } from '~/utils/object';
-import ButtonBase from '../ButtonBase.vue';
-import IconBase from '../IconBase.vue';
+import { objectKeys } from '~/utils/object';
 import ModalBase from '../ModalBase.vue';
 import FormBody from './FormBody.vue';
 import OptionBody from './OptionBody.vue';
@@ -45,7 +42,7 @@ const modalTile = reactive({
 });
 
 const isMethodAuthForm = computed(() => {
-  return ObjectKeys(modalTile)
+  return objectKeys(modalTile)
     .filter((key) => key !== 'option')
     .includes(methodAuth.value);
 });
@@ -95,7 +92,7 @@ const handleBack = () => {
     </template>
     <template #default>
       <h1 class="title">{{ currentModalTitle }}</h1>
-      <component
+      <Component
         :is="currentModalBody"
         v-bind="currentModalBody === FormBody ? { methodAuth } : {}"
         @onSelect="handleSelectOption"

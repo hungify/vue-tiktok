@@ -4,14 +4,9 @@ import {
   useWindowSize,
   type UseIntersectionObserverOptions,
 } from '@vueuse/core';
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
 import type { Video } from '~/models/video';
-import ButtonBase from './ButtonBase.vue';
-import Hashtag from './Hashtag.vue';
-import IconBase from './IconBase.vue';
-import ImageBase from './ImageBase.vue';
 import PopperWrapper from './Popper/PopperWrapper.vue';
 import AccountPreview from './Sidebar/AccountPreview.vue';
 import BaseVideoPlayer from './VideoPlayer/BaseVideoPlayer.vue';

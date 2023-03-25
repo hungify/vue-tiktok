@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import CardFollowItem from '~/components/CardFollowItem.vue';
 import { followingList } from '~/mocks/following';
 
 const currentVideoId = ref('1');

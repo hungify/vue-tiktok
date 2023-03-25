@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import IconBase from '~/components/IconBase.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="live-wrapper">

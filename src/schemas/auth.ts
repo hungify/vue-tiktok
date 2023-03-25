@@ -1,23 +1,49 @@
-import z from 'zod';
+import { z } from 'zod';
 
-export const loginSchema = z.object({
-  usernameOrEmail: z
-    .string({
-      required_error: 'Email is required',
-      invalid_type_error: 'Email must be a string',
-    })
-    .min(6, {
-      message: 'Email must be at least 6 characters',
-    })
-    .email({
-      message: 'Email must be a valid email',
-    }),
-  password: z
-    .string({
-      required_error: 'Password is required',
-      invalid_type_error: 'Password must be a string',
-    })
-    .min(6, {
-      message: 'Password must be at least 6 characters',
-    }),
+const loginRequestSchema = z.object({
+  usernameOrEmail: z.string().email(),
+  password: z.string().min(6),
 });
+
+const loginResponseSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+const registerRequestSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  name: z.string().min(2),
+});
+
+const registerResponseSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+const refreshRequestSchema = z.object({});
+
+const refreshResponseSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+const logoutRequestSchema = z.object({});
+
+const logoutResponseSchema = z.object({
+  message: z.string(),
+});
+
+export const authSchemaRequest = {
+  login: loginRequestSchema,
+  register: registerRequestSchema,
+  refresh: refreshRequestSchema,
+  logout: logoutRequestSchema,
+};
+
+export const authSchemaResponse = {
+  login: loginResponseSchema,
+  register: registerResponseSchema,
+  refresh: refreshResponseSchema,
+  logout: logoutResponseSchema,
+};

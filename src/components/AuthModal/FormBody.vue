@@ -1,15 +1,12 @@
 <script lang="ts" setup>
-import { toFormValidator } from '@vee-validate/zod';
+// import { toFormValidator }    from '@vee-validate/zod';
 import { ErrorMessage, useField, useForm } from 'vee-validate';
-import { ref, computed } from 'vue';
 import type { z } from 'zod';
-import { loginSchema } from '~/schemas/auth';
-import ButtonBase from '../ButtonBase.vue';
-import IconBase from '../IconBase.vue';
+import type { authSchemaRequest } from '~/schemas/auth';
 import type { AuthModalType } from './AuthModal.vue';
 
-type UsernameOrEmailField = z.infer<typeof loginSchema>['usernameOrEmail'];
-type PasswordField = z.infer<typeof loginSchema>['password'];
+type UsernameOrEmailField = z.infer<typeof authSchemaRequest.login>['usernameOrEmail'];
+type PasswordField = z.infer<typeof authSchemaRequest.login>['password'];
 
 interface OptionBodyProps {
   methodAuth: AuthModalType;
@@ -21,9 +18,8 @@ interface OptionBodyEvents {
 }
 const emit = defineEmits<OptionBodyEvents>();
 
-const loginValidationSchema = toFormValidator(loginSchema);
 const { handleSubmit, errors, isSubmitting, meta } = useForm({
-  validationSchema: loginValidationSchema,
+  // validationSchema: toFormValidator(authSchemaRequest.login)
 });
 
 const { value: usernameOrEmail } = useField<UsernameOrEmailField>('usernameOrEmail', undefined, {});

@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { MENU_LINKS } from '~/configs';
-import SuggestedList from './SuggestedList.vue';
-import Menu from './Menu.vue';
 import { UserList } from '~/mocks/users';
-import DiscoverList from './DiscoverList.vue';
-import ButtonBase from '../ButtonBase.vue';
 
 interface SidebarEvents {
   (event: 'onShowModal'): void;
@@ -41,6 +37,7 @@ defineEmits<SidebarEvents>();
     </div>
   </aside>
 </template>
+
 <style lang="scss" module>
 .wrapper {
   position: relative;

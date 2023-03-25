@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import ButtonBase from '~/components/ButtonBase.vue';
-import Hashtag from '~/components/Hashtag.vue';
-import IconBase from '~/components/IconBase.vue';
 import VIDEOS from '~/assets/videos';
-import IMAGES from '~/assets/images';
-import { ref, onMounted } from 'vue';
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 

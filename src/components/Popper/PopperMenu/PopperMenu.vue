@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue';
 import { Tippy } from 'vue-tippy';
-import ButtonBase from '~/components/ButtonBase.vue';
-import IconBase from '~/components/IconBase.vue';
-import ModalShortcut from '~/components/ModalShortcut.vue';
-import SwitchBase from '~/components/SwitchBase.vue';
 import type { BaseMenuItem } from '~/interfaces/layout';
 import PopperWrapper from '../PopperWrapper.vue';
 import PopperMenuItem from './PopperMenuItem.vue';
@@ -25,7 +20,9 @@ const isSubMenu = computed(() => !menuItems.data?.[0]?.children);
 
 const isDarkMode = ref(false);
 
-const handleReset = () => {};
+const handleReset = () => {
+  console.log('handleReset');
+};
 
 const handleMenuItemClick = (item: BaseMenuItem, _evt: Event) => {
   if (item?.children) {

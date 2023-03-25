@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, toRefs, useSlots, type ButtonHTMLAttributes } from 'vue';
+import type { ButtonHTMLAttributes } from 'vue';
 
 interface ButtonProps extends ButtonHTMLAttributes {
   color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
@@ -38,7 +38,7 @@ if (href?.value && to?.value) {
   throw new Error('You can only use one of href or to');
 }
 
-let Component = 'button';
+let Component: unknown = 'button';
 
 if (href?.value) {
   Component = 'a';
@@ -63,7 +63,7 @@ const slots = useSlots();
 </script>
 
 <template>
-  <component
+  <Component
     :is="Component"
     :href="href"
     :to="to"
@@ -81,7 +81,7 @@ const slots = useSlots();
     <span v-if="slots.rightIcon" class="icon">
       <slot name="rightIcon" />
     </span>
-  </component>
+  </Component>
 </template>
 
 <style lang="scss" scoped>

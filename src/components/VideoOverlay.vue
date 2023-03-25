@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { useElementHover } from '@vueuse/core';
-import { ref, watch } from 'vue';
-import { RouterLink } from 'vue-router';
 
 interface VideoOverlayProps {
   id: string;

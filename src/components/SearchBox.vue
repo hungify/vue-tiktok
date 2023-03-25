@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue';
-import ButtonBase from './ButtonBase.vue';
-import IconBase from './IconBase.vue';
 import { useTippy } from 'vue-tippy';
-import PopperWrapper from './Popper/PopperWrapper.vue';
-import AccountItem from './Sidebar/AccountItem.vue';
 import type { User } from '~/models/user';
 import { useDebounceFn } from '@vueuse/shared';
 
@@ -35,6 +30,7 @@ useTippy(searchBoxRef, {
   hideOnClick: true,
 });
 </script>
+
 <template>
   <div :class="$style.wrapper">
     <div ref="searchBoxRef" :class="$style.search">

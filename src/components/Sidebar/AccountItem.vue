@@ -1,11 +1,6 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { Tippy } from 'vue-tippy';
 import type { User } from '~/models/user';
-import IconBase from '../IconBase.vue';
-import ImageBase from '../ImageBase.vue';
-import PopperWrapper from '../Popper/PopperWrapper.vue';
-import AccountPreview from './AccountPreview.vue';
 
 interface AccountItem {
   item: User;

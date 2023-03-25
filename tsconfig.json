@@ -1,42 +1,24 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": [
-    "src/**/*",
-    "src/@types/*.d.ts",
-    ".eslintrc.*",
-    "vite.config.ts",
-    "vite-env.d.ts",
-    ".commitlint.js"
-  ],
-  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedParameters": true,
-    "importsNotUsedAsValues": "error",
-    "preserveValueImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "incremental": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client"],
-    "typeRoots": ["node_modules/@types", "src/@types"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["src/@types/*"],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-  "references": [{ "path": "./tsconfig.config.json" }]
+  "include": [".eslintrc.*", "vite.config.ts", "src/**/*"],
+  "exclude": ["dist", "node_modules", "cypress"]
 }

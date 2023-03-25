@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
 import type { User } from '~/models/user';
-import ButtonBase from '../ButtonBase.vue';
-import IconBase from '../IconBase.vue';
-import ImageBase from '../ImageBase.vue';
 
 interface AccountPreview {
   item: User;

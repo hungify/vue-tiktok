@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import { computed, getCurrentInstance, inject } from 'vue';
 import type { IconName } from '~/interfaces/icon';
 import type { TabsContext } from '.';
-import ButtonBase from '../ButtonBase.vue';
-import IconBase from '../IconBase.vue';
 
 interface TabProps {
   disabled?: boolean;

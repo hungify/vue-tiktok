@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import { useElementHover } from '@vueuse/core';
-import { computed, ref, watch } from 'vue';
-import ButtonBase from './ButtonBase.vue';
-import IconBase from './IconBase.vue';
-import VideoOverlay from './VideoOverlay.vue';
 
 interface CardFollowerProps {
   id: string;

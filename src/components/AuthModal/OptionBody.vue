@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import ButtonBase from '~/components/ButtonBase.vue';
-import IconBase from '~/components/IconBase.vue';
 import type { AuthModalType } from './AuthModal.vue';
 
 interface OptionBodyEvents {

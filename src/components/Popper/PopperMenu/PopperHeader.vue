@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import ButtonBase from '~/components/ButtonBase.vue';
-import IconBase from '~/components/IconBase.vue';
-
 interface HeaderProps {
   title: string;
 }

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { HashTags } from '~/mocks/hashtag';
-import Hashtag from '../Hashtag.vue';
 </script>
 
 <template>

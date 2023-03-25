@@ -1,42 +1,28 @@
 <script lang="ts" setup>
-import { computed, defineAsyncComponent, type SVGAttributes, useAttrs, useCssModule } from 'vue';
+import type { SVGAttributes } from 'vue';
 import type { IconName } from '~/interfaces/icon';
 
 interface IconProps extends SVGAttributes {
   name: IconName;
-  color?: string;
 }
 
 const props = defineProps<IconProps>();
 
-const currentIcon = computed(() =>
-  defineAsyncComponent({
-    loader: () => import(`~/assets/icons/${props.name}.svg`),
-    delay: 200,
-    timeout: 3000,
-    suspensible: true,
-  }),
-);
 const attrs = useAttrs();
-const $style = useCssModule();
-const styles = computed(() => {
-  return {
-    color: props.color,
-    width: attrs.width || '2rem',
-    height: attrs.height || '2rem',
-  };
-});
 
-const classes = computed(() => {
-  return [$style['icon'], attrs.class];
-});
+const currentIcon = computed(() =>
+  defineAsyncComponent(() => import(`~/assets/icons/${props.name}.svg?component`)),
+);
+
+const styles = computed(() => ({
+  width: attrs.width || '1.5rem',
+  height: attrs.height || '1.5rem',
+}));
 </script>
 
-<template>
-  <component :is="currentIcon" :class="classes" :style="styles" v-bind="attrs" />
-</template>
+<template><Component :is="currentIcon" :style="styles" class="icon" /></template>
 
-<style lang="scss" module>
+<style scoped>
 .icon {
   display: inline-block;
   fill: currentColor;

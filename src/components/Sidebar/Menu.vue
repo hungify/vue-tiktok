@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { BaseMenuItemLink } from '~/interfaces/layout';
-import MenuItemLink from './MenuItemLink.vue';
 
 interface MenuProps {
   items: BaseMenuItemLink[];

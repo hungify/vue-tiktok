@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
 import type { User } from '~/models/user';
-import AccountItem from './AccountItem.vue';
 
 interface SuggestedListProps {
   label: string;

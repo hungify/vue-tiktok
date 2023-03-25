@@ -1,23 +1,20 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { RouterView, useRoute } from 'vue-router';
-import MainLayout from '~/layouts/MainLayout.vue';
-import BlankLayout from '~/layouts/BlankLayout.vue';
-
-const route = useRoute();
-
-const layoutMapper = {
-  MainLayout,
-  BlankLayout,
-};
-
-const currentLayout = computed(() => {
-  return layoutMapper[route.meta.layout || 'MainLayout'];
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Component :is="currentLayout">
-    <RouterView />
-  </Component>
+  <RouterView />
 </template>
+
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
+</style>
