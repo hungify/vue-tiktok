@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import VIDEOS from '~/assets/videos';
 
+const router = useRouter();
+
 const videoRef = ref<HTMLVideoElement | null>(null);
 
 onMounted(() => {
@@ -8,31 +10,61 @@ onMounted(() => {
     videoRef.value.play();
   }
 });
+
+const handleBack = () => {
+  router.back();
+};
 </script>
 
 <template>
   <div class="wrapper">
     <div class="left">
       <div class="overlay" />
-      <div class="action-top">
-        <ButtonBase variant="ghost" color="default" size="sm">
-          <IconBase name="x" />
-        </ButtonBase>
-        <ButtonBase variant="ghost" color="default" size="sm">
-          <IconBase name="tiktok" />
-        </ButtonBase>
-      </div>
-
-      <div class="action-bottom">
-        <ButtonBase variant="ghost" color="default" size="sm">
-          <IconBase name="volume-full" />
-        </ButtonBase>
-      </div>
 
       <div class="video-wrap">
         <div class="video-inner">
           <div class="video-overlay">
             <video ref="videoRef" :src="VIDEOS.video1" loop :muted="true" />
+
+            <div class="duration">
+              <SeekBar :currentTime="10" :duration="1000" />
+              <div class="time">{{ 123 }}</div>
+            </div>
+
+            <div class="volume-slider">
+              <VolumeSlider :volume="50" :muted="false" />
+            </div>
+
+            <div class="action-top">
+              <div class="action-first">
+                <ButtonBase variant="ghost" color="default" class="btn-close" @click="handleBack">
+                  <IconBase name="x" width="1.8rem" height="1.8rem" />
+                </ButtonBase>
+                <ButtonBase variant="ghost" color="default">
+                  <IconBase name="tiktok" width="3.5rem" height="3.5rem" />
+                </ButtonBase>
+              </div>
+
+              <div class="action-last">
+                <ButtonBase variant="ghost" color="default" class="btn-report">
+                  <IconBase name="flag" width="1.8rem" height="1.8rem" />
+                  Report
+                </ButtonBase>
+              </div>
+            </div>
+
+            <div class="action-center">
+              <ButtonBase class="action" variant="ghost">
+                <IconBase name="play" width="70" height="70" color="white" />
+              </ButtonBase>
+            </div>
+
+            <ButtonBase class="action-previous" variant="ghost">
+              <IconBase name="arrow-solid" width="26" height="26" />
+            </ButtonBase>
+            <ButtonBase class="action-next" variant="ghost">
+              <IconBase name="arrow-solid" width="26" height="26" />
+            </ButtonBase>
           </div>
         </div>
       </div>
@@ -129,6 +161,12 @@ onMounted(() => {
   </div>
 </template>
 
+<route lang="yaml">
+meta:
+  layout: Blank
+  full: true
+</route>
+
 <style lang="scss" scoped>
 .wrapper {
   display: grid;
@@ -183,23 +221,13 @@ onMounted(() => {
     justify-content: center;
   }
 
-  .action-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  .btn-close {
+    padding: 1.2rem;
+    border-radius: 50%;
+    background-color: rgba(84, 84, 84, 0.5);
+    color: white;
   }
 
-  .action-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.6rem;
-  }
   .video-overlay {
     position: absolute;
     left: 0px;
@@ -211,6 +239,95 @@ onMounted(() => {
       width: 100%;
       height: 100%;
       object-fit: contain;
+    }
+
+    .duration {
+      width: calc(100% - 160px);
+      height: 24px;
+      padding-inline: 16px;
+      position: absolute;
+      opacity: 1;
+      transition: opacity 0.3s ease 0s;
+      bottom: 28px;
+      cursor: initial;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 56.25vh;
+      .time {
+        color: #fff;
+        font-size: 1rem;
+      }
+    }
+
+    .volume-slider {
+      position: absolute;
+      z-index: 1;
+      bottom: 1.25rem;
+      right: 1.25rem;
+    }
+
+    .action-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 1.2rem;
+      .action-first {
+        margin-left: 2rem;
+      }
+      .action-last {
+        margin-right: 2rem;
+        .btn-report {
+          background-color: rgba(84, 84, 84, 0.5);
+          color: white;
+          border-radius: 6.25rem;
+        }
+      }
+    }
+
+    .action-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .action-previous {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(84, 84, 84, 0.5);
+      border-radius: 50%;
+      transform: rotate(-90deg);
+      top: calc(50% - 48px);
+      right: 20px;
+      color: white;
+    }
+
+    .action-next {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(84, 84, 84, 0.5);
+      border-radius: 50%;
+      transform: rotate(90deg);
+      top: calc(50% + 8px);
+      right: 20px;
+      color: white;
     }
   }
 }

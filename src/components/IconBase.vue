@@ -27,7 +27,6 @@ const styles = computed(() => ({
   display: inline-block;
   fill: currentColor;
   vertical-align: middle;
-  flex-shrink: 0;
   user-select: none;
 }
 </style>

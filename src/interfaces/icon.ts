@@ -44,4 +44,6 @@ export type IconName =
   | 'lock-solid'
   | 'lock-outline'
   | 'tiktok'
-  | 'code';
+  | 'code'
+  | 'arrow-solid'
+  | 'flag';

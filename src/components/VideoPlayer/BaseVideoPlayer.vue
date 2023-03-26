@@ -64,6 +64,14 @@ const seekBarTime = computed(() => {
   return `${currentTime} / ${duration}`;
 });
 
+const handleLoadedMetaData = async () => {
+  await nextTick();
+  if (videoRef.value && store.currentVideoId === props.id) {
+    const duration = videoRef.value?.duration;
+    store.setDuration(duration);
+  }
+};
+
 const handleValueVolumeChange = (value: number) => {
   store.setVolume(value);
 };
@@ -87,14 +95,6 @@ const handleTimeUpdate = (evt: Event) => {
   const target = evt.target as HTMLVideoElement;
   const currentTime = target.currentTime;
   store.setCurrentTime(currentTime);
-};
-
-const handleLoadedMetaData = async () => {
-  await nextTick();
-  if (videoRef.value && store.currentVideoId === props.id) {
-    const duration = videoRef.value?.duration;
-    store.setDuration(duration);
-  }
 };
 
 const handleSeekChange = (value: number) => {
