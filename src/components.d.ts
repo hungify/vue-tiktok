@@ -21,13 +21,7 @@ declare module '@vue/runtime-core' {
     FormBody: typeof import('./components/AuthModal/FormBody.vue')['default'];
     Hashtag: typeof import('./components/Hashtag.vue')['default'];
     Header: typeof import('./components/Header.vue')['default'];
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default'];
     IconBase: typeof import('./components/IconBase.vue')['default'];
-    IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default'];
-    IconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default'];
-    IconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default'];
-    IconSupport: typeof import('./components/icons/IconSupport.vue')['default'];
-    IconTooling: typeof import('./components/icons/IconTooling.vue')['default'];
     ImageBase: typeof import('./components/ImageBase.vue')['default'];
     Menu: typeof import('./components/Sidebar/Menu.vue')['default'];
     MenuItemLink: typeof import('./components/Sidebar/MenuItemLink.vue')['default'];
@@ -52,10 +46,7 @@ declare module '@vue/runtime-core' {
     TabPanel: typeof import('./components/Tabs/TabPanel.vue')['default'];
     TabPanels: typeof import('./components/Tabs/TabPanels.vue')['default'];
     Tabs: typeof import('./components/Tabs/Tabs.vue')['default'];
-    TheHeader: typeof import('./components/TheHeader.vue')['default'];
-    TheWelcome: typeof import('./components/TheWelcome.vue')['default'];
     VideoOverlay: typeof import('./components/VideoOverlay.vue')['default'];
     VolumeSlider: typeof import('./components/VideoPlayer/VolumeSlider.vue')['default'];
-    WelcomeItem: typeof import('./components/WelcomeItem.vue')['default'];
   }
 }

@@ -14,11 +14,10 @@
     "strictNullChecks": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["src/@types/*"],
     "paths": {
       "~/*": ["src/*"]
     }
   },
-  "include": [".eslintrc.*", "vite.config.ts", "src/**/*"],
+  "include": [".eslintrc.*", "src/**/*"],
   "exclude": ["dist", "node_modules", "cypress"]
 }

@@ -1,7 +1,6 @@
 import generatedRoutes from '~pages';
 import { setupLayouts } from 'virtual:generated-layouts';
-import { createRouter } from 'vue-router';
-import { createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import type { App } from 'vue';
 import { locationsScrollToTop } from '~/configs/router';
 

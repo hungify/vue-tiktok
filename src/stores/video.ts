@@ -1,6 +1,3 @@
-import { acceptHMRUpdate, defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-
 export const useVideoPlayerStore = defineStore('video', () => {
   const currentVideoId = ref('');
   const playing = ref(false);

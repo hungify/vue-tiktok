@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import { defineStore } from 'pinia';
 import type { LoginRequest, RegisterRequest } from '~/interfaces/auth';
 import type { FormError } from '~/interfaces/error';
 import { AuthService } from '~/services/auth';
@@ -56,3 +55,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
+}

@@ -36,7 +36,7 @@ module.exports = {
     'eslint-config-prettier',
     'prettier',
   ],
-  ignorePatterns: ['node_modules', 'dist', '*.d.ts'],
+  ignorePatterns: ['node_modules', 'dist', '*.d.ts', 'vite.config.ts'],
   rules: {
     'prettier/prettier': 'error',
     'no-nested-ternary': 'error',
