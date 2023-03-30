@@ -27,6 +27,7 @@ const currentVideoRef = ref<InstanceType<typeof BaseVideoPlayer>>();
 const cardVideoRef = ref<HTMLElement>();
 const isVideoInView = ref(false);
 const { width } = useWindowSize();
+const router = useRouter();
 
 const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
 
@@ -100,11 +101,15 @@ defineExpose({
 onBeforeUnmount(() => {
   stop();
 });
+
+const handleGotoDetail = () => {
+  router.push(`/@${props.user.nickname}/video/${props.video.id}`);
+};
 </script>
 
 <template>
   <div ref="cardVideoRef" :class="$style.wrapper">
-    <RouterLink :to="`/@${user.nickname}`">
+    <div>
       <Tippy
         arrow
         theme="light"
@@ -129,7 +134,7 @@ onBeforeUnmount(() => {
           </PopperWrapper>
         </template>
       </Tippy>
-    </RouterLink>
+    </div>
     <div :class="$style.content">
       <div :class="$style.info">
         <div :class="$style['user-info']">
@@ -162,9 +167,9 @@ onBeforeUnmount(() => {
       </div>
 
       <div :class="$style['video-and-actions']">
-        <RouterLink :to="`@${user.nickname}/video/${video.id}`">
+        <div @click="handleGotoDetail">
           <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
-        </RouterLink>
+        </div>
         <ul :class="$style.actions">
           <li :class="$style['actions-item']">
             <ButtonBase

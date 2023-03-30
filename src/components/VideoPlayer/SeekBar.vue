@@ -22,10 +22,10 @@ const onSeekChangeHandler = (evt: Event) => {
 </script>
 
 <template>
-  <div :class="$style.wrapper">
+  <div :class="$style.wrapper" @click.stop="() => {}">
     <div :class="$style['progress_bar']" :style="{ width: percent }" />
     <div :class="$style['progress_circle']" :style="{ left: percent }" />
-    <input type="range" :class="$style.range" name="seek" @change="onSeekChangeHandler" />
+    <input type="range" :class="$style.range" name="seek" @change.stop="onSeekChangeHandler" />
   </div>
 </template>
 

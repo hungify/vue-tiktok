@@ -126,7 +126,7 @@ defineExpose({
         <source type="video/mp4" :src="url" />
       </video>
       <div v-if="isShowControls" :class="$style.controls">
-        <button :class="[$style['play-or-pause']]" @click="onPlayOrPauseHandler">
+        <button :class="[$style['play-or-pause']]" @click.stop="onPlayOrPauseHandler">
           <template v-if="store.playing && store.currentVideoId === id">
             <IconBase name="pause" width="24" height="24" />
           </template>
@@ -171,7 +171,10 @@ defineExpose({
   height: calc(450px + (100vw - 768px) / 1152 * 100);
   transition: opacity 0.3s linear;
 
-  &:hover .controls {
+  // &:hover .controls {
+  //   opacity: 1;
+  // }
+  .controls {
     opacity: 1;
   }
 }
