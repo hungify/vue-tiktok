@@ -67,7 +67,7 @@ const getSlotName = (iconPosition: string) => {
 
 <style scoped lang="scss">
 .tab {
-  margin: 0px !important;
+  margin: 0 !important;
   :deep(.tab-title) {
     flex: 0;
   }
@@ -81,28 +81,6 @@ const getSlotName = (iconPosition: string) => {
   .tab {
     border: 1px solid;
     border-color: transparent;
-    &--active {
-      border-color: inherit;
-      border-bottom-color: $white;
-      margin-bottom: -1px !important;
-    }
-  }
-}
-
-.tabs--line {
-  .tab {
-    position: relative;
-    &--active {
-      &::after {
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        content: '';
-        width: 100%;
-        height: 2px;
-        background-color: $danger;
-      }
-    }
   }
 }
 </style>
