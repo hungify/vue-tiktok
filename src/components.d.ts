@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
     QrBody: typeof import('./components/AuthModal/QrBody.vue')['default'];
     RouterLink: typeof import('vue-router')['RouterLink'];
     RouterView: typeof import('vue-router')['RouterView'];
+    Scrubber: typeof import('./components/Scrubber.vue')['default'];
     SearchBox: typeof import('./components/SearchBox.vue')['default'];
     SeekBar: typeof import('./components/VideoPlayer/SeekBar.vue')['default'];
     Sidebar: typeof import('./components/Sidebar/Sidebar.vue')['default'];

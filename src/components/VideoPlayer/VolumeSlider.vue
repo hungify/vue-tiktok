@@ -27,7 +27,7 @@ const onMutedHandler = () => {
 </script>
 
 <template>
-  <div :class="$style.wrapper" @click.stop="() => {}">
+  <div :class="$style.wrapper">
     <div :class="$style.icon" @click="onMutedHandler">
       <template v-if="muted">
         <IconBase name="volume-mute" width="24" height="24" />

@@ -2,6 +2,7 @@
 import { useVideoPlayerStore } from '~/stores/video';
 import SeekBar from './SeekBar.vue';
 import VolumeSlider from './VolumeSlider.vue';
+import { formatDuration } from '~/utils/format';
 
 interface VideoProps {
   id: string;
@@ -41,26 +42,8 @@ watch(
 );
 
 const seekBarTime = computed(() => {
-  const currentTimeSeconds =
-    Math.floor(store.currentTime / 60) < 10
-      ? `0${Math.floor(store.currentTime / 60)}`
-      : Math.floor(store.currentTime / 60);
-  const currentTimeMinutes =
-    Math.floor(store.currentTime % 60) < 10
-      ? `0${Math.floor(store.currentTime % 60)}`
-      : Math.floor(store.currentTime % 60);
-
-  const durationSeconds =
-    Math.floor(store.duration / 60) < 10
-      ? `0${Math.floor(store.duration / 60)}`
-      : Math.floor(store.duration / 60);
-  const durationMinutes =
-    Math.floor(store.duration % 60) < 10
-      ? `0${Math.floor(store.duration % 60)}`
-      : Math.floor(store.duration % 60);
-  const currentTime = `${currentTimeSeconds}:${currentTimeMinutes}`;
-  const duration = `${durationSeconds}:${durationMinutes}`;
-
+  const currentTime = formatDuration(store.currentTime);
+  const duration = formatDuration(store.duration);
   return `${currentTime} / ${duration}`;
 });
 
@@ -142,7 +125,7 @@ defineExpose({
             @onMuted="handleMuted"
           />
         </div>
-        <div :class="[$style['duration']]">
+        <div :class="[$style['duration']]" @click.stop="() => {}">
           <SeekBar
             :currentTime="store.currentTime"
             :duration="store.duration"
@@ -171,11 +154,11 @@ defineExpose({
   height: calc(450px + (100vw - 768px) / 1152 * 100);
   transition: opacity 0.3s linear;
 
-  // &:hover .controls {
-  //   opacity: 1;
-  // }
-  .controls {
+  &:hover .controls {
     opacity: 1;
+  }
+  .controls {
+    opacity: 0;
   }
 }
 

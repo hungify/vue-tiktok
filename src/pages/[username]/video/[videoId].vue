@@ -1,15 +1,74 @@
 <script lang="ts" setup>
 import VIDEOS from '~/assets/videos';
 
+interface VideoDetailProps {
+  src?: string;
+  poster?: string;
+  loop?: boolean;
+}
+
+const props = withDefaults(defineProps<VideoDetailProps>(), {
+  src: VIDEOS.video2,
+  poster: 'https://files.fullstack.edu.vn/f8-tiktok/videos/1953-64245f4b054b9.jpg',
+  loop: false,
+});
+
 const router = useRouter();
 
-const videoRef = ref<HTMLVideoElement | null>(null);
+const videoRef = ref<HTMLVideoElement>();
 
-onMounted(() => {
-  if (videoRef.value) {
-    videoRef.value.play();
+const { playing, currentTime, duration, volume, muted, buffered } = useMediaControls(videoRef, {
+  src: props.src,
+});
+
+const endBuffer = computed(() => {
+  return buffered.value.length > 0 ? buffered.value[buffered.value.length - 1][1] : 0;
+});
+
+const videoStyle = computed(() => {
+  return {
+    '--poster': props.poster,
+  };
+});
+
+useEventListener(document, 'visibilitychange', (evt: Event) => {
+  const target = evt.target as Document;
+  if (target.visibilityState === 'visible') {
+    playing.value = true;
+  } else {
+    playing.value = false;
   }
 });
+
+onKeyStroke(['ArrowDown', 'ArrowUp', 'm', ' '], (e) => {
+  if (e.key === 'ArrowDown') {
+    console.log('down');
+  } else if (e.key === 'ArrowUp') {
+    console.log('up');
+  } else if (e.key === 'm') {
+    muted.value = !muted.value;
+  } else if (e.key === ' ') {
+    playing.value = !playing.value;
+  }
+});
+
+const handleLoadedData = () => {
+  playing.value = true;
+};
+
+const handlePlayOrPause = () => {
+  if (playing.value) {
+    playing.value = false;
+  }
+};
+
+const handleVolumeChange = (value: number) => {
+  volume.value = value / 100;
+};
+
+const handleMuted = () => {
+  muted.value = !muted.value;
+};
 
 const handleBack = () => {
   router.back();
@@ -20,19 +79,29 @@ const handleBack = () => {
   <div class="wrapper">
     <div class="left">
       <div class="overlay" />
-
       <div class="video-wrap">
         <div class="video-inner">
-          <div class="video-overlay">
-            <video ref="videoRef" :src="VIDEOS.video1" loop :muted="true" />
+          <div class="video-overlay" @click="handlePlayOrPause">
+            <video
+              ref="videoRef"
+              :loop="loop"
+              :muted="muted"
+              :poster="poster"
+              :style="videoStyle"
+              @loadeddata="handleLoadedData"
+            />
 
-            <div class="duration">
-              <SeekBar :currentTime="10" :duration="1000" />
-              <div class="time">{{ 123 }}</div>
+            <div class="duration" @click.stop="() => {}">
+              <Scrubber v-model="currentTime" :max="duration" :secondary="endBuffer" />
             </div>
 
             <div class="volume-slider">
-              <VolumeSlider :volume="50" :muted="false" />
+              <VolumeSlider
+                :volume="volume"
+                :muted="muted"
+                @onMuted="handleMuted"
+                @onVolumeChange="handleVolumeChange"
+              />
             </div>
 
             <div class="action-top">
@@ -55,7 +124,7 @@ const handleBack = () => {
 
             <div class="action-center">
               <ButtonBase class="action" variant="ghost">
-                <IconBase name="play" width="70" height="70" color="white" />
+                <IconBase v-if="!playing" name="play" width="70" height="70" color="white" />
               </ButtonBase>
             </div>
 
@@ -197,7 +266,7 @@ meta:
     transform: scale(11);
     opacity: 0.3;
     background: center center / cover no-repeat;
-    background-image: url('https://p16-sign-va.tiktokcdn.com/tos-useast2a-p-0037-aiso/o8gZeDOMHGc4dIKRAnEs3nAleBfEeIbr8E6wK6~tplv-f5insbecw7-1:720:720.jpeg?x-expires=1674824400&x-signature=%2BtUNj4J7b7OjVG38HX5WQl5NKU8%3D');
+    background-image: url('--poster');
   }
 
   .video-wrap {
@@ -219,6 +288,12 @@ meta:
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:hover {
+      .duration {
+        opacity: 1;
+      }
+    }
   }
 
   .btn-close {
@@ -246,20 +321,32 @@ meta:
       height: 24px;
       padding-inline: 16px;
       position: absolute;
-      opacity: 1;
       transition: opacity 0.3s ease 0s;
       bottom: 28px;
-      cursor: initial;
       display: flex;
-      -webkit-box-align: center;
       align-items: center;
+      gap: 10px;
       left: 50%;
       transform: translateX(-50%);
       max-width: 56.25vh;
+      opacity: 1;
       .time {
         color: #fff;
         font-size: 1rem;
       }
+    }
+
+    .scrubber__tooltip {
+      position: absolute;
+      transform: translateX(-50%);
+      background-color: black;
+      border-radius: 0.5rem;
+      padding-inline: 0.5rem;
+      bottom: 0;
+      margin-bottom: 0.5rem;
+      padding-block: 0.25rem;
+      font-size: 0.75rem;
+      color: white;
     }
 
     .volume-slider {
@@ -298,6 +385,7 @@ meta:
       top: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .action-previous {

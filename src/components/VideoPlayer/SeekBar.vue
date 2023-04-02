@@ -25,7 +25,7 @@ const onSeekChangeHandler = (evt: Event) => {
   <div :class="$style.wrapper" @click.stop="() => {}">
     <div :class="$style['progress_bar']" :style="{ width: percent }" />
     <div :class="$style['progress_circle']" :style="{ left: percent }" />
-    <input type="range" :class="$style.range" name="seek" @change.stop="onSeekChangeHandler" />
+    <input type="range" :class="$style.range" min="0" name="seek" @change="onSeekChangeHandler" />
   </div>
 </template>
 
@@ -33,7 +33,7 @@ const onSeekChangeHandler = (evt: Event) => {
 .wrapper {
   max-width: 90%;
   flex: 1;
-  height: pxToRem(12px);
+  height: 0.75rem;
   position: relative;
 
   &:hover {
