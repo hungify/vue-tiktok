@@ -318,7 +318,7 @@ meta:
 
     .duration {
       width: calc(100% - 160px);
-      height: 24px;
+      height: 8px;
       padding-inline: 16px;
       position: absolute;
       transition: opacity 0.3s ease 0s;

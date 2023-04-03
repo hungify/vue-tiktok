@@ -117,7 +117,7 @@ defineExpose({
             <IconBase name="play" width="24" height="24" />
           </template>
         </button>
-        <div :class="[$style['volume']]">
+        <div :class="[$style['volume']]" @click.stop="() => {}">
           <VolumeSlider
             :volume="store.volume"
             :muted="store.muted"

@@ -70,8 +70,8 @@ const position = computed(() => {
 <style lang="scss" scoped>
 .scrubber {
   width: 100%;
+  height: 100%;
   position: relative;
-  height: 0.5rem;
   border-radius: 0.25rem;
   cursor: pointer;
   user-select: none;
