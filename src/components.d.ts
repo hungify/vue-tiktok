@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     TabPanels: typeof import('./components/Tabs/TabPanels.vue')['default'];
     Tabs: typeof import('./components/Tabs/Tabs.vue')['default'];
     VideoOverlay: typeof import('./components/VideoOverlay.vue')['default'];
+    Volume: typeof import('./components/Volume.vue')['default'];
     VolumeSlider: typeof import('./components/VideoPlayer/VolumeSlider.vue')['default'];
   }
 }

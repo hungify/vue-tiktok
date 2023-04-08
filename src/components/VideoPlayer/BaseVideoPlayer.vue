@@ -32,7 +32,7 @@ watch(
         videoRef.value.pause();
       }
       if (value.volume > 0) {
-        videoRef.value.volume = value.volume / 100;
+        videoRef.value.volume = value.volume;
       }
     }
   },
@@ -55,12 +55,8 @@ const handleLoadedMetaData = async () => {
   }
 };
 
-const handleValueVolumeChange = (value: number) => {
+const handleVolumeChange = (value: number) => {
   store.setVolume(value);
-};
-
-const handleMuted = () => {
-  store.toggleMuted();
 };
 
 const onPlayOrPauseHandler = () => {
@@ -81,7 +77,7 @@ const handleTimeUpdate = (evt: Event) => {
 };
 
 const handleSeekChange = (value: number) => {
-  const currentTime = (value / 100) * store.duration;
+  const currentTime = value * store.duration;
   store.setCurrentTime(currentTime);
   if (videoRef.value) {
     videoRef.value.currentTime = currentTime;
@@ -118,12 +114,7 @@ defineExpose({
           </template>
         </button>
         <div :class="[$style['volume']]" @click.stop="() => {}">
-          <VolumeSlider
-            :volume="store.volume"
-            :muted="store.muted"
-            @onVolumeChange="handleValueVolumeChange"
-            @onMuted="handleMuted"
-          />
+          <VolumeSlider :volume="store.volume" @onVolumeChange="handleVolumeChange" />
         </div>
         <div :class="[$style['duration']]" @click.stop="() => {}">
           <SeekBar

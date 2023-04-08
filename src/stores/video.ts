@@ -15,10 +15,6 @@ export const useVideoPlayerStore = defineStore('video', () => {
     }
   };
 
-  const toggleMuted = () => {
-    volume.value = volume.value === 0 ? 100 : 0;
-  };
-
   const setVolume = (value: number) => {
     volume.value = value;
   };
@@ -45,7 +41,6 @@ export const useVideoPlayerStore = defineStore('video', () => {
     duration,
     currentVideoId,
 
-    toggleMuted,
     togglePlayOrPause,
     setVolume,
     setCurrentTime,

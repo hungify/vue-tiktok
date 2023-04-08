@@ -46,7 +46,7 @@ onKeyStroke(['ArrowDown', 'ArrowUp', 'm'], (e) => {
       cardVideoItemRef.value?.[index - 1]?.scrollToVideo();
     }
   } else if (e.key === 'm') {
-    store.toggleMuted();
+    store.setVolume(store.volume ? 0 : 0.5);
   }
 });
 

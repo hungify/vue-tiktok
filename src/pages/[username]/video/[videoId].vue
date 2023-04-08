@@ -8,7 +8,7 @@ interface VideoDetailProps {
 }
 
 const props = withDefaults(defineProps<VideoDetailProps>(), {
-  src: VIDEOS.video2,
+  src: VIDEOS.video3,
   poster: 'https://files.fullstack.edu.vn/f8-tiktok/videos/1953-64245f4b054b9.jpg',
   loop: false,
 });
@@ -63,11 +63,7 @@ const handlePlayOrPause = () => {
 };
 
 const handleVolumeChange = (value: number) => {
-  volume.value = value / 100;
-};
-
-const handleMuted = () => {
-  muted.value = !muted.value;
+  volume.value = Number(value);
 };
 
 const handleBack = () => {
@@ -92,19 +88,19 @@ const handleBack = () => {
             />
 
             <div class="duration" @click.stop="() => {}">
-              <Scrubber v-model="currentTime" :max="duration" :secondary="endBuffer" />
-            </div>
-
-            <div class="volume-slider">
-              <VolumeSlider
-                :volume="volume"
-                :muted="muted"
-                @onMuted="handleMuted"
-                @onVolumeChange="handleVolumeChange"
+              <Scrubber
+                v-model="currentTime"
+                :max="duration"
+                :secondary="endBuffer"
+                type="tooltip"
               />
             </div>
 
-            <div class="action-top">
+            <div class="volume-slider" @click.stop="() => {}">
+              <VolumeSlider :volume="volume" @onVolumeChange="handleVolumeChange" />
+            </div>
+
+            <div class="action-top" @click.stop="() => {}">
               <div class="action-first">
                 <ButtonBase variant="ghost" color="default" class="btn-close" @click="handleBack">
                   <IconBase name="x" width="1.8rem" height="1.8rem" />
@@ -148,7 +144,7 @@ const handleBack = () => {
           <div class="info-user__content">
             <span class="info-user__content__title">tu_meme_102</span>
             <div class="info-user__content__description">
-              <span> Meme Bình Dương </span>
+              <span>Meme Bình Dương </span>
               <span>2022-12-31</span>
             </div>
           </div>
@@ -352,8 +348,8 @@ meta:
     .volume-slider {
       position: absolute;
       z-index: 1;
-      bottom: 1.25rem;
-      right: 1.25rem;
+      bottom: 2rem;
+      right: 2rem;
     }
 
     .action-top {

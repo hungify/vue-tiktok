@@ -2,17 +2,18 @@
 import { formatDuration } from '~/utils/format';
 
 interface ScrubberProps {
-  min: number;
-  max: number;
-  secondary: number;
+  min?: number;
+  max?: number;
+  secondary?: number;
   modelValue: number;
+  type?: 'tooltip';
 }
 
 const props = withDefaults(defineProps<ScrubberProps>(), {
   min: 0,
   max: 100,
   secondary: 0,
-  variant: 'tooltip',
+  type: undefined,
 });
 
 interface ScrubberEvents {
@@ -60,7 +61,7 @@ const position = computed(() => {
         opacity: scrubbing ? 1 : 0,
       }"
     >
-      <div class="scrubber__tooltip" :style="{ left: position }">
+      <div v-if="type?.includes('tooltip')" class="scrubber__tooltip" :style="{ left: position }">
         {{ formatDuration(pendingValue) }}
       </div>
     </div>
