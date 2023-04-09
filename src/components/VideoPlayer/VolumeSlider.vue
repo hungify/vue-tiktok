@@ -9,8 +9,6 @@ interface VolumeSliderEvents {
 }
 const emit = defineEmits<VolumeSliderEvents>();
 
-const isShowVolumeControl = ref(false);
-
 const onVolumeChangeHandler = (evt: Event) => {
   const target = evt.target as HTMLInputElement;
   const volume = Number(target.valueAsNumber / 100);
@@ -21,13 +19,15 @@ const onMutedHandler = () => {
   emit('onVolumeChange', props.volume ? 0 : 0.5);
 };
 
-const handleShowControl = () => {
-  isShowVolumeControl.value = true;
+const isHovering = ref(false);
+const volumeSlider = ref<HTMLDivElement>();
+
+const handleMouseEnter = () => {
+  isHovering.value = true;
 };
 
-const handleHideControl = () => {
-  console.log('hide');
-  isShowVolumeControl.value = false;
+const handleMouseLeave = () => {
+  isHovering.value = false;
 };
 
 const thumbStyle = computed(() => {
@@ -47,37 +47,39 @@ const trackStyle = computed(() => {
 
 <template>
   <div class="volume-container">
-    <input
-      min="0"
-      max="100"
-      type="range"
-      name="volume"
-      class="input-slider"
-      :value="volume * 100"
-      style="transform: rotate(-90deg)"
-      @input="onVolumeChangeHandler"
-    />
     <div
-      v-show="isShowVolumeControl"
+      v-show="isHovering"
+      ref="volumeSlider"
       class="volume-inner"
-      @mouseenter="handleShowControl"
-      @mouseleave="handleHideControl"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
     >
+      <input
+        min="0"
+        max="100"
+        type="range"
+        name="volume"
+        class="input-slider"
+        :value="volume * 100"
+        style="transform: rotate(-90deg)"
+        @input="onVolumeChangeHandler"
+      />
       <div class="volume-control">
         <div class="progress" />
         <div class="thumb" :style="thumbStyle" />
         <div class="track" :style="trackStyle" />
       </div>
     </div>
-    <div
+    <ButtonBase
       class="icon-volume"
-      @mouseenter="handleShowControl"
-      @mouseleave="handleHideControl"
+      size="sm"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
       @click="onMutedHandler"
     >
       <IconBase v-if="volume" name="volume-full" width="24" height="24" />
       <IconBase v-else name="volume-mute" width="24" height="24" />
-    </div>
+    </ButtonBase>
   </div>
 </template>
 
@@ -89,9 +91,8 @@ const trackStyle = computed(() => {
 }
 .volume-inner {
   position: relative;
-  transition: all 0.2s linear;
+  transition: all 0.3s ease 0s;
   cursor: default;
-  background-color: red;
 }
 
 .volume-control {
@@ -124,6 +125,7 @@ const trackStyle = computed(() => {
   left: 6px;
   bottom: 6px;
   cursor: pointer;
+  transition: all 0.3s ease 0s;
 }
 
 .track {
@@ -136,35 +138,29 @@ const trackStyle = computed(() => {
   cursor: pointer;
   transform: scaleY(0);
   transform-origin: center bottom;
+  transition: all 0.3s ease 0s;
 }
 
 .input-slider {
   width: 96px;
   position: absolute;
   z-index: 1;
-  bottom: 87px;
+  bottom: 54px;
   right: -28px;
   opacity: 0;
   cursor: pointer;
 }
 
 .icon-volume {
-  background-color: red;
   color: white;
   text-align: center;
-  padding: 4px 8px;
+  padding: 8px;
   position: relative;
-  &:before {
-    content: '';
-    z-index: 2;
-    width: 40px;
-    height: 20px;
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+  background: none rgba(84, 84, 84, 0.5);
+  border-radius: 50%;
+
+  &:hover {
+    background-color: rgba(37, 37, 37, 0.6);
   }
 }
 </style>
