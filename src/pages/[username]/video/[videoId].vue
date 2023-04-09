@@ -4,13 +4,11 @@ import VIDEOS from '~/assets/videos';
 interface VideoDetailProps {
   src?: string;
   poster?: string;
-  loop?: boolean;
 }
 
 const props = withDefaults(defineProps<VideoDetailProps>(), {
   src: VIDEOS.video3,
   poster: 'https://files.fullstack.edu.vn/f8-tiktok/videos/1953-64245f4b054b9.jpg',
-  loop: false,
 });
 
 const router = useRouter();
@@ -62,10 +60,6 @@ const handlePlayOrPause = () => {
   }
 };
 
-const handleVolumeChange = (value: number) => {
-  volume.value = Number(value);
-};
-
 const handleBack = () => {
   router.back();
 };
@@ -80,7 +74,7 @@ const handleBack = () => {
           <div class="video-overlay" @click="handlePlayOrPause">
             <video
               ref="videoRef"
-              :loop="loop"
+              loop
               :muted="muted"
               :poster="poster"
               :style="videoStyle"
@@ -97,7 +91,7 @@ const handleBack = () => {
             </div>
 
             <div class="volume-slider" @click.stop="() => {}">
-              <VolumeSlider :volume="volume" @onVolumeChange="handleVolumeChange" />
+              <VolumeSlider v-model="volume" size="md" />
             </div>
 
             <div class="action-top" @click.stop="() => {}">

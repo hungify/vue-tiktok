@@ -55,10 +55,6 @@ const handleLoadedMetaData = async () => {
   }
 };
 
-const handleVolumeChange = (value: number) => {
-  store.setVolume(value);
-};
-
 const onPlayOrPauseHandler = () => {
   store.setCurrentVideoId(props.id);
   store.togglePlayOrPause();
@@ -114,7 +110,7 @@ defineExpose({
           </template>
         </button>
         <div :class="[$style['volume']]" @click.stop="() => {}">
-          <VolumeSlider :volume="store.volume" @onVolumeChange="handleVolumeChange" />
+          <VolumeSlider v-model="store.volume" />
         </div>
         <div :class="[$style['duration']]" @click.stop="() => {}">
           <SeekBar
@@ -147,9 +143,6 @@ defineExpose({
 
   &:hover .controls {
     opacity: 1;
-  }
-  .controls {
-    opacity: 0;
   }
 }
 
