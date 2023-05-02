@@ -19,6 +19,7 @@ const containerClasses = computed(() => {
 
 const isOpen = ref(false);
 useSessionStorage('isModalOpen', isOpen);
+
 const handleShowModal = () => {
   isOpen.value = true;
 };

@@ -21,16 +21,11 @@ const props = defineProps<AuthModalProps>();
 interface AuthModalEvents {
   (eventName: 'update:modelValue', event: boolean): void;
 }
-const emits = defineEmits<AuthModalEvents>();
+const emit = defineEmits<AuthModalEvents>();
 
-const isShowModal = computed({
-  get: () => props.modelValue,
-  set: (value) => {
-    emits('update:modelValue', value);
-  },
-});
+const isShowModal = useVModel(props, 'modelValue', emit);
 
-const methodAuth = ref<AuthModalType>('option');
+const authMethod = ref<AuthModalType>('option');
 
 const modalTile = reactive({
   'login-phone': 'Log in for TikTok',
@@ -44,11 +39,11 @@ const modalTile = reactive({
 const isMethodAuthForm = computed(() => {
   return objectKeys(modalTile)
     .filter((key) => key !== 'option')
-    .includes(methodAuth.value);
+    .includes(authMethod.value);
 });
 
 const currentModalBody = computed(() => {
-  if (methodAuth.value === 'qr') {
+  if (authMethod.value === 'qr') {
     return QrBody;
   }
   if (isMethodAuthForm.value) {
@@ -58,14 +53,14 @@ const currentModalBody = computed(() => {
 });
 
 const currentModalTitle = computed(() => {
-  return modalTile[methodAuth.value];
+  return modalTile[authMethod.value];
 });
 
 const handleSelectOption = (option: AuthModalType) => {
-  methodAuth.value = option;
+  authMethod.value = option;
 };
 const handleBack = () => {
-  methodAuth.value = 'option';
+  authMethod.value = 'option';
 };
 </script>
 
@@ -78,7 +73,7 @@ const handleBack = () => {
     headerClass="auth-header"
     bodyClass="auth-body"
   >
-    <template v-if="methodAuth !== 'option'" #header>
+    <template v-if="authMethod !== 'option'" #header>
       <ButtonBase
         variant="ghost"
         color="default"
@@ -94,7 +89,7 @@ const handleBack = () => {
       <h1 class="title">{{ currentModalTitle }}</h1>
       <Component
         :is="currentModalBody"
-        v-bind="currentModalBody === FormBody ? { methodAuth } : {}"
+        v-bind="currentModalBody === FormBody ? { authMethod } : {}"
         @onSelect="handleSelectOption"
       />
     </template>

@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-// import { toFormValidator }    from '@vee-validate/zod';
-import { ErrorMessage, useField, useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import { ErrorMessage, useForm } from 'vee-validate';
 import type { z } from 'zod';
-import type { authSchemaRequest } from '~/schemas/auth';
+import { authSchemaRequest } from '~/schemas/auth';
 import type { AuthModalType } from './AuthModal.vue';
 
-type UsernameOrEmailField = z.infer<typeof authSchemaRequest.login>['usernameOrEmail'];
-type PasswordField = z.infer<typeof authSchemaRequest.login>['password'];
+type LoginFormData = z.infer<typeof authSchemaRequest.login>;
 
 interface OptionBodyProps {
-  methodAuth: AuthModalType;
+  authMethod: AuthModalType;
 }
 const props = defineProps<OptionBodyProps>();
 
@@ -18,20 +17,17 @@ interface OptionBodyEvents {
 }
 const emit = defineEmits<OptionBodyEvents>();
 
-const { handleSubmit, errors, isSubmitting, meta } = useForm({
-  // validationSchema: toFormValidator(authSchemaRequest.login)
+const { handleSubmit, errors, isSubmitting, meta } = useForm<LoginFormData>({
+  validationSchema: toTypedSchema(authSchemaRequest.login),
 });
-
-const { value: usernameOrEmail } = useField<UsernameOrEmailField>('usernameOrEmail', undefined, {});
-const { value: password } = useField<PasswordField>('password', undefined, {});
 
 const isShow = ref(false);
 
 const otherMethodAuthTitle = computed(() => {
-  if (props.methodAuth === 'login-phone') {
+  if (props.authMethod === 'login-phone') {
     return 'Log in with email';
   }
-  if (props.methodAuth === 'login-email') {
+  if (props.authMethod === 'login-email') {
     return 'Log in with phone';
   }
   return 'Log in with email';
@@ -54,31 +50,26 @@ const handleSelectOption = (option: AuthModalType) => {
 </script>
 
 <template>
-  <form class="form-body" @submit.prevent="onSubmit">
+  <Form class="form-body" @submit.prevent="onSubmit">
     <div class="form-body-label">
       <label>Email or username</label>
       <ButtonBase
         variant="link"
         color="default"
         class="btn-link btn-redirect-login"
-        @click="handleSelectOption(methodAuth === 'login-phone' ? 'login-email' : 'login-phone')"
+        @click="handleSelectOption(authMethod === 'login-phone' ? 'login-email' : 'login-phone')"
         >{{ otherMethodAuthTitle }}</ButtonBase
       >
     </div>
     <div class="form-body-group" :class="{ error: errors['usernameOrEmail'] }">
       <div class="form-body-field">
-        <input
-          v-model="usernameOrEmail"
-          type="text"
-          placeholder="Email or username"
-          class="form-body"
-        />
+        <TextField name="usernameOrEmail" type="text" placeholder="Email or username" />
       </div>
       <ErrorMessage name="usernameOrEmail" class="error-message" />
     </div>
     <div class="form-body-group" :class="{ error: errors['password'] }">
       <div class="form-body-field">
-        <input v-model="password" type="password" placeholder="Password" />
+        <TextField :type="isShow ? 'text' : 'password'" placeholder="Password" name="password" />
         <div class="form-body-toggle" @click="handleTogglePassword">
           <IconBase v-if="isShow" name="eye" stroke="white" />
           <IconBase v-else name="eye-slash" stroke="white" />
@@ -104,7 +95,7 @@ const handleSelectOption = (option: AuthModalType) => {
       :disabled="isSubmitting || !meta.valid"
       >Login</ButtonBase
     >
-  </form>
+  </Form>
 </template>
 
 <style lang="scss" scoped>

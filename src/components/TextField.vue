@@ -4,7 +4,7 @@ import { useField } from 'vee-validate';
 interface BaseInputFieldProps {
   value?: string;
   name: string;
-  label: string;
+  label?: string;
   type?: string;
   placeholder?: string;
   successMessage?: string;
@@ -25,7 +25,6 @@ const {
 
 <template>
   <div class="base-input-field" :class="{ error: !!errorMessage, success: meta.valid }">
-    <label :for="name" class="base-input-field-label">{{ label }}</label>
     <input
       :id="name"
       :name="name"
@@ -36,34 +35,34 @@ const {
       @input="handleChange"
       @blur="handleBlur"
     />
-    <p v-if="errorMessage && meta.touched" class="base-input-field-message">
-      {{ errorMessage || successMessage }}
-    </p>
   </div>
 </template>
 
 <style lang="scss" scoped>
-:root {
-  --primary-color: #0071fe;
-  --error-color: #f23648;
-  --error-bg-color: #fddfe2;
-  --success-color: #21a67a;
-  --success-bg-color: #e0eee4;
-}
-
 .base-input-field {
   position: relative;
+  width: 100%;
   & + & {
     margin-top: 1.5rem;
   }
   &.error {
     .base-input-field-input {
-      border-color: var(--error-color);
+      border-color: $danger;
     }
     .base-input-field-message {
-      color: var(--error-color);
+      color: $danger;
     }
   }
+
+  &.success {
+    .base-input-field-input {
+      border-color: $success;
+    }
+    .base-input-field-message {
+      color: $success;
+    }
+  }
+
   &-label {
     display: flex;
     justify-content: space-between;
@@ -79,11 +78,11 @@ const {
     font-size: 1.5rem;
     height: 100%;
     width: 100%;
-    background-color: rgba(22, 24, 35, 0.06);
-    border: 1px solid rgba(22, 24, 35, 0.12);
+    background-color: rgba($text, 0.06);
+    border: 1px solid rgba($text, 0.12);
   }
   &-message {
-    color: rgb(255, 76, 58);
+    color: $danger-light;
     margin: 0;
     font-size: 14px;
   }

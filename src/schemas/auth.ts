@@ -1,13 +1,20 @@
 import { z } from 'zod';
 
 const loginRequestSchema = z.object({
-  usernameOrEmail: z.string().email(),
+  usernameOrEmail: z.string().refine((val) => {
+    if (val.includes('@') && val.includes('.')) {
+      return z.string().email('Enter a valid email');
+    } else {
+      return z
+        .string()
+        .regex(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/, 'Enter a valid phone number');
+    }
+  }),
   password: z.string().min(6),
 });
 
 const loginResponseSchema = z.object({
   accessToken: z.string(),
-  refreshToken: z.string(),
 });
 
 const registerRequestSchema = z.object({

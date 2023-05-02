@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IconName } from '~/interfaces/icon';
+import type { IconName } from '~/interfaces/icon';
 
 interface HashTagProps {
   title: string;
