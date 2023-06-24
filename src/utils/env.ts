@@ -14,7 +14,7 @@ const envSchema = z.object({
   ssr: z.boolean(),
 
   // custom
-  viteBaseApi: z.string().min(1).url(),
+  viteBaseApiUrl: z.string().min(1),
 });
 
 type EnvVariables = z.infer<typeof envSchema>;
@@ -30,7 +30,7 @@ export const envVariables = {
   ssr: import.meta.env.SSR,
 
   // custom
-  viteBaseApi: import.meta.env.VITE_BASE_API,
+  viteBaseApiUrl: import.meta.env.VITE_BASE_API_URL,
 } as EnvVariables;
 
 export const loadEnvVariables = () => {

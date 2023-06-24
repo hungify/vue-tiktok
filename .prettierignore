@@ -3,3 +3,7 @@ dist
 dist-ssr
 *.local
 node_modules/*
+
+src/generated/*
+src/auto-imports.d.ts
+src/components.d.ts

@@ -18,6 +18,6 @@
       "~/*": ["src/*"]
     }
   },
-  "include": [".eslintrc.*", "src/**/*"],
+  "include": [".eslintrc.*", "src/**/*", "codegen.ts", "apollo.config.ts", "vite.config.ts"],
   "exclude": ["dist", "node_modules", "cypress"]
 }

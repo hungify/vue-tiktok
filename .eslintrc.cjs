@@ -33,6 +33,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     '@vue/eslint-config-prettier',
     'plugin:promise/recommended',
+    '@vue/eslint-config-prettier',
     'eslint-config-prettier',
     'prettier',
   ],
