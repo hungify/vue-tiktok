@@ -69,7 +69,7 @@ useInfiniteScroll(
 </script>
 
 <template>
-  <div ref="newsFeedRef" :class="$style.wrapper">
+  <div ref="newsFeedRef" :class="$style['new-feed-container']">
     <CardVideoItem
       v-for="(item, index) in newsFeed"
       :key="index"
@@ -83,8 +83,7 @@ useInfiniteScroll(
 </template>
 
 <style lang="scss" module>
-.wrapper {
-  flex: 1 1 auto;
+.new-feed-container {
   overflow-y: auto;
 }
 </style>

@@ -13,54 +13,40 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
 </script>
 
 <template>
-  <header :class="$style.wrapper">
-    <div :class="$style.inner">
-      <RouterLink :to="ROUTES_PATH.home" :class="$style['logo-link']">
-        <img :src="images['logo']" alt="Tiktok" />
-      </RouterLink>
-      <SearchBox />
+  <div :class="$style.inner">
+    <RouterLink :to="ROUTES_PATH.home" :class="$style['logo-link']">
+      <img :src="images['logo']" alt="Tiktok" />
+    </RouterLink>
+    <SearchBox />
 
-      <div :class="$style.actions">
-        <ButtonBase color="default" variant="outline" size="md">
-          <template #leftIcon>
-            <IconBase name="plus" width="16" height="16" />
-          </template>
-          Upload
+    <div :class="$style.actions">
+      <ButtonBase color="default" variant="outline" size="md">
+        <template #leftIcon>
+          <IconBase name="plus" width="16" height="16" />
+        </template>
+        Upload
+      </ButtonBase>
+      <ButtonBase @click="$emit('onShowModal')">Log in</ButtonBase>
+      <PopperMenu :items="currentItems">
+        <ImageBase
+          v-if="!currentUser"
+          :class="$style['user-avatar']"
+          src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
+          alt="Nguyen Van A"
+        />
+        <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="default">
+          <IconBase name="ellipsis-vertical" width="24" height="24" />
         </ButtonBase>
-        <ButtonBase @click="$emit('onShowModal')">Log in</ButtonBase>
-        <PopperMenu :items="currentItems">
-          <ImageBase
-            v-if="!currentUser"
-            :class="$style['user-avatar']"
-            src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
-            alt="Nguyen Van A"
-          />
-          <ButtonBase v-else :class="$style['more-btn']" variant="ghost" color="default">
-            <IconBase name="ellipsis-vertical" width="24" height="24" />
-          </ButtonBase>
-        </PopperMenu>
-      </div>
+      </PopperMenu>
     </div>
-  </header>
+  </div>
 </template>
 
 <style lang="scss" module>
-.wrapper {
-  $search-border-radius: 92px;
-  $search-height: 46px;
-  $search-top-spacer: 9px;
-  $search-button-width: 52px;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: $default-layout-header-height;
-  box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
-  background-color: $white;
-}
+$search-border-radius: 92px;
+$search-height: 46px;
+$search-top-spacer: 9px;
+$search-button-width: 52px;
 
 .inner {
   height: 100%;
@@ -74,8 +60,6 @@ const currentItems = !currentUser ? USER_MENU : BASE_MENU;
 .logo-link {
   display: flex;
 }
-
-// Actions
 .actions {
   display: flex;
   align-items: center;

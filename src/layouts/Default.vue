@@ -1,22 +1,6 @@
 <script lang="ts" setup>
 import { useSessionStorage } from '@vueuse/core';
 
-interface MainLayoutProps {
-  full?: boolean;
-}
-const props = withDefaults(defineProps<MainLayoutProps>(), {
-  full: false,
-});
-const $style = useCssModule();
-
-const layoutClasses = computed(() => {
-  return [$style['main-layout-wrapper'], props.full && $style.full];
-});
-
-const containerClasses = computed(() => {
-  return [$style['main-layout-container'], props.full && $style.full];
-});
-
 const isOpen = ref(false);
 useSessionStorage('isModalOpen', isOpen);
 
@@ -27,48 +11,73 @@ const handleShowModal = () => {
 
 <template>
   <AuthModal v-model="isOpen" />
-  <div :class="layoutClasses">
+  <div class="layout-container">
     <slot name="header">
-      <Header @onShowModal="handleShowModal" />
+      <header>
+        <Header @onShowModal="handleShowModal" />
+      </header>
     </slot>
 
-    <main :class="containerClasses">
-      <slot name="sidebar">
-        <Sidebar @onShowModal="handleShowModal" />
-      </slot>
-
-      <div :class="$style.content">
-        <RouterView />
-      </div>
+    <main>
+      <RouterView />
     </main>
+
+    <slot name="sidebar">
+      <aside>
+        <Sidebar @onShowModal="handleShowModal" />
+      </aside>
+    </slot>
+
+    <slot name="footer">
+      <footer>
+        <Footer />
+      </footer>
+    </slot>
   </div>
 </template>
 
-<style lang="scss" module>
-.main-layout-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: $default-layout-width;
-  margin: 0 auto;
-  &.full {
-    max-width: 100%;
+<style lang="scss" scoped>
+.layout-container {
+  display: grid;
+  grid-template-columns: $default-layout-sidebar-width 1fr;
+  grid-gap: 1rem;
+  grid-template-areas:
+    'header header'
+    'aside main'
+    'footer footer';
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-}
 
-.main-layout-container {
-  width: 100%;
-  gap: 2rem;
-  padding: 0 $default-layout-horizontal-spacer;
-  display: flex;
-  &.full {
-    padding: 0 $full-layout-horizontal-spacer;
+  header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: $white;
+    width: 100%;
+    min-height: $default-layout-header-height;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
   }
-}
 
-.content {
-  flex: 1 1 auto;
-  padding: 2.4rem 0;
-  position: relative;
+  footer {
+    grid-area: footer;
+  }
+
+  main {
+    grid-area: main;
+    position: relative;
+  }
+
+  aside {
+    grid-area: aside;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    z-index: 0;
+  }
 }
 </style>

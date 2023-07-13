@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     CardFollowItem: typeof import('./components/CardFollowItem.vue')['default']
     CardVideoItem: typeof import('./components/CardVideoItem.vue')['default']
     DiscoverList: typeof import('./components/Sidebar/DiscoverList.vue')['default']
+    Footer: typeof import('./components/Footer.vue')['default']
     FormBody: typeof import('./components/Auth/FormBody.vue')['default']
     Hashtag: typeof import('./components/Hashtag.vue')['default']
     Header: typeof import('./components/Header.vue')['default']

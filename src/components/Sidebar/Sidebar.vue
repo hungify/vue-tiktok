@@ -9,43 +9,34 @@ defineEmits<SidebarEvents>();
 </script>
 
 <template>
-  <aside :class="$style.wrapper">
-    <div :class="$style.scroll">
-      <div :class="$style.inner">
-        <Menu :items="MENU_LINKS" />
-        <div :class="$style['action-wrap']">
-          <p :class="$style['text-hint']">
-            Log in to follow creators, like videos, and view comments.
-          </p>
-          <ButtonBase
-            expanded
-            variant="outline"
-            :class="$style['btn-login']"
-            @click="$emit('onShowModal')"
-            >LOGIN</ButtonBase
-          >
-        </div>
-
-        <SuggestedList label="Suggested accounts" :items="UserList" />
-        <SuggestedList
-          label="Following accounts"
-          :items="[]"
-          labelEmpty="Accounts you follow will appear here"
-        />
-        <DiscoverList />
+  <div :class="$style.scroll">
+    <div :class="$style.inner">
+      <Menu :items="MENU_LINKS" />
+      <div :class="$style['action-wrap']">
+        <p :class="$style['text-hint']">
+          Log in to follow creators, like videos, and view comments.
+        </p>
+        <ButtonBase
+          expanded
+          variant="outline"
+          :class="$style['btn-login']"
+          @click="$emit('onShowModal')"
+          >LOGIN</ButtonBase
+        >
       </div>
+
+      <SuggestedList label="Suggested accounts" :items="UserList" />
+      <SuggestedList
+        label="Following accounts"
+        :items="[]"
+        labelEmpty="Accounts you follow will appear here"
+      />
+      <DiscoverList />
     </div>
-  </aside>
+  </div>
 </template>
 
 <style lang="scss" module>
-.wrapper {
-  position: relative;
-  z-index: 0;
-  width: 356px;
-  flex: 0 0 356px;
-}
-
 .scroll {
   overflow-x: hidden;
   overflow-y: auto;
@@ -56,7 +47,6 @@ defineEmits<SidebarEvents>();
   perspective-origin: right top;
   top: 6rem;
   bottom: 0;
-  width: 35rem;
   background: $white;
   position: fixed;
   z-index: 99;

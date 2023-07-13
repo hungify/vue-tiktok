@@ -2,7 +2,7 @@
 import type { ImgHTMLAttributes } from 'vue';
 import images from '~/assets/images';
 
-interface ImageProps extends ImgHTMLAttributes {
+interface ImageProps extends /* @vue-ignore */ ImgHTMLAttributes {
   src: string;
   alt: string;
   fallback?: string;
@@ -15,15 +15,11 @@ const props = withDefaults(defineProps<ImageProps>(), {
   shape: 'unstyled',
 });
 
-const fallback = ref('');
+const currentSrc = ref(images.noImage);
 
 const handleError = () => {
-  fallback.value = props.fallback;
+  currentSrc.value = props.fallback;
 };
-
-const currentSrc = computed(() => {
-  return props.src || fallback.value;
-});
 
 const classes = computed(() => {
   const { shape } = props;

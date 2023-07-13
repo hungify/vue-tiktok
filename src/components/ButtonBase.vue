@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ButtonHTMLAttributes } from 'vue';
 
-interface ButtonProps extends ButtonHTMLAttributes {
+interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   color?: 'default' | 'success' | 'info' | 'warning' | 'danger';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'outline' | 'solid' | 'ghost' | 'link';

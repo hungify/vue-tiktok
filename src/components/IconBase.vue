@@ -2,7 +2,7 @@
 import type { SVGAttributes } from 'vue';
 import type { IconName } from '~/interfaces/icon';
 
-interface IconProps extends SVGAttributes {
+interface IconProps extends /* @vue-ignore */ SVGAttributes {
   name: IconName;
 }
 
