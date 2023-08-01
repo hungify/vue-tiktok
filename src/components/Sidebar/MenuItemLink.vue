@@ -33,6 +33,10 @@ defineProps<MenuItemProps>();
     color: $text;
     transition: background-color ease-in-out 200ms;
 
+    :first-child {
+      padding-top: 0;
+    }
+
     &.router-link-exact-active {
       color: $danger;
     }
@@ -44,6 +48,9 @@ defineProps<MenuItemProps>();
 
   .title {
     margin-left: 10px;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 </style>

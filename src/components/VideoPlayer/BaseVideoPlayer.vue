@@ -27,7 +27,7 @@ watch(
   (value) => {
     if (videoRef.value) {
       if (value.playing && props.id === store.currentVideoId) {
-        videoRef.value.play();
+        void videoRef.value.play();
       } else {
         videoRef.value.pause();
       }
@@ -61,7 +61,7 @@ const onPlayOrPauseHandler = () => {
 };
 
 const handlePlay = () => {
-  handleLoadedMetaData();
+  void handleLoadedMetaData();
   store.setCurrentVideoId(props.id);
   store.togglePlayOrPause('play');
 };

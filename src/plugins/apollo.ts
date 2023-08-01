@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 import { createHttpLink, InMemoryCache, ApolloClient } from '@apollo/client/core';
 import { envVariables } from '~/utils/env';
 import { DefaultApolloClient } from '@vue/apollo-composable';

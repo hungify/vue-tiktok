@@ -23,19 +23,15 @@ module.exports = {
       },
     },
   },
-  plugins: ['vue', '@typescript-eslint', 'prettier', '@typescript-eslint', 'import', 'promise'],
+  plugins: ['vue', 'prettier', '@typescript-eslint', 'import', 'promise', 'unicorn'],
   extends: [
     'eslint:recommended',
-    'plugin:vue/vue3-essential',
     'plugin:vue/vue3-recommended',
-    'plugin:vue/vue3-strongly-recommended',
     '@vue/eslint-config-typescript/recommended',
     'plugin:@typescript-eslint/recommended',
-    '@vue/eslint-config-prettier',
     'plugin:promise/recommended',
-    '@vue/eslint-config-prettier',
-    'eslint-config-prettier',
-    'prettier',
+    'plugin:prettier/recommended',
+    '@vue/eslint-config-prettier/skip-formatting',
   ],
   ignorePatterns: ['node_modules', 'dist', '*.d.ts', 'vite.config.ts'],
   rules: {
@@ -55,6 +51,7 @@ module.exports = {
     ],
 
     // # TYPESCRIPT
+    '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/ban-types': 'error',
@@ -64,6 +61,7 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'error',
     '@typescript-eslint/no-use-before-define': 'warn',
     '@typescript-eslint/no-var-requires': 'error',
+    '@typescript-eslint/prefer-enum-initializers': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -121,6 +119,7 @@ module.exports = {
     ],
 
     // # VUE
+    'vue/no-setup-props-destructure': 'off',
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/v-on-event-hyphenation': 'off',

@@ -1,11 +1,11 @@
-import App from './App.vue';
-import { type App as AppVue } from 'vue';
+import AppVue from './App.vue';
+import { type App } from 'vue';
 import { setupRouter } from './router';
 
 const bootstrap = async () => {
-  const app = createApp(App);
+  const app = createApp(AppVue);
 
-  const plugins = import.meta.glob<{ install: (app: AppVue) => void }>('./plugins/*.ts');
+  const plugins = import.meta.glob<{ install: (app: App) => void }>('./plugins/*.ts');
   Object.values(plugins).forEach(async (plugin) => {
     const { install } = await plugin();
     install(app);
@@ -15,4 +15,4 @@ const bootstrap = async () => {
   app.mount('#app');
 };
 
-bootstrap();
+void bootstrap();

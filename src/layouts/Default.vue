@@ -18,15 +18,15 @@ const handleShowModal = () => {
       </header>
     </slot>
 
-    <main>
-      <RouterView />
-    </main>
-
     <slot name="sidebar">
       <aside>
         <Sidebar @onShowModal="handleShowModal" />
       </aside>
     </slot>
+
+    <main>
+      <RouterView />
+    </main>
 
     <slot name="footer">
       <footer>
@@ -40,12 +40,22 @@ const handleShowModal = () => {
 .layout-container {
   display: grid;
   grid-template-columns: $default-layout-sidebar-width 1fr;
-  grid-gap: 1rem;
+  grid-gap: $default-layout-spacing;
   grid-template-areas:
     'header header'
     'aside main'
     'footer footer';
-  > * {
+
+  @media (max-width: 768px) {
+    grid-template-columns: calc(#{$default-layout-sidebar-width} / 6) 1fr;
+    grid-gap: 0;
+    aside {
+      border-right: 1px solid rgba(22, 24, 35, 0.12);
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  & > * {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +66,7 @@ const handleShowModal = () => {
     position: sticky;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 5;
     background-color: $white;
     width: 100%;
     min-height: $default-layout-header-height;
@@ -69,15 +79,14 @@ const handleShowModal = () => {
 
   main {
     grid-area: main;
-    position: relative;
   }
 
   aside {
     grid-area: aside;
     position: sticky;
-    top: 0;
+    top: calc(#{$default-layout-header-height} + #{$default-layout-spacing});
     align-self: start;
-    z-index: 0;
+    height: 100vh;
   }
 }
 </style>

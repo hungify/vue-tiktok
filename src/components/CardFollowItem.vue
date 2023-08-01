@@ -41,7 +41,7 @@ watch(
   () => props.active,
   (value) => {
     if (value) {
-      videoRef.value?.play();
+      void videoRef.value?.play();
     } else {
       videoRef.value?.load();
     }
@@ -97,6 +97,7 @@ const handleFollowOrUnFollow = () => {
   padding: 30px 12px 20px;
   text-align: center;
   color: $white;
+
   .avatar {
     border-radius: 50%;
     height: 48px;
@@ -104,6 +105,7 @@ const handleFollowOrUnFollow = () => {
     object-fit: cover;
     width: 48px;
   }
+
   .title {
     font-weight: 700;
     font-size: 18px;
@@ -121,17 +123,20 @@ const handleFollowOrUnFollow = () => {
     justify-content: center;
     overflow: hidden;
     margin-bottom: 8px;
+
     .icon-wrap {
       margin-left: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
+
       svg {
         color: $info;
       }
     }
   }
 }
+
 .btn-follow {
   min-width: 16rem;
   min-height: 3.6rem;

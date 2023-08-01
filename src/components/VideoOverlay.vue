@@ -28,7 +28,7 @@ watch(
   () => props.active,
   (value) => {
     if (value) {
-      videoRef.value?.play();
+      void videoRef.value?.play();
     } else {
       videoRef.value?.load();
     }
@@ -56,7 +56,7 @@ watch(
 .card-follower-container {
   display: flex;
   width: 100%;
-  height: 302px;
+  max-height: 450px;
   border-radius: 8px;
   overflow: hidden;
 

@@ -18,6 +18,6 @@ export type VideoPlayList = {
   user: User;
 };
 
-export interface NewsFeed extends VideoPlayList {
-  shouldBePlay: boolean;
+export interface Posts extends VideoPlayList {
+  shouldBePlay?: boolean;
 }

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+defineOptions({ inheritAttrs: true });
+
 interface SwitchProps {
   value?: boolean;
   disabled?: boolean;

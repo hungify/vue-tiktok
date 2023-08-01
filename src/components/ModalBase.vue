@@ -142,10 +142,8 @@ const bodyClasses = computed(() => {
             </slot>
             <ButtonBase
               class="modal-close-btn"
-              variant="ghost"
+              variant="link"
               color="default"
-              size="xs"
-              rounded
               @click="handleCloseModal"
             >
               <IconBase name="x" />
@@ -240,6 +238,7 @@ $modalSizes: (
     margin-bottom: map-get($styles, margin-bottom);
   }
 }
+
 .modal-content {
   display: flex;
   flex-direction: column;
@@ -264,10 +263,11 @@ $modalSizes: (
 
 .modal-close-btn {
   background-color: rgba(22, 24, 35, 0.03);
-  transition-property: all;
-  transition-duration: 200ms;
-  width: 4rem;
-  height: 4rem;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  margin-right: 1rem;
 }
 
 .modal-body {
@@ -276,6 +276,7 @@ $modalSizes: (
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   flex: 1 1 0%;
+
   &-inside {
     overflow: auto;
   }
@@ -320,6 +321,7 @@ $modalSizes: (
   color: white;
   margin-right: 0.75rem;
 }
+
 .modal-button-ok {
   background: white;
   color: #000;

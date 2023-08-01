@@ -24,5 +24,8 @@ defineProps<MenuProps>();
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 }
 </style>

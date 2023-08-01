@@ -13,60 +13,61 @@ defineEmits<SidebarEvents>();
     <div :class="$style.inner">
       <Menu :items="MENU_LINKS" />
       <div :class="$style['action-wrap']">
-        <p :class="$style['text-hint']">
-          Log in to follow creators, like videos, and view comments.
-        </p>
-        <ButtonBase
-          expanded
-          variant="outline"
-          :class="$style['btn-login']"
-          @click="$emit('onShowModal')"
-          >LOGIN</ButtonBase
-        >
+        <div :class="$style['action-inner']">
+          <p :class="$style['text-hint']">
+            Log in to follow creators, like videos, and view comments.
+          </p>
+          <ButtonBase
+            expanded
+            variant="outline"
+            :class="$style['btn-login']"
+            @click="$emit('onShowModal')"
+          >
+            LOGIN
+          </ButtonBase>
+          <SuggestedList label="Suggested accounts" :items="UserList" />
+          <SuggestedList
+            label="Following accounts"
+            :items="[]"
+            labelEmpty="Accounts you follow will appear here"
+          />
+          <DiscoverList />
+        </div>
       </div>
-
-      <SuggestedList label="Suggested accounts" :items="UserList" />
-      <SuggestedList
-        label="Following accounts"
-        :items="[]"
-        labelEmpty="Accounts you follow will appear here"
-      />
-      <DiscoverList />
     </div>
   </div>
 </template>
 
 <style lang="scss" module>
 .scroll {
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  perspective: 1px;
-  transform-style: preserve-3d;
-  padding-right: 12px;
-  perspective-origin: right top;
-  top: 6rem;
-  bottom: 0;
-  background: $white;
-  position: fixed;
-  z-index: 99;
-  padding-right: 0.8rem;
+  height: 100%;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    perspective: 1px;
+    transform-style: preserve-3d;
+    perspective-origin: right top;
+    top: 6rem;
+    bottom: 0;
+    background: $white;
+    position: fixed;
+    width: inherit;
+  }
 }
 
 .inner {
-  flex-shrink: 0;
-  padding: 20px 0 26px;
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  min-height: 100%;
-  padding-left: 0.8rem;
+  height: 100%;
 }
-.action-wrap {
+
+.action-inner {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+.action-inner {
   position: relative;
   padding: 2rem 0.8rem 2.4rem 0.8rem;
   &::before {

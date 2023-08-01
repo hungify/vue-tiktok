@@ -78,20 +78,25 @@ useTippy(searchBoxRef, {
 
 <style lang="scss" module>
 .wrapper {
-  $search-width: 40rem;
+  min-width: $search-width;
+  padding: 0.3rem 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
   .search,
   .search-result {
-    width: $search-width;
+    width: 100%;
   }
 
   .search {
     position: relative;
-    height: $search-height;
     padding-left: 1.6rem;
     display: flex;
+    align-items: center;
     background-color: rgba(22, 24, 35, 0.06);
     border-radius: $search-border-radius;
-    border: 1.5px solid transparent;
 
     input {
       flex: 1 1 auto;
@@ -113,7 +118,6 @@ useTippy(searchBoxRef, {
       top: $search-top-spacer;
       right: $search-button-width;
       width: 1px;
-      height: calc(#{$search-height} - #{$search-top-spacer} * 2);
       background-color: rgba(22, 24, 35, 0.12);
     }
 

@@ -30,8 +30,10 @@ const handlePlay = (id: string) => {
 
 <style lang="scss" scoped>
 .following-list {
-  display: grid !important;
+  width: 100%;
+  display: grid;
   gap: 2.4rem 1.6rem;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(3, 25rem);
+  justify-content: center;
 }
 </style>

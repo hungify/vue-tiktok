@@ -14,6 +14,8 @@ declare module '@vue/runtime-core' {
     AuthModal: typeof import('./components/Auth/AuthModal.vue')['default']
     BaseInputField: typeof import('./components/FormFields/BaseInputField.vue')['default']
     BaseVideoPlayer: typeof import('./components/VideoPlayer/BaseVideoPlayer.vue')['default']
+    BoxFloating: typeof import('./components/BoxFloating.vue')['default']
+    BoxPopper: typeof import('./components/BoxPopper.vue')['default']
     ButtonBase: typeof import('./components/ButtonBase.vue')['default']
     CardFollowItem: typeof import('./components/CardFollowItem.vue')['default']
     CardVideoItem: typeof import('./components/CardVideoItem.vue')['default']

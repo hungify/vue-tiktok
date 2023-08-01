@@ -1,7 +1,7 @@
 import VIDEOS from '~/assets/videos';
-import type { NewsFeed } from '~/models/video';
+import type { VideoPlayList } from '~/models/video';
 
-export const playList: NewsFeed[] = [
+export const playList: VideoPlayList[] = [
   {
     video: {
       id: '1',
@@ -24,7 +24,6 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
   {
     video: {
@@ -48,7 +47,6 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
   {
     video: {
@@ -72,7 +70,6 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
 
   {
@@ -97,7 +94,6 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
   {
     video: {
@@ -121,7 +117,6 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
   {
     video: {
@@ -145,6 +140,5 @@ export const playList: NewsFeed[] = [
       followers: 10000,
       likes: 10000,
     },
-    shouldBePlay: false,
   },
 ];

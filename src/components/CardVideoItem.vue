@@ -103,12 +103,12 @@ onBeforeUnmount(() => {
 });
 
 const handleGotoDetail = () => {
-  router.push(`/@${props.user.nickname}/video/${props.video.id}`);
+  void router.push(`/@${props.user.nickname}/video/${props.video.id}`);
 };
 </script>
 
 <template>
-  <div ref="cardVideoRef" :class="$style.wrapper">
+  <div ref="cardVideoRef" class="card-video">
     <div>
       <Tippy
         arrow
@@ -119,11 +119,11 @@ const handleGotoDetail = () => {
         :offset="[140, 0]"
       >
         <template #default>
-          <div :class="$style['user-avatar']">
+          <div class="user-avatar">
             <ImageBase
               :src="user.avatar"
               :alt="user.nickname"
-              :class="$style.avatar"
+              class="avatar"
               fallback="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
             />
           </div>
@@ -135,30 +135,29 @@ const handleGotoDetail = () => {
         </template>
       </Tippy>
     </div>
-    <div :class="$style.content">
-      <div :class="$style.info">
-        <div :class="$style['user-info']">
+
+    <div class="content">
+      <div class="info">
+        <div class="user-info">
           <RouterLink :to="`@${user.nickname}`">
-            <strong :class="$style['full-name']">{{ fullName }}</strong>
-            <span :class="$style.nickname">{{ user.nickname }}</span>
+            <strong class="full-name">{{ fullName }}</strong>
+            <span class="nickname">{{ user.nickname }}</span>
           </RouterLink>
         </div>
-        <div :class="$style.action">
-          <ButtonBase :class="$style['btn-follow']" size="sm" variant="outline">
-            Follow
-          </ButtonBase>
+        <div class="action">
+          <ButtonBase class="btn-follow']" size="sm" variant="outline"> Follow </ButtonBase>
         </div>
-        <div :class="$style['video-info']">
-          <span :class="$style.desc">
+        <div class="video-info">
+          <span class="desc">
             {{ video.description }}
           </span>
-          <div :class="$style['hashtag-list']">
+          <div class="hashtag-list">
             <Hashtag v-for="tag in video.hashtags" :key="tag" :title="tag" />
           </div>
         </div>
-        <div :class="$style['song-info']">
+        <div class="song-info">
           <IconBase name="music" width="12" heigh="12" />
-          <RouterLink to="/music" :class="$style['song-name']">
+          <RouterLink to="/music" class="song-name">
             <span>
               {{ video.song }}
             </span>
@@ -166,43 +165,28 @@ const handleGotoDetail = () => {
         </div>
       </div>
 
-      <div :class="$style['video-and-actions']">
+      <div class="video-and-actions">
         <div @click="handleGotoDetail">
           <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
         </div>
-        <ul :class="$style.actions">
-          <li :class="$style['actions-item']">
-            <ButtonBase
-              :class="$style.action"
-              variant="ghost"
-              color="default"
-              @click="handleLikeVideo"
-            >
+        <ul class="actions">
+          <li class="actions-item">
+            <ButtonBase class="action" variant="ghost" color="default" @click="handleLikeVideo">
               <IconBase name="heart" />
             </ButtonBase>
-            <strong :class="$style.count">{{ video.likesCount }}</strong>
+            <strong class="count">{{ video.likesCount }}</strong>
           </li>
-          <li :class="$style['actions-item']">
-            <ButtonBase
-              :class="$style.action"
-              variant="ghost"
-              color="default"
-              @click="handleCommentVideo"
-            >
+          <li class="actions-item">
+            <ButtonBase class="action" variant="ghost" color="default" @click="handleCommentVideo">
               <IconBase name="comment" />
             </ButtonBase>
-            <strong :class="$style.count">{{ video.commentsCount }}</strong>
+            <strong class="count">{{ video.commentsCount }}</strong>
           </li>
-          <li :class="$style['actions-item']">
-            <ButtonBase
-              :class="$style.action"
-              variant="ghost"
-              color="default"
-              @click="handleShareVideo"
-            >
+          <li class="actions-item">
+            <ButtonBase class="action" variant="ghost" color="default" @click="handleShareVideo">
               <IconBase name="share" />
             </ButtonBase>
-            <strong :class="$style.count">{{ video.sharesCount }}</strong>
+            <strong class="count">{{ video.sharesCount }}</strong>
           </li>
         </ul>
       </div>
@@ -210,14 +194,14 @@ const handleGotoDetail = () => {
   </div>
 </template>
 
-<style lang="scss" module>
-.wrapper {
+<style lang="scss" scoped>
+.card-video {
   display: flex;
+  justify-content: space-between;
   position: relative;
-  padding: pxToRem(30px) 0;
-  &:first-child {
-    padding-top: 0;
-  }
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+
   &::after {
     content: '';
     position: absolute;
@@ -240,9 +224,12 @@ const handleGotoDetail = () => {
   border-radius: 50%;
 }
 
+.content {
+  width: 100%;
+}
+
 .info {
   margin-left: 12px;
-  width: pxToRem(724px);
   flex: 1 1 pxToRem(724px);
   margin-bottom: pxToRem(12px);
 

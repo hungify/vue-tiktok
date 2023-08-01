@@ -1,47 +1,41 @@
 <script setup lang="ts">
-import {
-  onKeyStroke,
-  useEventListener,
-  useInfiniteScroll,
-  type UseInfiniteScrollOptions,
-} from '@vueuse/core';
 import CardVideoItem from '~/components/CardVideoItem.vue';
-import { playList } from '~/mocks/video';
-import type { NewsFeed } from '~/models/video';
+import type { Posts } from '~/models/video';
+
+interface NewsFeedProps {
+  posts: Posts[];
+}
 
 const isModalOpen = sessionStorage.getItem('isModalOpen') === 'true';
 
-const newsFeed = reactive<NewsFeed[]>(playList);
-const newsFeedRef = ref<HTMLDivElement>();
+const { posts } = defineProps<NewsFeedProps>();
+
 const cardVideoItemRef = ref<InstanceType<typeof CardVideoItem>[]>();
-const infiniteOptions = shallowReactive<UseInfiniteScrollOptions>({
-  distance: 2,
-});
 
 const store = useVideoPlayerStore();
 
+const firstVideoInView = computed(() => {
+  return posts.find((item) => item.shouldBePlay);
+});
+
 const onIntersecting = (videoId: string, shouldBePlay: boolean) => {
-  newsFeed.forEach((item) => {
+  posts.forEach((item) => {
     if (item.video.id === videoId) {
       item.shouldBePlay = shouldBePlay;
     }
   });
 };
 
-const firstVideoInView = computed(() => {
-  return newsFeed.find((item) => item.shouldBePlay);
-});
-
 onKeyStroke(['ArrowDown', 'ArrowUp', 'm'], (e) => {
   if (isModalOpen) return;
   e.preventDefault();
   if (e.key === 'ArrowDown') {
-    const index = newsFeed.findIndex((item) => item.video.id === firstVideoInView.value?.video.id);
-    if (index < newsFeed.length - 1) {
+    const index = posts.findIndex((item) => item.video.id === firstVideoInView.value?.video.id);
+    if (index < posts.length - 1) {
       cardVideoItemRef.value?.[index + 1]?.scrollToVideo();
     }
   } else if (e.key === 'ArrowUp') {
-    const index = newsFeed.findIndex((item) => item.video.id === firstVideoInView.value?.video.id);
+    const index = posts.findIndex((item) => item.video.id === firstVideoInView.value?.video.id);
     if (index > 0) {
       cardVideoItemRef.value?.[index - 1]?.scrollToVideo();
     }
@@ -58,20 +52,12 @@ useEventListener(document, 'visibilitychange', (evt: Event) => {
     store.togglePlayOrPause('pause');
   }
 });
-
-useInfiniteScroll(
-  newsFeedRef,
-  () => {
-    newsFeed.push(...newsFeed);
-  },
-  infiniteOptions,
-);
 </script>
 
 <template>
-  <div ref="newsFeedRef" :class="$style['new-feed-container']">
+  <div class="new-feed-container">
     <CardVideoItem
-      v-for="(item, index) in newsFeed"
+      v-for="(item, index) in posts"
       :key="index"
       ref="cardVideoItemRef"
       :video="item.video"
@@ -82,8 +68,8 @@ useInfiniteScroll(
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .new-feed-container {
-  overflow-y: auto;
+  max-width: 692px;
 }
 </style>
