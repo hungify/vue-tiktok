@@ -29,6 +29,8 @@ const isVideoInView = ref(false);
 const { width } = useWindowSize();
 const router = useRouter();
 
+const isMobileScreen = useMediaQuery('(max-width: 768px)');
+
 const fullName = computed(() => `${props.user.firstName} ${props.user.lastName}`);
 
 const options = computed(() => {
@@ -109,51 +111,69 @@ const handleGotoDetail = () => {
 
 <template>
   <div ref="cardVideoRef" class="card-video">
-    <div>
+    <RouterLink v-if="!isMobileScreen" to="#">
       <Tippy
         arrow
         theme="light"
         placement="bottom"
         interactive
         :delay="[0, 400]"
-        :offset="[140, 0]"
+        :offset="[120, 10]"
       >
-        <template #default>
-          <div class="user-avatar">
-            <ImageBase
-              :src="user.avatar"
-              :alt="user.nickname"
-              class="avatar"
-              fallback="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
-            />
-          </div>
-        </template>
+        <div class="user-avatar">
+          <ImageBase
+            :src="user.avatar"
+            :alt="user.nickname"
+            class="avatar"
+            fallback="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
+          />
+        </div>
         <template #content>
           <PopperWrapper>
             <AccountPreview :item="user" />
           </PopperWrapper>
         </template>
       </Tippy>
-    </div>
+    </RouterLink>
 
-    <div class="content">
+    <div class="card-video-inner">
       <div class="info">
-        <div class="user-info">
+        <template v-if="isMobileScreen">
           <RouterLink :to="`@${user.nickname}`">
-            <strong class="full-name">{{ fullName }}</strong>
-            <span class="nickname">{{ user.nickname }}</span>
+            <div class="user-wrapper">
+              <div class="user-avatar">
+                <ImageBase
+                  :src="user.avatar"
+                  :alt="user.nickname"
+                  class="avatar"
+                  fallback="https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg"
+                />
+              </div>
+              <div class="user-info">
+                <strong class="full-name">{{ fullName }}</strong>
+                <span class="nickname">{{ user.nickname }}</span>
+              </div>
+            </div>
           </RouterLink>
-        </div>
-        <div class="action">
-          <ButtonBase class="btn-follow']" size="sm" variant="outline"> Follow </ButtonBase>
-        </div>
+        </template>
+        <template v-else>
+          <RouterLink :to="`@${user.nickname}`">
+            <div class="user-info">
+              <strong class="full-name">{{ fullName }}</strong>
+              <span class="nickname">{{ user.nickname }}</span>
+            </div>
+          </RouterLink>
+        </template>
         <div class="video-info">
-          <span class="desc">
-            {{ video.description }}
-          </span>
-          <div class="hashtag-list">
-            <Hashtag v-for="tag in video.hashtags" :key="tag" :title="tag" />
+          <div>
+            <span class="desc">
+              {{ video.description }}
+            </span>
+            <div class="hashtag-list">
+              <Hashtag v-for="tag in video.hashtags" :key="tag" :title="tag" />
+            </div>
           </div>
+          <ButtonBase class="btn-follow" size="sm" variant="outline"> Follow </ButtonBase>
         </div>
         <div class="song-info">
           <IconBase name="music" width="12" heigh="12" />
@@ -166,29 +186,34 @@ const handleGotoDetail = () => {
       </div>
 
       <div class="video-and-actions">
-        <div @click="handleGotoDetail">
+        <div class="video-wrapper" @click="handleGotoDetail">
           <BaseVideoPlayer :id="video.id" ref="currentVideoRef" :url="video.url" />
+          <ul class="actions">
+            <li class="actions-item">
+              <ButtonBase class="action" variant="ghost" color="default" @click="handleLikeVideo">
+                <IconBase name="heart" />
+              </ButtonBase>
+              <strong class="count">{{ video.likesCount }}</strong>
+            </li>
+            <li class="actions-item">
+              <ButtonBase
+                class="action"
+                variant="ghost"
+                color="default"
+                @click="handleCommentVideo"
+              >
+                <IconBase name="comment" />
+              </ButtonBase>
+              <strong class="count">{{ video.commentsCount }}</strong>
+            </li>
+            <li class="actions-item">
+              <ButtonBase class="action" variant="ghost" color="default" @click="handleShareVideo">
+                <IconBase name="share" />
+              </ButtonBase>
+              <strong class="count">{{ video.sharesCount }}</strong>
+            </li>
+          </ul>
         </div>
-        <ul class="actions">
-          <li class="actions-item">
-            <ButtonBase class="action" variant="ghost" color="default" @click="handleLikeVideo">
-              <IconBase name="heart" />
-            </ButtonBase>
-            <strong class="count">{{ video.likesCount }}</strong>
-          </li>
-          <li class="actions-item">
-            <ButtonBase class="action" variant="ghost" color="default" @click="handleCommentVideo">
-              <IconBase name="comment" />
-            </ButtonBase>
-            <strong class="count">{{ video.commentsCount }}</strong>
-          </li>
-          <li class="actions-item">
-            <ButtonBase class="action" variant="ghost" color="default" @click="handleShareVideo">
-              <IconBase name="share" />
-            </ButtonBase>
-            <strong class="count">{{ video.sharesCount }}</strong>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -197,10 +222,17 @@ const handleGotoDetail = () => {
 <style lang="scss" scoped>
 .card-video {
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: center;
   position: relative;
-  gap: 0.5rem;
+  gap: 0.75rem;
   padding: 1.5rem 0;
+  max-width: 66rem;
+  margin: 0 auto;
+
+  @media screen and (max-width: 768px) {
+    max-width: 45rem;
+  }
 
   &::after {
     content: '';
@@ -214,9 +246,18 @@ const handleGotoDetail = () => {
   }
 }
 
+.user-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
 .user-avatar {
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 5.6rem;
+  width: 5.6rem;
+  @media (max-width: 768px) {
+    height: 4rem;
+    width: 4rem;
+  }
 }
 .avatar {
   width: 100%;
@@ -224,14 +265,18 @@ const handleGotoDetail = () => {
   border-radius: 50%;
 }
 
-.content {
+.card-video-inner {
   width: 100%;
 }
 
 .info {
-  margin-left: 12px;
-  flex: 1 1 pxToRem(724px);
   margin-bottom: pxToRem(12px);
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0;
+  }
 
   .user-info {
     cursor: pointer;
@@ -241,29 +286,34 @@ const handleGotoDetail = () => {
     .nickname {
       margin-left: 8px;
     }
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      .nickname {
+        margin-left: 0;
+      }
+    }
   }
   .hashtag-list {
     display: flex;
-    max-width: 35rem;
     gap: 0.8rem;
   }
-  .action {
-    position: absolute;
-    right: 12px;
-    .btn-follow {
-      min-height: 28px;
-      min-width: 88px;
-      padding: 0 1.2rem;
-      font-size: 1.6rem;
-    }
+  .btn-follow {
+    height: 36px;
+    min-width: 96px;
+    padding: 0 1.2rem;
+    font-size: 1.6rem;
   }
-
   .video-info {
+    display: flex;
+    justify-content: space-between;
     .desc {
       display: block;
     }
   }
   .song-info {
+    display: inline;
     cursor: pointer;
     &:hover .song-name {
       text-decoration: underline;
@@ -276,16 +326,18 @@ const handleGotoDetail = () => {
 
 .video-and-actions {
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
 }
+.video-wrapper {
+  display: flex;
+  gap: 0.75rem;
+}
+
 .actions {
+  align-self: flex-end;
   display: flex;
   flex-direction: column;
   align-items: center;
   list-style: none;
-  padding: 0;
-  margin: 0;
   &-item {
     display: flex;
     flex-direction: column;

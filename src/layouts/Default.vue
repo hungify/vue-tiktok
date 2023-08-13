@@ -27,12 +27,6 @@ const handleShowModal = () => {
     <main>
       <RouterView />
     </main>
-
-    <slot name="footer">
-      <footer>
-        <Footer />
-      </footer>
-    </slot>
   </div>
 </template>
 
@@ -71,10 +65,6 @@ const handleShowModal = () => {
     width: 100%;
     min-height: $default-layout-header-height;
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
-  }
-
-  footer {
-    grid-area: footer;
   }
 
   main {

@@ -134,11 +134,11 @@ defineExpose({
   cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
-  margin-right: pxToRem(20px);
 }
 
 .overlay {
-  height: calc(450px + (100vw - 768px) / 1152 * 100);
+  height: 100%;
+  max-height: 500px;
   transition: opacity 0.3s linear;
 
   &:hover .controls {

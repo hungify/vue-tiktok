@@ -6,7 +6,7 @@ const posts = reactive<Posts[]>(playList);
 const lastPostRef = ref<HTMLDivElement>();
 
 useIntersectionObserver(lastPostRef, () => {
-  posts?.push(...playList);
+  // posts?.push(...playList);
 });
 </script>
 

@@ -70,6 +70,9 @@ useEventListener(document, 'visibilitychange', (evt: Event) => {
 
 <style lang="scss" scoped>
 .new-feed-container {
-  max-width: 692px;
+  width: 100%;
+  @media (max-width: 768px) {
+    padding: 0 1.6rem;
+  }
 }
 </style>
